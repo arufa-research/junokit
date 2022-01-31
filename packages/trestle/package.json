@@ -1,6 +1,6 @@
 {
-  "name": "secret-polar",
-  "version": "0.9.9",
+  "name": "trestle-af",
+  "version": "0.0.1",
   "main": "dist/src/index.js",
   "authors": [
     {
@@ -14,7 +14,7 @@
   ],
   "keywords": [
     "cosmwasm",
-    "secret-network",
+    "juno",
     "dev-tooling",
     "blockchain",
     "rust",

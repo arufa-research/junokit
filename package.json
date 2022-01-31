@@ -1,7 +1,7 @@
 {
-  "name": "polar",
-  "description": "Polar is a development environment to compile, deploy, test, run scrt contracts on different networks.",
-  "repository": "https://github.com/arufa-research/polar.git",
+  "name": "trestle",
+  "description": "Trestle is a development environment to compile, deploy, test, run scrt contracts on different networks.",
+  "repository": "https://github.com/arufa-research/trestle.git",
   "author": "https://github.com/coco-sha",
   "license": "MIT",
   "private": true,

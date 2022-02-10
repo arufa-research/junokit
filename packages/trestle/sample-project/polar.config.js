@@ -15,10 +15,10 @@ const networks = {
   localnet: {
     endpoint: 'http://localhost:1337/'
   },
-  // Pulsar-2
+  // uni-2
   testnet: {
-    endpoint: 'http://testnet.securesecrets.org:1317/',
-    chainId: 'pulsar-2',
+    endpoint: 'https://rpc.uni.junonetwork.io/',
+    chainId: 'uni-2',
     trustNode: true,
     keyringBackend: 'test',
     accounts: accounts,

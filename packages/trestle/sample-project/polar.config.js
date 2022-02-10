@@ -6,8 +6,8 @@ const accounts = [
   },
   {
     name: 'account_1',
-    address: '',
-    mnemonic: ''
+    address: 'juno1njamu5g4n0vahggrxn4ma2s4vws5x4w3u64z8h',
+    mnemonic: 'student prison fresh dwarf ecology birth govern river tissue wreck hope autumn basic trust divert dismiss buzz play pistol focus long armed flag bicycle'
   }
 ];
 

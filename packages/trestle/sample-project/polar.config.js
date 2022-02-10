@@ -13,7 +13,7 @@ const accounts = [
 
 const networks = {
   localnet: {
-    endpoint: 'http://localhost:1337/'
+    endpoint: 'http://localhost:26657/'
   },
   // uni-2
   testnet: {

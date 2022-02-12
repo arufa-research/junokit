@@ -1,7 +1,8 @@
 import chalk from "chalk";
 import fs from "fs-extra";
 import path from "path";
-import { CosmWasmClient } from "secretjs";
+import { CosmWasmClient,SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing"
 
 import { PolarContext } from "../../internal/context";
 import { PolarError } from "../../internal/core/errors";
@@ -25,7 +26,7 @@ import type {
   UserAccount
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
-import { ExecuteResult, getClient, getSigningClient } from "../client";
+import {getClient,  ExecuteResult, getSigningClient } from "../client";
 import { Abi, AbiParam } from "./abi";
 
 function checkCallArgs (
@@ -200,7 +201,7 @@ export class Contract {
       this.checkpointData = {};
     }
 
-    this.client = getClient(this.env.network);
+    const client = getClient(this.env.network);
   }
 
   async parseSchema (): Promise<void> {
@@ -249,18 +250,18 @@ export class Contract {
     }
     await compress(this.contractName);
 
-    const wasmFileContent: Buffer = fs.readFileSync(this.contractPath);
+    const wasmFileContent = fs.readFileSync(this.contractPath);
 
     const signingClient = await getSigningClient(this.env.network, accountVal);
     const uploadReceipt = await signingClient.upload(
-      wasmFileContent,
-      {},
-      `upload ${this.contractName}`,
-      customFees
+     accountVal.address,
+     wasmFileContent,
+     customFees,
+     "this is upload"
     );
     const codeId: number = uploadReceipt.codeId;
     const contractCodeHash: string =
-      await signingClient.restClient.getCodeHashByCodeId(codeId);
+      await signingClient.getCodeHashByCodeId(codeId);
 
     this.codeId = codeId;
     const deployInfo: DeployInfo = {
@@ -326,18 +327,19 @@ export class Contract {
       return info;
     }
     const signingClient = await getSigningClient(this.env.network, accountVal);
-
+    const memo1="instantiating";
     const initTimestamp = String(new Date());
     label = (this.env.runtimeArgs.command === "test")
       ? `deploy ${this.contractName} ${initTimestamp}` : label;
     console.log(`Instantiating with label: ${label}`);
     const contract = await signingClient.instantiate(
+      accountVal.address,
       this.codeId,
       initArgs,
       label,
-      `init ${this.contractName}`,
-      transferAmount,
-      customFees);
+      customFees,
+      {memo1}
+      );
     this.contractAddress = contract.contractAddress;
 
     const instantiateInfo: InstantiateInfo = {
@@ -392,11 +394,13 @@ export class Contract {
     console.log(this.contractAddress, msgData);
     // Send the same handleMsg to increment multiple times
     return await signingClient.execute(
+      accountVal.address,
       this.contractAddress,
       msgData,
-      `execute handle ${this.contractName}`,
-      transferAmount,
-      customFees
+      customFees,
+      "executing",
+      transferAmount
+      
     );
   }
 }

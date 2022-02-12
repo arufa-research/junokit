@@ -1,27 +1,26 @@
-import { CosmWasmClient, EnigmaUtils, ExecuteResult, Secp256k1Pen, SigningCosmWasmClient } from "secretjs";
 
+import { CosmWasmClient,SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing"
+import amino_1 from "@cosmjs/amino";
 import { Account, Network } from "../types";
 
-export function getClient (network: Network): CosmWasmClient {
-  return new CosmWasmClient(
-    network.config.endpoint, network.config.seed, network.config.broadCastMode
-  );
+export  async function getClient (network: Network):Promise<CosmWasmClient> {
+  const client = await CosmWasmClient.connect(network.config.endpoint)
+  return client
 }
 
 export async function getSigningClient (
   network: Network,
   account: Account
 ): Promise<SigningCosmWasmClient> {
-  const signingPen = await Secp256k1Pen.fromMnemonic(account.mnemonic);
-  const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
-  return new SigningCosmWasmClient(
+  const wallet = await DirectSecp256k1HdWallet.fromMnemonic(account.mnemonic,  { bip39Password: "",
+  hdPaths: [( 0 , amino_1.makeCosmoshubPath)(0)],
+  prefix: "juno",});
+  
+  return  await SigningCosmWasmClient.connectWithSigner(
     network.config.endpoint,
-    account.address,
-    (signBytes) => signingPen.sign(signBytes),
-    network.config.seed ?? txEncryptionSeed,
-    network.config.fees,
-    network.config.broadCastMode
+    wallet
   );
 }
 
-export { ExecuteResult };
+

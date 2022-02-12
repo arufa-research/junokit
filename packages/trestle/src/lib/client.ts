@@ -1,5 +1,5 @@
 
-import { CosmWasmClient,SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { ExecuteResult,CosmWasmClient,SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing"
 import amino_1 from "@cosmjs/amino";
 import { Account, Network } from "../types";
@@ -23,4 +23,4 @@ export async function getSigningClient (
   );
 }
 
-
+export {ExecuteResult};

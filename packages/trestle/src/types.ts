@@ -13,7 +13,7 @@
 // fields), we don't use `extends` as that can interfere with plugin authors
 // trying to augment the config types.
 // Networks config\
-import { BroadcastMode, FeeTable } from "secretjs";
+import { BroadcastMode, FeeTable } from "@cosmjs/cosmwasm-stargate";
 
 import * as types from "./internal/core/params/argument-types";
 
@@ -27,8 +27,26 @@ export interface Coin {
   readonly amount: string
 }
 export interface StdFee {
+  readonly upload:{
+    readonly amount: readonly Coin[]
+    readonly gas: string
+  }
+   readonly init:{
+    readonly amount: readonly Coin[]
+    readonly gas: string
+   } 
+   readonly exec:{
+    readonly amount: readonly Coin[]
+    readonly gas: string
+   }
+   readonly send:{
+    readonly amount: readonly Coin[]
+    readonly gas: string
+   }
   readonly amount: readonly Coin[]
-  readonly gas: string
+    readonly gas: string
+  
+
 }
 
 export interface UserAccount {
@@ -59,7 +77,7 @@ export interface InstantiateInfo {
 
 export interface DeployInfo {
   codeId: number
-  contractCodeHash: string
+  
   deployTimestamp: string
 }
 

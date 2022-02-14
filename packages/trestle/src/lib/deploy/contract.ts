@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import path from "path";
 import { CosmWasmClient,SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing"
-
+import {defaultFees }from "../contants"
 import { PolarContext } from "../../internal/context";
 import { PolarError } from "../../internal/core/errors";
 import { ERRORS } from "../../internal/core/errors-list";
@@ -139,6 +139,7 @@ export class Contract {
   };
 
   constructor (contractName: string) {
+    
     this.contractName = replaceAll(contractName, '-', '_');
     this.codeId = 0;
     this.contractCodeHash = "mock_hash";
@@ -190,18 +191,18 @@ export class Contract {
     if (fs.existsSync(this.checkpointPath) &&
     this.env.runtimeArgs.useCheckpoints === true) {
       this.checkpointData = loadCheckpoint(this.checkpointPath);
-      const contractHash = this.checkpointData[this.env.network.name].deployInfo?.contractCodeHash;
+      //const contractHash = this.checkpointData[this.env.network.name].deployInfo?.contractCodeHash;
       const contractCodeId = this.checkpointData[this.env.network.name].deployInfo?.codeId;
       const contractAddr =
         this.checkpointData[this.env.network.name].instantiateInfo?.contractAddress;
-      this.contractCodeHash = contractHash ?? "mock_hash";
+      //this.contractCodeHash = contractHash ?? "mock_hash";
       this.codeId = contractCodeId ?? 0;
       this.contractAddress = contractAddr ?? "mock_address";
     } else {
       this.checkpointData = {};
     }
 
-    const client = getClient(this.env.network);
+    this.client = getClient(this.env.network);
   }
 
   async parseSchema (): Promise<void> {
@@ -256,17 +257,17 @@ export class Contract {
     const uploadReceipt = await signingClient.upload(
      accountVal.address,
      wasmFileContent,
-     customFees,
+     customFees?.upload ?? defaultFees.upload,
      "this is upload"
     );
     const codeId: number = uploadReceipt.codeId;
-    const contractCodeHash: string =
-      await signingClient.getCodeHashByCodeId(codeId);
+    //const contractCodeHash: string =
+      //await signingClient.getCodeHashByCodeId(codeId);
 
     this.codeId = codeId;
     const deployInfo: DeployInfo = {
       codeId: codeId,
-      contractCodeHash: contractCodeHash,
+      //contractCodeHash: contractCodeHash,
       deployTimestamp: String(new Date())
     };
 
@@ -275,7 +276,7 @@ export class Contract {
         { ...this.checkpointData[this.env.network.name], deployInfo };
       persistCheckpoint(this.checkpointPath, this.checkpointData);
     }
-    this.contractCodeHash = contractCodeHash;
+    //this.contractCodeHash = contractCodeHash;
 
     return deployInfo;
   }
@@ -337,8 +338,8 @@ export class Contract {
       this.codeId,
       initArgs,
       label,
-      customFees,
-      {memo1}
+      customFees?.init ?? defaultFees.init,
+      {}
       );
     this.contractAddress = contract.contractAddress;
 
@@ -397,7 +398,7 @@ export class Contract {
       accountVal.address,
       this.contractAddress,
       msgData,
-      customFees,
+      customFees?.exec??defaultFees.exec,
       "executing",
       transferAmount
       

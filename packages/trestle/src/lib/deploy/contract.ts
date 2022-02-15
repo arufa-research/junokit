@@ -11,10 +11,12 @@ import {
   ARTIFACTS_DIR,
   SCHEMA_DIR
 } from "../../internal/core/project-structure";
+
 import { replaceAll } from "../../internal/util/strings";
 import { compress } from "../../lib/deploy/compress";
 import type {
   Account,
+  Network,
   AnyJson,
   Checkpoints,
   Coin,
@@ -118,10 +120,10 @@ export class Contract {
   readonly responseAbis: Abi[] = [];
 
   private readonly env: PolarRuntimeEnvironment = PolarContext.getPolarContext().getRuntimeEnv();
-  private readonly client: CosmWasmClient;
+  private  client?: CosmWasmClient;
 
   public codeId: number;
-  public contractCodeHash: string;
+  //public contractCodeHash: string;
   public contractAddress: string;
   private checkpointData: Checkpoints;
   private readonly checkpointPath: string;
@@ -137,12 +139,12 @@ export class Contract {
   public responses: {
     [name: string]: AbiParam[]
   };
-
+  
   constructor (contractName: string) {
-    
+   
     this.contractName = replaceAll(contractName, '-', '_');
     this.codeId = 0;
-    this.contractCodeHash = "mock_hash";
+    //this.contractCodeHash = "mock_hash";
     this.contractAddress = "mock_address";
     this.contractPath = path.join(ARTIFACTS_DIR, "contracts", `${this.contractName}_compressed.wasm`);
 
@@ -179,7 +181,7 @@ export class Contract {
       const responseAbi = new Abi(responseSchemaJson);
       this.responseAbis.push(responseAbi);
     }
-
+    
     this.query = {};
     this.tx = {};
     this.responses = {};
@@ -201,8 +203,15 @@ export class Contract {
     } else {
       this.checkpointData = {};
     }
-
-    this.client = getClient(this.env.network);
+    
+    //this.client =  this.providing(this.env.network);
+    
+  }
+  
+  
+  
+  async setUpclient (){
+   this.client =  await getClient(this.env.network);
   }
 
   async parseSchema (): Promise<void> {
@@ -317,11 +326,11 @@ export class Contract {
   ): Promise<InstantiateInfo> {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
-    if (this.contractCodeHash === "mock_hash") {
+   /* if (this.contractCodeHash === "mock_hash") {
       throw new PolarError(ERRORS.GENERAL.CONTRACT_NOT_DEPLOYED, {
         param: this.contractName
       });
-    }
+    }*/
     const info = this.checkpointData[this.env.network.name]?.instantiateInfo;
     if (info) {
       console.log("Warning: contract already instantiated, using checkpoints");
@@ -370,7 +379,7 @@ export class Contract {
     const msgData: { [key: string]: Record<string, unknown> } = {};
     msgData[methodName] = callArgs;
     console.log(this.contractAddress, msgData);
-    return await this.client.queryContractSmart(this.contractAddress, msgData);
+    return await this.client?.queryContractSmart(this.contractAddress, msgData);
   }
 
   async executeMsg (

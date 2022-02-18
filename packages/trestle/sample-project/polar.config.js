@@ -1,24 +1,24 @@
 const accounts = [
   {
     name: 'account_0',
-    address: 'secret1l0g5czqw7vjvd20ezlk4x7ndgyn0rx5aumr8gk',
-    mnemonic: 'snack cable erode art lift better october drill hospital clown erase address'
+    address: 'juno1evpfprq0mre5n0zysj6cf74xl6psk96gus7dp5',
+    mnemonic: 'omit sphere nurse rib tribe suffer web account catch brain hybrid zero act gold coral shell voyage matter nose stick crucial fog judge text'
   },
   {
     name: 'account_1',
-    address: 'secret1ddfphwwzqtkp8uhcsc53xdu24y9gks2kug45zv',
-    mnemonic: 'sorry object nation also century glove small tired parrot avocado pulp purchase'
+    address: 'juno1njamu5g4n0vahggrxn4ma2s4vws5x4w3u64z8h',
+    mnemonic: 'student prison fresh dwarf ecology birth govern river tissue wreck hope autumn basic trust divert dismiss buzz play pistol focus long armed flag bicycle'
   }
 ];
 
 const networks = {
   localnet: {
-    endpoint: 'http://localhost:1337/'
+    endpoint: 'http://localhost:26657/'
   },
-  // Pulsar-2
+  // uni-2
   testnet: {
-    endpoint: 'http://testnet.securesecrets.org:1317/',
-    chainId: 'pulsar-2',
+    endpoint: 'https://rpc.uni.junonetwork.io/',
+    chainId: 'uni-2',
     trustNode: true,
     keyringBackend: 'test',
     accounts: accounts,

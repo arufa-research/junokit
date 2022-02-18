@@ -1,20 +1,21 @@
 const { Contract, getAccountByName, getLogs } = require("secret-polar");
 
 async function run () {
-  const contract_owner = getAccountByName("account_0");
-  const contract = new Contract("sample-project");
+  const contract_owner = getAccountByName("account_1");
+  const contract = new Contract("cw_escrow");
+  await contract.setUpclient ();
   await contract.parseSchema();
 
   const deploy_response = await contract.deploy(
     contract_owner,
     { // custom fees
-      amount: [{ amount: "750000", denom: "uscrt" }],
+      amount: [{ amount: "750000", denom: "ujunox" }],
       gas: "3000000",
     }
   );
   console.log(deploy_response);
 
-  const contract_info = await contract.instantiate({"count": 102}, "deploy test", contract_owner);
+  const contract_info = await contract.instantiate({"arbiter": "juno1njamu5g4n0vahggrxn4ma2s4vws5x4w3u64z8h","recipient":"juno1njamu5g4n0vahggrxn4ma2s4vws5x4w3u64z8h","end_height": 1000000000000,/*"end_time": 0*/}, "deploy test", contract_owner);
   console.log(contract_info);
 
   // use below line if contract initiation done using another contract
@@ -29,9 +30,9 @@ async function run () {
   const response = await contract.query.get_count();
   console.log(response);
 
-  const transferAmount = [{"denom": "uscrt", "amount": "15000000"}] // 15 SCRT
+  const transferAmount = [{"denom": "ujunox", "amount": "15000000"}] // 15 SCRT
   const customFees = { // custom fees
-    amount: [{ amount: "750000", denom: "uscrt" }],
+    amount: [{ amount: "750000", denom: "ujunox" }],
     gas: "3000000",
   }
   const ex_response = await contract.tx.increment(

@@ -1,20 +1,22 @@
 export const POLAR_NAME = "polar";
 
 export const defaultFees = {
-  upload: {
-    amount: [{ amount: "250000", denom: "uscrt" }],
-    gas: String(1000000)
-  },
+  upload : {amount: [{ amount: "2000000", denom: "ujunox" }],
+    gas: "20000000",
+     },
+  
   init: {
-    amount: [{ amount: "125000", denom: "uscrt" }],
-    gas: String(500000)
-  },
+    amount: [{ amount: "500000", denom: "ujunox" }],
+    gas: "500000",
+    },
+  
   exec: {
-    amount: [{ amount: "50000", denom: "uscrt" }],
-    gas: String(200000)
-  },
+    amount: [{ amount: "500000", denom: "ujunox" }],
+    gas: "500000",
+    },
+  
   send: {
-    amount: [{ amount: "20000", denom: "uscrt" }],
-    gas: String(80000)
-  }
+    amount: [{ amount: "80000", denom: "ujunox" }],
+    gas: "80000",
+    },
 };

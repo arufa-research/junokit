@@ -2,6 +2,7 @@
   "name": "trestle-af",
   "version": "0.0.1",
   "main": "dist/src/index.js",
+  "repository": "https://github.com/arufa-research/trestle.git",
   "authors": [
     {
       "name": "Coco sha",
@@ -35,7 +36,7 @@
   },
   "types": "dist/src/index.d.ts",
   "bin": {
-    "polar": "dist/src/internal/cli/cli.js"
+    "trestle": "dist/src/internal/cli/cli.js"
   },
   "engines": {
     "node": ">=14.11.0"

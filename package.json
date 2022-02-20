@@ -1,6 +1,6 @@
 {
   "name": "trestle",
-  "description": "Trestle is a development environment to compile, deploy, test, run scrt contracts on different networks.",
+  "description": "Trestle is a development environment to compile, deploy, test, run juno contracts on different networks.",
   "repository": "https://github.com/arufa-research/trestle.git",
   "author": "https://github.com/coco-sha",
   "license": "MIT",

@@ -13,7 +13,7 @@ export class UserAccountI implements UserAccount {
 
   constructor (account: Account, env: PolarRuntimeEnvironment) {
     this.account = account;
-    this.client = getClient(env.network);
+    this.client = await getClient(env.network);
   }
 
   async getAccountInfo (): Promise<WasmAccount | undefined> {

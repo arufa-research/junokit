@@ -1,45 +1,52 @@
-import { Account as WasmAccount, CosmWasmClient } from "secretjs";
-import { PubKey } from "secretjs/types/types";
+import { Pubkey } from "@cosmjs/amino";
+import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { Account as WasmAccount } from "@cosmjs/stargate";
 
 import { PolarContext } from "../internal/context";
 import { PolarError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
-import { Account, Coin, PolarRuntimeEnvironment, UserAccount } from "../types";
+import { Account, Coin, Network, PolarRuntimeEnvironment, UserAccount } from "../types";
 import { getClient } from "./client";
 
+// TODO: Throw error if client is not initialized
 export class UserAccountI implements UserAccount {
   account: Account;
-  client: CosmWasmClient;
+  client?: CosmWasmClient;
+  network: Network;
 
   constructor (account: Account, env: PolarRuntimeEnvironment) {
     this.account = account;
-    this.client = await getClient(env.network);
+    this.network = env.network;
   }
 
-  async getAccountInfo (): Promise<WasmAccount | undefined> {
-    return await this.client.getAccount(this.account.address);
+  async setupClient (): Promise<void> {
+    this.client = await getClient(this.network);
   }
 
-  async getBalance (): Promise<readonly Coin[]> {
-    const info = await this.client.getAccount(this.account.address);
-    if (info?.balance === undefined) {
+  async getAccountInfo (): Promise<WasmAccount | undefined | null> {
+    return await this.client?.getAccount(this.account.address);
+  }
+
+  async getBalance (searchDenom: string): Promise<Coin> {
+    const info = await this.client?.getBalance(this.account.address, searchDenom);
+    if (info === undefined) {
       throw new PolarError(ERRORS.GENERAL.BALANCE_UNDEFINED);
     }
-    return info?.balance;
+    return info;
   }
 
-  async getPublicKey (): Promise<PubKey | undefined> {
-    const info = await this.client.getAccount(this.account.address);
+  async getPublicKey (): Promise<Pubkey | undefined | null> {
+    const info = await this.client?.getAccount(this.account.address);
     return info?.pubkey;
   }
 
   async getAccountNumber (): Promise<number | undefined> {
-    const info = await this.client.getAccount(this.account.address);
+    const info = await this.client?.getAccount(this.account.address);
     return info?.accountNumber;
   }
 
   async getSequence (): Promise<number | undefined> {
-    const info = await this.client.getAccount(this.account.address);
+    const info = await this.client?.getAccount(this.account.address);
     return info?.sequence;
   }
 }

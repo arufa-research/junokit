@@ -1,9 +1,9 @@
+import { CosmWasmClient, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import chalk from "chalk";
 import fs from "fs-extra";
 import path from "path";
-import { CosmWasmClient,SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing"
-import {defaultFees }from "../contants"
+
 import { PolarContext } from "../../internal/context";
 import { PolarError } from "../../internal/core/errors";
 import { ERRORS } from "../../internal/core/errors-list";
@@ -11,24 +11,24 @@ import {
   ARTIFACTS_DIR,
   SCHEMA_DIR
 } from "../../internal/core/project-structure";
-
 import { replaceAll } from "../../internal/util/strings";
 import { compress } from "../../lib/deploy/compress";
 import type {
   Account,
-  Network,
   AnyJson,
   Checkpoints,
   Coin,
   ContractFunction,
   DeployInfo,
   InstantiateInfo,
+  Network,
   PolarRuntimeEnvironment,
   StdFee,
   UserAccount
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
-import {getClient,  ExecuteResult, getSigningClient } from "../client";
+import { ExecuteResult, getClient, getSigningClient } from "../client";
+import { defaultFees } from "../contants";
 import { Abi, AbiParam } from "./abi";
 
 function checkCallArgs (
@@ -120,10 +120,10 @@ export class Contract {
   readonly responseAbis: Abi[] = [];
 
   private readonly env: PolarRuntimeEnvironment = PolarContext.getPolarContext().getRuntimeEnv();
-  private  client?: CosmWasmClient;
+  private client?: CosmWasmClient;
 
   public codeId: number;
-  //public contractCodeHash: string;
+  // public contractCodeHash: string;
   public contractAddress: string;
   private checkpointData: Checkpoints;
   private readonly checkpointPath: string;
@@ -139,12 +139,11 @@ export class Contract {
   public responses: {
     [name: string]: AbiParam[]
   };
-  
+
   constructor (contractName: string) {
-   
     this.contractName = replaceAll(contractName, '-', '_');
     this.codeId = 0;
-    //this.contractCodeHash = "mock_hash";
+    // this.contractCodeHash = "mock_hash";
     this.contractAddress = "mock_address";
     this.contractPath = path.join(ARTIFACTS_DIR, "contracts", `${this.contractName}_compressed.wasm`);
 
@@ -181,7 +180,7 @@ export class Contract {
       const responseAbi = new Abi(responseSchemaJson);
       this.responseAbis.push(responseAbi);
     }
-    
+
     this.query = {};
     this.tx = {};
     this.responses = {};
@@ -191,27 +190,20 @@ export class Contract {
     // file exist load it else create new checkpoint
     // skip checkpoints if test command is run, or skip-checkpoints is passed
     if (fs.existsSync(this.checkpointPath) &&
-    this.env.runtimeArgs.useCheckpoints === true) {
+      this.env.runtimeArgs.useCheckpoints === true) {
       this.checkpointData = loadCheckpoint(this.checkpointPath);
-      //const contractHash = this.checkpointData[this.env.network.name].deployInfo?.contractCodeHash;
       const contractCodeId = this.checkpointData[this.env.network.name].deployInfo?.codeId;
       const contractAddr =
         this.checkpointData[this.env.network.name].instantiateInfo?.contractAddress;
-      //this.contractCodeHash = contractHash ?? "mock_hash";
       this.codeId = contractCodeId ?? 0;
       this.contractAddress = contractAddr ?? "mock_address";
     } else {
       this.checkpointData = {};
     }
-    
-    //this.client =  this.providing(this.env.network);
-    
   }
-  
-  
-  
-  async setUpclient (){
-   this.client =  await getClient(this.env.network);
+
+  async setUpclient (): Promise<void> {
+    this.client = await getClient(this.env.network);
   }
 
   async parseSchema (): Promise<void> {
@@ -264,19 +256,16 @@ export class Contract {
 
     const signingClient = await getSigningClient(this.env.network, accountVal);
     const uploadReceipt = await signingClient.upload(
-     accountVal.address,
-     wasmFileContent,
-     customFees?.upload ?? defaultFees.upload,
-     "this is upload"
+      accountVal.address,
+      wasmFileContent,
+      customFees?.upload ?? defaultFees.upload,
+      "this is upload"
     );
     const codeId: number = uploadReceipt.codeId;
-    //const contractCodeHash: string =
-      //await signingClient.getCodeHashByCodeId(codeId);
 
     this.codeId = codeId;
     const deployInfo: DeployInfo = {
       codeId: codeId,
-      //contractCodeHash: contractCodeHash,
       deployTimestamp: String(new Date())
     };
 
@@ -285,8 +274,6 @@ export class Contract {
         { ...this.checkpointData[this.env.network.name], deployInfo };
       persistCheckpoint(this.checkpointPath, this.checkpointData);
     }
-    //this.contractCodeHash = contractCodeHash;
-
     return deployInfo;
   }
 
@@ -326,18 +313,13 @@ export class Contract {
   ): Promise<InstantiateInfo> {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
-   /* if (this.contractCodeHash === "mock_hash") {
-      throw new PolarError(ERRORS.GENERAL.CONTRACT_NOT_DEPLOYED, {
-        param: this.contractName
-      });
-    }*/
     const info = this.checkpointData[this.env.network.name]?.instantiateInfo;
     if (info) {
       console.log("Warning: contract already instantiated, using checkpoints");
       return info;
     }
     const signingClient = await getSigningClient(this.env.network, accountVal);
-    const memo1="instantiating";
+    const memo1 = "instantiating";
     const initTimestamp = String(new Date());
     label = (this.env.runtimeArgs.command === "test")
       ? `deploy ${this.contractName} ${initTimestamp}` : label;
@@ -349,7 +331,7 @@ export class Contract {
       label,
       customFees?.init ?? defaultFees.init,
       {}
-      );
+    );
     this.contractAddress = contract.contractAddress;
 
     const instantiateInfo: InstantiateInfo = {
@@ -407,10 +389,10 @@ export class Contract {
       accountVal.address,
       this.contractAddress,
       msgData,
-      customFees?.exec??defaultFees.exec,
+      customFees?.exec ?? defaultFees.exec,
       "executing",
       transferAmount
-      
+
     );
   }
 }

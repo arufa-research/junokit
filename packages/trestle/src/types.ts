@@ -13,8 +13,6 @@
 // fields), we don't use `extends` as that can interfere with plugin authors
 // trying to augment the config types.
 // Networks config\
-import { BroadcastMode, FeeTable } from "@cosmjs/cosmwasm-stargate";
-
 import * as types from "./internal/core/params/argument-types";
 
 export interface Account {
@@ -22,36 +20,36 @@ export interface Account {
   address: string
   mnemonic: string
 }
+
 export interface Coin {
   readonly denom: string
   readonly amount: string
 }
+
 export interface StdFee {
-  readonly upload:{
+  readonly upload: {
     readonly amount: readonly Coin[]
     readonly gas: string
   }
-   readonly init:{
+  readonly init: {
     readonly amount: readonly Coin[]
     readonly gas: string
-   } 
-   readonly exec:{
+  }
+  readonly exec: {
     readonly amount: readonly Coin[]
     readonly gas: string
-   }
-   readonly send:{
+  }
+  readonly send: {
     readonly amount: readonly Coin[]
     readonly gas: string
-   }
+  }
   readonly amount: readonly Coin[]
-    readonly gas: string
-  
-
+  readonly gas: string
 }
 
 export interface UserAccount {
   account: Account
-  getBalance: () => Promise<readonly Coin[]>
+  getBalance: (searchDenom: string) => Promise<Coin>
 }
 
 export interface ContractInfo {
@@ -77,7 +75,7 @@ export interface InstantiateInfo {
 
 export interface DeployInfo {
   codeId: number
-  
+
   deployTimestamp: string
 }
 
@@ -89,8 +87,8 @@ export interface PolarNetworkUserConfig {
   accounts: PolarNetworkAccountsUserConfig
   gasLimit?: string | number
   seed?: Uint8Array
-  broadCastMode?: BroadcastMode
-  fees?: Partial<FeeTable>
+  broadCastMode?: string
+  fees?: Partial<StdFee>
 }
 
 export interface NetworksUserConfig {

@@ -5,7 +5,7 @@ import { getPackageJson } from "../internal/util/packageInfo";
 import { PolarRuntimeEnvironment } from "../types";
 import { TASK_HELP } from "./task-names";
 
-const POLAR_NAME = "polar";
+const TRESTLE_NAME = "trestle";
 export default function (): void {
   task(TASK_HELP, "Prints this message")
     .addOptionalPositionalParam(
@@ -20,7 +20,7 @@ async function help (
 ): Promise<void> {
   const packageJson = await getPackageJson();
   const helpPrinter = new HelpPrinter(
-    POLAR_NAME,
+    TRESTLE_NAME,
     packageJson.version,
     POLAR_PARAM_DEFINITIONS,
     env.tasks

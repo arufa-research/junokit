@@ -23,7 +23,7 @@ import { isSetupTask } from "../core/tasks/builtin-tasks";
 import { getPackageJson, PackageJson } from "../util/packageInfo";
 import { ArgumentsParser } from "./arguments-parser";
 
-const POLAR_NAME = "polar";
+const TRESTLE_NAME = "trestle";
 const log = debug("polar:core:cli");
 
 async function printVersionMessage (packageJson: PackageJson): Promise<void> {
@@ -54,7 +54,7 @@ function printStackTraces (showStackTraces: boolean, error: PolarError): void {
   if (showStackTraces) {
     printErrRecur(error);
   } else {
-    console.error(`For more info run ${POLAR_NAME} with --show-stack-traces or add --help to display task-specific help.`);
+    console.error(`For more info run ${TRESTLE_NAME} with --show-stack-traces or add --help to display task-specific help.`);
   }
 }
 

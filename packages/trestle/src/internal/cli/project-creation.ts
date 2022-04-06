@@ -4,7 +4,7 @@ import fsExtra from "fs-extra";
 import os from "os";
 import path from "path";
 
-import { POLAR_NAME } from "../../lib/contants";
+import { TRESTLE_NAME } from "../../lib/contants";
 import { PolarError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { ExecutionMode, getExecutionMode } from "../core/execution-mode";
@@ -19,7 +19,7 @@ export async function printWelcomeMessage (): Promise<void> {
   const packageJson = await getPackageJson();
 
   console.log(
-    chalk.cyan(`★ Welcome to ${POLAR_NAME} v${packageJson.version}`));
+    chalk.cyan(`★ Welcome to ${TRESTLE_NAME} v${packageJson.version}`));
 }
 
 function copySampleProject (projectName: string): void {
@@ -60,8 +60,8 @@ export function printSuggestedCommands (projectName: string): void {
 
   console.log(`Begin by typing:`);
   console.log(`  cd ${projectName}`);
-  console.log(`  ${POLAR_NAME} help`);
-  console.log(`  ${POLAR_NAME} compile`);
+  console.log(`  ${TRESTLE_NAME} help`);
+  console.log(`  ${TRESTLE_NAME} compile`);
 }
 
 async function printPluginInstallationInstructions (): Promise<void> {

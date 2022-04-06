@@ -1,4 +1,3 @@
-
 import amino_1 from "@cosmjs/amino";
 import { CosmWasmClient, ExecuteResult, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
@@ -9,6 +8,7 @@ export async function getClient (network: Network): Promise<CosmWasmClient> {
   return await CosmWasmClient.connect(network.config.endpoint);
 }
 
+// TODO: Check hdPaths
 export async function getSigningClient (
   network: Network,
   account: Account

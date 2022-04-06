@@ -14,7 +14,6 @@ export async function getSigningClient (
   account: Account
 ): Promise<SigningCosmWasmClient> {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(account.mnemonic, {
-    bip39Password: "",
     hdPaths: [(amino_1.makeCosmoshubPath)(0)],
     prefix: "juno"
   });

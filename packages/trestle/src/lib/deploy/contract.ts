@@ -147,9 +147,9 @@ export class Contract {
     this.contractAddress = "mock_address";
     this.contractPath = path.join(ARTIFACTS_DIR, "contracts", `${this.contractName}_compressed.wasm`);
 
-    this.initSchemaPath = path.join(SCHEMA_DIR, this.contractName, "init_msg.json");
+    this.initSchemaPath = path.join(SCHEMA_DIR, this.contractName, "instantiate_msg.json");
     this.querySchemaPath = path.join(SCHEMA_DIR, this.contractName, "query_msg.json");
-    this.executeSchemaPath = path.join(SCHEMA_DIR, this.contractName, "handle_msg.json");
+    this.executeSchemaPath = path.join(SCHEMA_DIR, this.contractName, "execute_msg.json");
 
     for (const file of fs.readdirSync(path.join(SCHEMA_DIR, this.contractName))) {
       if (file.split('.')[0].split('_')[1] !== "response") { // *_response.json

@@ -5,6 +5,7 @@ import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Account, Network } from "../types";
 
 export async function getClient (network: Network): Promise<CosmWasmClient> {
+  console.log("Endpoint: ", network.config.endpoint);
   return await CosmWasmClient.connect(network.config.endpoint);
 }
 

@@ -6,6 +6,8 @@ async function run () {
   await contract.setUpclient ();
   await contract.parseSchema();
 
+  console.log("Client setup done!! ");
+
   const deploy_response = await contract.deploy(
     contract_owner,
     { // custom fees

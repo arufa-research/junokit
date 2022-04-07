@@ -17,7 +17,7 @@ const networks = {
   },
   // uni-2
   testnet: {
-    endpoint: 'https://rpc.uni.junonetwork.io/',
+    endpoint: 'https://rpc.uni.juno.deuslabs.fi/',//https://lcd.uni.juno.deuslabs.fi/
     chainId: 'uni-2',
     trustNode: true,
     keyringBackend: 'test',
@@ -61,6 +61,6 @@ module.exports = {
     timeout: 60000
   },
   rust: {
-    version: "1.55.0",
+    version: "1.59.0",
   }
 };

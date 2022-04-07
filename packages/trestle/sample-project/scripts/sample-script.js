@@ -1,4 +1,4 @@
-const { Contract, getAccountByName, getLogs } = require("secret-polar");
+const { Contract, getAccountByName, getLogs } = require("juno-trestle");
 
 async function run () {
   const contract_owner = getAccountByName("account_1");

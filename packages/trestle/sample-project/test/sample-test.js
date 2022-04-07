@@ -1,5 +1,5 @@
 const { expect, use } = require("chai");
-const { Contract, getAccountByName, polarChai } = require("secret-polar");
+const { Contract, getAccountByName, polarChai } = require("juno-trestle");
 
 use(polarChai);
 

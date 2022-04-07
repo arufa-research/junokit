@@ -1,5 +1,5 @@
 {
-  "name": "trestle-af",
+  "name": "juno-trestle",
   "version": "0.0.1",
   "main": "dist/src/index.js",
   "repository": "https://github.com/arufa-research/trestle.git",

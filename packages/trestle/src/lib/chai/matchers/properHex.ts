@@ -9,3 +9,4 @@ export function supportProperHex (Assertion: Chai.AssertionStatic): void {
       subject);
   });
 }
+// TODO: rename polar to trestle

@@ -7,8 +7,8 @@ export const defaultFees = {
   },
 
   init: {
-    amount: [{ amount: "5000000", denom: "ujunox" }],
-    gas: "5000000"
+    amount: [{ amount: "500000", denom: "ujunox" }],
+    gas: "500000"
   },
 
   exec: {

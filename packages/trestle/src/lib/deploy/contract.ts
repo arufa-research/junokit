@@ -1,5 +1,4 @@
-import { CosmWasmClient, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import chalk from "chalk";
 import fs from "fs-extra";
 import path from "path";
@@ -258,7 +257,7 @@ export class Contract {
     const uploadReceipt = await signingClient.upload(
       accountVal.address,
       wasmFileContent,
-      customFees?.upload ?? defaultFees.upload,
+      customFees ?? defaultFees.upload,
       "this is upload"
     );
     const codeId: number = uploadReceipt.codeId;
@@ -329,7 +328,7 @@ export class Contract {
       this.codeId,
       initArgs,
       label,
-      customFees?.init ?? defaultFees.init,
+      customFees ?? defaultFees.init,
       {}
     );
     this.contractAddress = contract.contractAddress;
@@ -389,7 +388,7 @@ export class Contract {
       accountVal.address,
       this.contractAddress,
       msgData,
-      customFees?.exec ?? defaultFees.exec,
+      customFees ?? defaultFees.exec,
       "executing",
       transferAmount
 

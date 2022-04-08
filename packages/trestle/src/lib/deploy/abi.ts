@@ -1,6 +1,5 @@
-import { ExecuteMsgNode, ParseNode, ParseSchema, parseSchema, rustRepr } from "parse-cosmwasm-schema";
-
 import type { AnyJson } from '../../types';
+import { ExecuteMsgNode, ParseNode, ParseSchema, parseSchema, rustRepr } from "../schema/parse-schema";
 
 // TODO: add types here when rust types parsing is added later
 export interface AbiParam {

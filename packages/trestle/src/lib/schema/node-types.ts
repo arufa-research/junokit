@@ -52,7 +52,7 @@ export type NodeValue<T> = {
   description?: string
 } & T;
 
-export interface NodeDef<T extends NodeType, V = Record<string, never>> {
+export interface NodeDef<T extends NodeType, V = Record<string, unknown>> {
   type: T
   value: NodeValue<V>
   ref?: string

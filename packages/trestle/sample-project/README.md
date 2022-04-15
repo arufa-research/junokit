@@ -11,11 +11,11 @@ The contract is created with a parameter for the initial count and allows subseq
 # Compiling contracts
 
 Use this command to compile your contracts: 
-`polar compile`
+`trestle compile`
 
 # Run script
 
-`polar run scripts/sample-script.js`
+`trestle run scripts/sample-script.js`
 
 # Deploying contracts
 
@@ -36,7 +36,7 @@ Note: You can check out your contract information in `deploy_response`.
 
 # Interact with contracts
 
-`polar` will load functions using schema, you can call contract functions using `contract.tx`(to execute transactions) and `contract.query`(to query from contract)
+`trestle` will load functions using schema, you can call contract functions using `contract.tx`(to execute transactions) and `contract.query`(to query from contract)
 ```js
 // To interact with your contract
 // Execute contract function

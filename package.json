@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "yarn workspaces run build",
-    "watch": "tsc --build --watch packages/polar",
+    "watch": "tsc --build --watch packages/trestle",
     "test": "yarn workspaces run test",
     "lint": "yarn workspaces -p run lint",
     "lint:fix": "yarn workspaces -p run lint:fix",

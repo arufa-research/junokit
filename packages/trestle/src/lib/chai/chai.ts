@@ -10,7 +10,7 @@ import { supportResponse } from './matchers/response';
 import { supportReverted } from './matchers/revert';
 import { supportRevertedWith } from './matchers/revertWith';
 
-export function polarChai (chai: Chai.ChaiStatic, utils: Chai.ChaiUtils): void {
+export function trestleChai (chai: Chai.ChaiStatic, utils: Chai.ChaiUtils): void {
   supportProperHex(chai.Assertion);
   supportProperAddress(chai.Assertion);
   supportProperJunoAddress(chai.Assertion);

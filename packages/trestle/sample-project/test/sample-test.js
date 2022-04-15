@@ -1,7 +1,7 @@
 const { expect, use } = require("chai");
-const { Contract, getAccountByName, polarChai } = require("juno-trestle");
+const { Contract, getAccountByName, trestleChai } = require("juno-trestle");
 
-use(polarChai);
+use(trestleChai);
 
 describe("sample_project", () => {
   async function setup() {

@@ -26,10 +26,10 @@ jobs:
         restore-keys: |
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
-    - name: Install polar
-      run: npm i -g secret-polar
+    - name: Install trestle
+      run: npm i -g juno-trestle
     - name: Run commands
-      run: polar help
-    - run: polar install
-    - run: polar init blue
-    - run: cd blue && polar compile
+      run: trestle help
+    - run: trestle install
+    - run: trestle init blue
+    - run: cd blue && trestle compile

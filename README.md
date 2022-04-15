@@ -10,11 +10,11 @@ The minimum packages/requirements are as follows:
 - Yarn v1.22+ or NPM `v6.0+**
 - Connection to an Juno node. 
 
-## Install polar
+## Install trestle
 
 ### Installation from released version
 
-To install polar globally in your system you can use:
+To install trestle globally in your system you can use:
   - Using Yarn: `yarn global add juno-trestle`
   - Using NPM: `npm install -g juno-trestle` // or trestle-af
 

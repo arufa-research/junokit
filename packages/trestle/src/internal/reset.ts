@@ -1,7 +1,7 @@
 /**
- * This function resets the polar context.
+ * This function resets the Trestle context.
  *
- * This doesn't unload any loaded Polar plugin, so those have to be unloaded
+ * This doesn't unload any loaded Trestle plugin, so those have to be unloaded
  * manually with `unloadModule`.
  */
 import { TrestleContext } from "./context";
@@ -26,7 +26,7 @@ export function resetTrestleContext (): void {
       try {
         configPath = getUserConfigPath();
       } catch (error) {
-        // We weren't in a polar project
+        // We weren't in a Trestle project
       }
 
       if (configPath !== undefined) {
@@ -36,7 +36,7 @@ export function resetTrestleContext (): void {
     TrestleContext.deleteTrestleContext();
   }
 
-  // Unload all the polar's entry-points.
+  // Unload all the Trestle's entry-points.
   unloadModule("../register");
   unloadModule("./cli/cli");
   unloadModule("./lib/lib");

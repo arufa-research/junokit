@@ -2,7 +2,7 @@
 import { assert } from "chai";
 
 import {
-  TrestleError, PolarPluginError
+  TrestleError, TrestlePluginError
 } from "../../../src/internal/core/errors";
 import {
   ERROR_RANGES,
@@ -30,7 +30,7 @@ describe("TrestleError", () => {
     it("Should return false for everything else", () => {
       assert.isFalse(TrestleError.isTrestleError(new Error()));
       assert.isFalse(
-        TrestleError.isTrestleError(new PolarPluginError("asd", "asd"))
+        TrestleError.isTrestleError(new TrestlePluginError("asd", "asd"))
       );
       assert.isFalse(TrestleError.isTrestleError(undefined));
       assert.isFalse(TrestleError.isTrestleError(null));
@@ -201,28 +201,28 @@ describe("Error descriptors", () => {
   });
 });
 
-describe("PolarPluginError", () => {
+describe("TrestlePluginError", () => {
   describe("Type guard", () => {
-    it("Should return true for PolarPluginError", () => {
+    it("Should return true for TrestlePluginError", () => {
       assert.isTrue(
-        PolarPluginError.isPolarPluginError(
-          new PolarPluginError("asd", "asd")
+        TrestlePluginError.isTrestlePluginError(
+          new TrestlePluginError("asd", "asd")
         )
       );
     });
 
     it("Should return false for everything else", () => {
-      assert.isFalse(PolarPluginError.isPolarPluginError(new Error()));
+      assert.isFalse(TrestlePluginError.isTrestlePluginError(new Error()));
       assert.isFalse(
-        PolarPluginError.isPolarPluginError(
+        TrestlePluginError.isTrestlePluginError(
           new TrestleError(ERRORS.GENERAL.NOT_INSIDE_PROJECT)
         )
       );
-      assert.isFalse(PolarPluginError.isPolarPluginError(undefined));
-      assert.isFalse(PolarPluginError.isPolarPluginError(null));
-      assert.isFalse(PolarPluginError.isPolarPluginError(123));
-      assert.isFalse(PolarPluginError.isPolarPluginError("123"));
-      assert.isFalse(PolarPluginError.isPolarPluginError({ asd: 123 }));
+      assert.isFalse(TrestlePluginError.isTrestlePluginError(undefined));
+      assert.isFalse(TrestlePluginError.isTrestlePluginError(null));
+      assert.isFalse(TrestlePluginError.isTrestlePluginError(123));
+      assert.isFalse(TrestlePluginError.isTrestlePluginError("123"));
+      assert.isFalse(TrestlePluginError.isTrestlePluginError({ asd: 123 }));
     });
   });
 
@@ -232,7 +232,7 @@ describe("PolarPluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new PolarPluginError(message, parent);
+        const error = new TrestlePluginError(message, parent);
 
         assert.equal(error.message, message);
         assert.equal(error.parent, parent);
@@ -241,7 +241,7 @@ describe("PolarPluginError", () => {
       it("Should work without a parent error", () => {
         const message = "m2";
 
-        const error = new PolarPluginError(message);
+        const error = new TrestlePluginError(message);
 
         assert.equal(error.message, message);
         assert.isUndefined(error.parent);
@@ -251,7 +251,7 @@ describe("PolarPluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new PolarPluginError(message, parent);
+        const error = new TrestlePluginError(message, parent);
 
         // This is being called from mocha, so that would be used as plugin name
         assert.equal(error.pluginName, "mocha");
@@ -261,9 +261,9 @@ describe("PolarPluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new PolarPluginError(message, parent);
+        const error = new TrestlePluginError(message, parent);
 
-        assert.instanceOf(error, PolarPluginError);
+        assert.instanceOf(error, TrestlePluginError);
       });
     });
 
@@ -273,7 +273,7 @@ describe("PolarPluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new PolarPluginError(plugin, message, parent);
+        const error = new TrestlePluginError(plugin, message, parent);
 
         assert.equal(error.pluginName, plugin);
         assert.equal(error.message, message);
@@ -284,7 +284,7 @@ describe("PolarPluginError", () => {
         const plugin = "p2";
         const message = "m2";
 
-        const error = new PolarPluginError(plugin, message);
+        const error = new TrestlePluginError(plugin, message);
 
         assert.equal(error.pluginName, plugin);
         assert.equal(error.message, message);
@@ -296,9 +296,9 @@ describe("PolarPluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new PolarPluginError(plugin, message, parent);
+        const error = new TrestlePluginError(plugin, message, parent);
 
-        assert.instanceOf(error, PolarPluginError);
+        assert.instanceOf(error, TrestlePluginError);
       });
     });
   });

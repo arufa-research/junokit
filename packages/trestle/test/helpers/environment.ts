@@ -24,7 +24,7 @@ export const defaultNetCfg: TrestleNetworkConfig = {
 };
 
 export function useEnvironment (
-  beforeEachFn?: (polarRuntimeEnv: TrestleRuntimeEnvironment) => PromiseAny
+  beforeEachFn?: (trestleRuntimeEnv: TrestleRuntimeEnvironment) => PromiseAny
 ): void {
   beforeEach("Load environment", async function () {
     this.env = await getEnv(defaultNetCfg);
@@ -60,7 +60,7 @@ export async function getEnv (
   );
 
   if (runtimeArgs.verbose) {
-    debug.enable("polar*");
+    debug.enable("trestle*");
   }
 
   const config = await loadConfigAndTasks(runtimeArgs);

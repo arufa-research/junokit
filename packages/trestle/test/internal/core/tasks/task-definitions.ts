@@ -160,7 +160,7 @@ describe("SimpleTaskDefinition", () => {
       });
     });
 
-    describe("param name clashes with polar's ones", () => {
+    describe("param name clashes with trestle's ones", () => {
       function testClashWith (name: string): void {
         expectTrestleError(
           () => taskDefinition.addParam(name),
@@ -193,9 +193,9 @@ describe("SimpleTaskDefinition", () => {
       }
 
       it("Should throw if a param clashes", () => {
-        // This is constructed to force a type error here if a polar arg is
+        // This is constructed to force a type error here if a trestle arg is
         // added and not tested.
-        const polarArgs: RuntimeArgs = {
+        const trestleArgs: RuntimeArgs = {
           showStackTraces: true,
           network: "",
           version: false,
@@ -203,7 +203,7 @@ describe("SimpleTaskDefinition", () => {
           verbose: false
         };
 
-        Object.keys(polarArgs).forEach((name) => testClashWith(name));
+        Object.keys(trestleArgs).forEach((name) => testClashWith(name));
       });
     });
 

@@ -77,7 +77,7 @@ export class Environment implements TrestleRuntimeEnvironment {
    * @param name The task's name.
    * @param taskArguments A map of task's arguments.
    *
-   * @throws a POLAR303 if there aren't any defined tasks with the given name.
+   * @throws a TRESTLE303 if there aren't any defined tasks with the given name.
    * @returns a promise with the task's execution result.
    */
   public readonly run: RunTaskFunction = async (name, taskArguments = {}) => {
@@ -277,7 +277,7 @@ export class Environment implements TrestleRuntimeEnvironment {
    * @param paramDefinition {ParamDefinition} - the param definition for validation
    * @param argumentValue - the value to be validated
    * @private
-   * @throws POLAR301 if value is not valid for the param type
+   * @throws TRESTLE301 if value is not valid for the param type
    */
   private _checkTypeValidation (
     paramDefinition: ParamDefinitionAny,

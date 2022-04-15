@@ -13,13 +13,13 @@ export interface ArgumentType<T> {
   name: string
 
   /**
-   * Parses strValue. This function MUST throw POLAR301 if it
+   * Parses strValue. This function MUST throw TRESTLE301 if it
    * can parse the given value.
    *
    * @param argName argument's name - used for context in case of error.
    * @param strValue argument's string value to be parsed.
    *
-   * @throws POLAR301 if an invalid value is given.
+   * @throws TRESTLE301 if an invalid value is given.
    * @returns the parsed value.
    */
   parse: (argName: string, strValue: string) => T
@@ -30,7 +30,7 @@ export interface ArgumentType<T> {
    * @param argName {string} argument's name - used for context in case of error.
    * @param argumentValue - value to be validated
    *
-   * @throws POLAR301 if value is not of type <t>
+   * @throws TRESTLE301 if value is not of type <t>
    */
   validate?(argName: string, argumentValue: any): void;  // eslint-disable-line
 }
@@ -49,7 +49,7 @@ export const string: ArgumentType<string> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws POLAR301 if value is not of type "string"
+   * @throws TRESTLE301 if value is not of type "string"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     const isString = typeof value === "string";
@@ -68,7 +68,7 @@ export const string: ArgumentType<string> = {
  * Boolean type.
  *
  * Accepts only 'true' or 'false' (case-insensitive).
- * @throws POLAR301
+ * @throws TRESTLE301
  */
 export const boolean: ArgumentType<boolean> = {
   name: "boolean",
@@ -92,7 +92,7 @@ export const boolean: ArgumentType<boolean> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws POLAR301 if value is not of type "boolean"
+   * @throws TRESTLE301 if value is not of type "boolean"
    */
   validate: (argName: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const isBoolean = typeof value === "boolean";
@@ -110,7 +110,7 @@ export const boolean: ArgumentType<boolean> = {
 /**
  * Int type.
  * Accepts either a decimal string integer or hexadecimal string integer.
- * @throws POLAR301
+ * @throws TRESTLE301
  */
 export const int: ArgumentType<number> = {
   name: "int",
@@ -137,7 +137,7 @@ export const int: ArgumentType<number> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws POLAR301 if value is not of type "int"
+   * @throws TRESTLE301 if value is not of type "int"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     const isInt = Number.isInteger(value);
@@ -154,7 +154,7 @@ export const int: ArgumentType<number> = {
 /**
  * Float type.
  * Accepts either a decimal string number or hexadecimal string number.
- * @throws POLAR301
+ * @throws TRESTLE301
  */
 export const float: ArgumentType<number> = {
   name: "float",
@@ -182,7 +182,7 @@ export const float: ArgumentType<number> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws POLAR301 if value is not of type "number"
+   * @throws TRESTLE301 if value is not of type "number"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     const isFloatOrInteger = typeof value === "number" && !isNaN(value);
@@ -200,7 +200,7 @@ export const float: ArgumentType<number> = {
 /**
  * Input file type.
  * Accepts a path to a readable file..
- * @throws POLAR302
+ * @throws TRESTLE302
  */
 export const inputFile: ArgumentType<string> = {
   name: "inputFile",
@@ -234,7 +234,7 @@ export const inputFile: ArgumentType<string> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws POLAR301 if value is not of type "inputFile"
+   * @throws TRESTLE301 if value is not of type "inputFile"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     try {
@@ -277,7 +277,7 @@ export const json: ArgumentType<any> = {  // eslint-disable-line
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws POLAR301 if value is not of type "json"
+   * @throws TRESTLE301 if value is not of type "json"
    */
   validate: (argName: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (value === undefined) {

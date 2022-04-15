@@ -23,7 +23,7 @@ describe("Init task", () => {
     await createProject(projectName);
 
     assert.isTrue(fs.existsSync(`./${projectName}`));
-    assert.isTrue(fs.existsSync(`./${projectName}/polar.config.js`));
+    assert.isTrue(fs.existsSync(`./${projectName}/trestle.config.js`));
   });
 
   it("When directory name has special character", async function () {
@@ -31,7 +31,7 @@ describe("Init task", () => {
     await createProject(projectName);
 
     assert.isTrue(fs.existsSync(`./${projectName}`));
-    assert.isTrue(fs.existsSync(`./${projectName}/polar.config.js`));
+    assert.isTrue(fs.existsSync(`./${projectName}/trestle.config.js`));
   });
 
   it("When directory with same name exists", async function () {

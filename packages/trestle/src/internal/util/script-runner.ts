@@ -5,7 +5,7 @@ import { TrestleRuntimeEnvironment } from "../../types";
 import { TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 
-const log = debug("polar:core:scripts-runner");
+const log = debug("trestle:core:scripts-runner");
 // eslint-disable-next-line
 async function loadScript (relativeScriptPath: string): Promise<any> {
   const absoluteScriptPath = path.join(process.cwd(), relativeScriptPath);
@@ -76,14 +76,14 @@ export async function runScript (
 }
 
 /**
- * Ensure polar/register source file path is resolved to compiled JS file
+ * Ensure trestle/register source file path is resolved to compiled JS file
  * instead of TS source file, so we don't need to run ts-node unnecessarily.
  */
 export function resolveBuilderRegisterPath (): string {
-  const polarCoreBaseDir = path.join(__dirname, "..", "..", "..");
+  const trestleCoreBaseDir = path.join(__dirname, "..", "..", "..");
 
   return path.join(
-    polarCoreBaseDir,
+    trestleCoreBaseDir,
     "dist/register.js"
   );
 }

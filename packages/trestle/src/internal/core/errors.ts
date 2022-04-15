@@ -54,24 +54,24 @@ export class TrestleError extends Error {
 }
 
 /**
- * This class is used to throw errors from polar plugins made by third parties.
+ * This class is used to throw errors from trestle plugins made by third parties.
  */
-export class PolarPluginError extends Error {
-  public static isPolarPluginError (other: any): other is PolarPluginError { // eslint-disable-line  
+export class TrestlePluginError extends Error {
+  public static isTrestlePluginError (other: any): other is TrestlePluginError { // eslint-disable-line  
     return (
       other !== undefined &&
       other !== null &&
-      other._isPolarPluginError === true
+      other._isTrestlePluginError === true
     );
   }
 
   public readonly parent?: Error;
   public readonly pluginName: string;
 
-  private readonly _isPolarPluginError: boolean;
+  private readonly _isTrestlePluginError: boolean;
 
   /**
-   * Creates a PolarPluginError.
+   * Creates a TrestlePluginError.
    *
    * @param pluginName The name of the plugin.
    * @param message An error message that will be shown to the user.
@@ -106,8 +106,8 @@ export class PolarPluginError extends Error {
       this.parent = messageOrParent;
     }
 
-    this._isPolarPluginError = true;
-    Object.setPrototypeOf(this, PolarPluginError.prototype);
+    this._isTrestlePluginError = true;
+    Object.setPrototypeOf(this, TrestlePluginError.prototype);
   }
 }
 
@@ -169,7 +169,7 @@ function _applyErrorMessageTemplate (
   return template;
 }
 
-export function assertPolarInvariant (
+export function assertTrestleInvariant (
   invariant: boolean,
   message: string
 ): asserts invariant {

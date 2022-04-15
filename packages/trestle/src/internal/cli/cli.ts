@@ -10,7 +10,7 @@ import { TASK_HELP } from "../../builtin-tasks/task-names";
 import { RuntimeArgs, TaskArguments, TrestleRuntimeEnvironment } from "../../types";
 import { TrestleContext } from "../context";
 import { loadConfigAndTasks } from "../core/config/config-loading";
-import { PolarPluginError, TrestleError } from "../core/errors";
+import { TrestleError, TrestlePluginError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { getEnvRuntimeArgs } from "../core/params/env-variables";
 import {
@@ -200,7 +200,7 @@ async function main (): Promise<void> {
   } catch (error) {
     if (TrestleError.isTrestleError(error)) {
       console.error(chalk.red(`Error ${error.message}`));
-    } else if (PolarPluginError.isPolarPluginError(error)) {
+    } else if (TrestlePluginError.isTrestlePluginError(error)) {
       console.error(
         chalk.red(`Error in plugin ${error.pluginName ?? ""}: ${error.message}`)
       );

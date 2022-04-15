@@ -124,8 +124,8 @@ describe("ArgumentsParser", () => {
     );
   });
 
-  describe("polar arguments", () => {
-    it("should parse polar arguments with task", () => {
+  describe("trestle arguments", () => {
+    it("should parse trestle arguments with task", () => {
       const rawCLAs: string[] = [
         SHOW_STACK,
         "--network",
@@ -151,7 +151,7 @@ describe("ArgumentsParser", () => {
       assert.equal("--task-param", unparsedCLAs[0]);
     });
 
-    it("should parse polar arguments after taskname", () => {
+    it("should parse trestle arguments after taskname", () => {
       const rawCLAs: string[] = [
         "compile",
         "--task-param",
@@ -192,7 +192,7 @@ describe("ArgumentsParser", () => {
         ERRORS.ARGUMENTS.UNRECOGNIZED_COMMAND_LINE_ARG);
     });
 
-    it("should parse a polar argument", () => {
+    it("should parse a trestle argument", () => {
       const rawCLAs: string[] = [
         "--show-stack-traces",
         "--network",
@@ -223,7 +223,7 @@ describe("ArgumentsParser", () => {
       assert.equal(runtimeArgs.network, "local");
     });
 
-    it("should fail trying to parse polar with invalid argument", () => {
+    it("should fail trying to parse trestle with invalid argument", () => {
       const rawCLAs: string[] = [
         SHOW_STACK,
         "--network",

@@ -175,7 +175,7 @@ export interface ProjectPathsConfig {
   sources: string
 }
 
-// Polar config
+// Trestle config
 export type UserPaths = Omit<Partial<ProjectPathsConfig>, "configFile">;
 
 export interface Config {
@@ -262,12 +262,12 @@ export interface ResolvedConfig extends TrestleUserConfig {
 }
 
 /**
- * Polar arguments:
+ * Trestle arguments:
  * + network: the network to be used (default="default").
  * + showStackTraces: flag to show stack traces.
- * + version: flag to show polar's version.
- * + help: flag to show polar's help message.
- * + config: used to specify polar's config file.
+ * + version: flag to show Trestle's version.
+ * + help: flag to show Trestle's help message.
+ * + config: used to specify Trestle's config file.
  */
 export interface RuntimeArgs {
   network: string

@@ -66,8 +66,8 @@ export function useFixtureProjectCopy (srcProjectName: string): void {
  */
 export function useCleanFixtureProject (projectName: string): void {
   useFixtureProject(projectName);
-  useEnvironment(async (polarEnv: TrestleRuntimeEnvironment) => {
-    return await polarEnv.run(TASK_CLEAN, {});
+  useEnvironment(async (trestleEnv: TrestleRuntimeEnvironment) => {
+    return await trestleEnv.run(TASK_CLEAN, {});
   });
 
   beforeEach(function () {

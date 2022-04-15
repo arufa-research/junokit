@@ -10,18 +10,18 @@ import { TRESTLE_PARAM_DEFINITIONS } from "../../../../src/internal/core/params/
 import { expectTrestleError } from "../../../helpers/errors";
 
 describe("paramNameToEnvVariable", () => {
-  it("should convert camelCase to UPPER_CASE and prepend POLAR_", () => {
-    assert.equal(paramNameToEnvVariable("a"), "POLAR_A");
-    assert.equal(paramNameToEnvVariable("B"), "POLAR_B");
-    assert.equal(paramNameToEnvVariable("AC"), "POLAR_A_C");
-    assert.equal(paramNameToEnvVariable("aC"), "POLAR_A_C");
+  it("should convert camelCase to UPPER_CASE and prepend TRESTLE_", () => {
+    assert.equal(paramNameToEnvVariable("a"), "TRESTLE_A");
+    assert.equal(paramNameToEnvVariable("B"), "TRESTLE_B");
+    assert.equal(paramNameToEnvVariable("AC"), "TRESTLE_A_C");
+    assert.equal(paramNameToEnvVariable("aC"), "TRESTLE_A_C");
     assert.equal(
       paramNameToEnvVariable("camelCaseRight"),
-      "POLAR_CAMEL_CASE_RIGHT"
+      "TRESTLE_CAMEL_CASE_RIGHT"
     );
     assert.equal(
       paramNameToEnvVariable("somethingAB"),
-      "POLAR_SOMETHING_A_B"
+      "TRESTLE_SOMETHING_A_B"
     );
   });
 });
@@ -84,7 +84,7 @@ describe("getEnvVariablesMap", () => {
         TRESTLE_HELP: "true",
         TRESTLE_SHOW_STACK_TRACES: "true",
         TRESTLE_VERSION: "false",
-        POLAR_VERBOSE: "true"
+        TRESTLE_VERBOSE: "true"
       }
     );
   });

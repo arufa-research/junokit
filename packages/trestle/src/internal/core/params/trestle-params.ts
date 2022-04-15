@@ -14,7 +14,7 @@ export const TRESTLE_PARAM_DEFINITIONS: ParamDefinitions = {
   command: {
     name: "command",
     defaultValue: "",
-    description: "Name of polar task ran.",
+    description: "Name of trestle task ran.",
     type: types.string,
     isFlag: false,
     isOptional: true,
@@ -61,7 +61,7 @@ export const TRESTLE_PARAM_DEFINITIONS: ParamDefinitions = {
   config: {
     name: "config",
     defaultValue: undefined,
-    description: "Path to POLAR config file.",
+    description: "Path to trestle config file.",
     type: types.inputFile,
     isFlag: false,
     isOptional: true,

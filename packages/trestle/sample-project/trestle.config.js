@@ -10,7 +10,7 @@ const accounts = [
     mnemonic: 'student prison fresh dwarf ecology birth govern river tissue wreck hope autumn basic trust divert dismiss buzz play pistol focus long armed flag bicycle'
   }
 ];
-
+// TODO: update fixture tests
 const networks = {
   localnet: {
     endpoint: 'http://localhost:26657/'
@@ -30,25 +30,6 @@ const networks = {
     keyringBackend: 'test',
     types: {}
   },
-  // Supernova Testnet
-  supernova: {
-    endpoint: 'http://bootstrap.supernova.enigma.co:1317',
-    chainId: 'supernova-2',
-    trustNode: true,
-    keyringBackend: 'test',
-    accounts: accounts,
-    types: {},
-    fees: {
-      upload: {
-          amount: [{ amount: "500000", denom: "uscrt" }],
-          gas: "2000000",
-      },
-      init: {
-          amount: [{ amount: "125000", denom: "uscrt" }],
-          gas: "500000",
-      },
-    }
-  }
 };
 
 module.exports = {

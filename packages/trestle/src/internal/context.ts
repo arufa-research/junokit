@@ -6,13 +6,13 @@ import { TasksDSL } from './core/tasks/dsl';
 
 export type GlobalWithTrestleContext = NodeJS.Global & {
   // eslint-disable-next-line no-use-before-define
-  __TrestleContext: TrestleContext
+  __trestleContext: TrestleContext
 };
 
 export class TrestleContext {
   public static isCreated (): boolean {
     const globalWithTrestleContext = global as unknown as GlobalWithTrestleContext;
-    return globalWithTrestleContext.__TrestleContext !== undefined;
+    return globalWithTrestleContext.__trestleContext !== undefined;
   }
 
   public static createTrestleContext (): TrestleContext {
@@ -22,13 +22,13 @@ export class TrestleContext {
 
     const globalWithTrestleContext = global as unknown as GlobalWithTrestleContext;
     const ctx = new TrestleContext();
-    globalWithTrestleContext.__TrestleContext = ctx;
+    globalWithTrestleContext.__trestleContext = ctx;
     return ctx;
   }
 
   public static getTrestleContext (): TrestleContext {
     const globalWithTrestleContext = global as unknown as GlobalWithTrestleContext;
-    const ctx = globalWithTrestleContext.__TrestleContext;
+    const ctx = globalWithTrestleContext.__trestleContext;
 
     if (ctx === undefined) {
       throw new TrestleError(ERRORS.GENERAL.CONTEXT_NOT_CREATED);

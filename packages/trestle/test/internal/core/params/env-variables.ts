@@ -6,8 +6,8 @@ import {
   getEnvVariablesMap,
   paramNameToEnvVariable
 } from "../../../../src/internal/core/params/env-variables";
-import { POLAR_PARAM_DEFINITIONS } from "../../../../src/internal/core/params/polar-params";
-import { expectPolarError } from "../../../helpers/errors";
+import { TRESTLE_PARAM_DEFINITIONS } from "../../../../src/internal/core/params/trestle-params";
+import { expectTrestleError } from "../../../helpers/errors";
 
 describe("paramNameToEnvVariable", () => {
   it("should convert camelCase to UPPER_CASE and prepend POLAR_", () => {
@@ -28,25 +28,25 @@ describe("paramNameToEnvVariable", () => {
 
 describe("Env vars arguments parsing", () => {
   it("Should use the default values if arguments are not defined", () => {
-    const args = getEnvRuntimeArgs(POLAR_PARAM_DEFINITIONS, {
+    const args = getEnvRuntimeArgs(TRESTLE_PARAM_DEFINITIONS, {
       IRRELEVANT_ENV_VAR: "123"
     });
-    assert.equal(args.help, POLAR_PARAM_DEFINITIONS.help.defaultValue);
-    assert.equal(args.network, POLAR_PARAM_DEFINITIONS.network.defaultValue);
+    assert.equal(args.help, TRESTLE_PARAM_DEFINITIONS.help.defaultValue);
+    assert.equal(args.network, TRESTLE_PARAM_DEFINITIONS.network.defaultValue);
     assert.equal(
       args.showStackTraces,
-      POLAR_PARAM_DEFINITIONS.showStackTraces.defaultValue
+      TRESTLE_PARAM_DEFINITIONS.showStackTraces.defaultValue
     );
-    assert.equal(args.version, POLAR_PARAM_DEFINITIONS.version.defaultValue);
+    assert.equal(args.version, TRESTLE_PARAM_DEFINITIONS.version.defaultValue);
   });
 
   it("Should accept values", () => {
-    const args = getEnvRuntimeArgs(POLAR_PARAM_DEFINITIONS, {
+    const args = getEnvRuntimeArgs(TRESTLE_PARAM_DEFINITIONS, {
       IRRELEVANT_ENV_VAR: "123",
-      POLAR_NETWORK: "asd",
-      POLAR_SHOW_STACK_TRACES: "true",
-      POLAR_VERSION: "true",
-      POLAR_HELP: "true"
+      TRESTLE_NETWORK: "asd",
+      TRESTLE_SHOW_STACK_TRACES: "true",
+      TRESTLE_VERSION: "true",
+      TRESTLE_HELP: "true"
     });
 
     assert.equal(args.network, "asd");
@@ -58,10 +58,10 @@ describe("Env vars arguments parsing", () => {
   });
 
   it("should throw if an invalid value is passed", () => {
-    expectPolarError(
+    expectTrestleError(
       () =>
-        getEnvRuntimeArgs(POLAR_PARAM_DEFINITIONS, {
-          POLAR_HELP: "123"
+        getEnvRuntimeArgs(TRESTLE_PARAM_DEFINITIONS, {
+          TRESTLE_HELP: "123"
         }),
       ERRORS.ARGUMENTS.INVALID_ENV_VAR_VALUE
     );
@@ -80,10 +80,10 @@ describe("getEnvVariablesMap", () => {
         config: undefined // config is optional
       }),
       {
-        POLAR_NETWORK: "asd",
-        POLAR_HELP: "true",
-        POLAR_SHOW_STACK_TRACES: "true",
-        POLAR_VERSION: "false",
+        TRESTLE_NETWORK: "asd",
+        TRESTLE_HELP: "true",
+        TRESTLE_SHOW_STACK_TRACES: "true",
+        TRESTLE_VERSION: "false",
         POLAR_VERBOSE: "true"
       }
     );

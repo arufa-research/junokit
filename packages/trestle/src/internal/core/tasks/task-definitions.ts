@@ -5,10 +5,10 @@ import {
   TaskArguments,
   TaskDefinition
 } from "../../../types";
-import { PolarError } from "../errors";
+import { TrestleError } from "../errors";
 import { ErrorDescriptor, ERRORS } from "../errors-list";
 import * as types from "../params/argument-types";
-import { POLAR_PARAM_DEFINITIONS } from "../params/polar-params";
+import { TRESTLE_PARAM_DEFINITIONS } from "../params/trestle-params";
 
 /**
  * This class creates a task definition, which consists of:
@@ -48,7 +48,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     this._hasVariadicParam = false;
     this._hasOptionalPositionalParam = false;
     this.action = () => {
-      throw new PolarError(ERRORS.TASK_DEFINITIONS.ACTION_NOT_SET, {
+      throw new TrestleError(ERRORS.TASK_DEFINITIONS.ACTION_NOT_SET, {
         taskName: name
       });
     };
@@ -105,7 +105,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
       }
 
       if (typeof defaultValue !== "string") {
-        throw new PolarError(
+        throw new TrestleError(
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE,
           {
             paramName: name,
@@ -225,7 +225,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
       }
 
       if (typeof defaultValue !== "string") {
-        throw new PolarError(
+        throw new TrestleError(
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE,
           {
             paramName: name,
@@ -321,7 +321,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
       }
 
       if (!this._isStringArray(defaultValue)) {
-        throw new PolarError(
+        throw new TrestleError(
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE,
           {
             paramName: name,
@@ -415,7 +415,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
    */
   private _validateNotAfterVariadicParam (name: string): void {
     if (this._hasVariadicParam) {
-      throw new PolarError(ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC, {
+      throw new TrestleError(ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC, {
         paramName: name,
         taskName: this.name
       });
@@ -431,15 +431,15 @@ export class SimpleTaskDefinition implements TaskDefinition {
    */
   private _validateNameNotUsed (name: string): void {
     if (this._hasParamDefined(name)) {
-      throw new PolarError(ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED, {
+      throw new TrestleError(ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED, {
         paramName: name,
         taskName: this.name
       });
     }
 
-    if (Object.keys(POLAR_PARAM_DEFINITIONS).includes(name)) {
-      throw new PolarError(
-        ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM,
+    if (Object.keys(TRESTLE_PARAM_DEFINITIONS).includes(name)) {
+      throw new TrestleError(
+        ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM,
         {
           paramName: name,
           taskName: this.name
@@ -472,7 +472,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     isOptional: boolean
   ): void {
     if (!isOptional && this._hasOptionalPositionalParam) {
-      throw new PolarError(
+      throw new TrestleError(
         ERRORS.TASK_DEFINITIONS.MANDATORY_PARAM_AFTER_OPTIONAL,
         {
           paramName: name,
@@ -486,7 +486,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     const pattern = /^[a-z]+([a-zA-Z0-9])*$/;
     const match = name.match(pattern);
     if (match === null) {
-      throw new PolarError(
+      throw new TrestleError(
         ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING,
         {
           paramName: name,
@@ -502,7 +502,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     name: string
   ): void {
     if (defaultValue !== undefined && !isOptional) {
-      throw new PolarError(
+      throw new TrestleError(
         ERRORS.TASK_DEFINITIONS.DEFAULT_IN_MANDATORY_PARAM,
         {
           paramName: name,
@@ -705,7 +705,7 @@ export class OverriddenTaskDefinition implements TaskDefinition {
   }
 
   private _throwNoParamsOverrideError (errorDescriptor: ErrorDescriptor): never {
-    throw new PolarError(errorDescriptor, {
+    throw new TrestleError(errorDescriptor, {
       taskName: this.name
     });
   }

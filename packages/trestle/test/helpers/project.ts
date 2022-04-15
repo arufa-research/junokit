@@ -3,7 +3,7 @@ import * as fsExtra from "fs-extra";
 import path from "path";
 
 import { TASK_CLEAN } from "../../src/builtin-tasks/task-names";
-import { PolarRuntimeEnvironment } from "../../src/types";
+import { TrestleRuntimeEnvironment } from "../../src/types";
 import { testFixtureOutputFile } from "./constants";
 import { useEnvironment } from "./environment";
 
@@ -66,7 +66,7 @@ export function useFixtureProjectCopy (srcProjectName: string): void {
  */
 export function useCleanFixtureProject (projectName: string): void {
   useFixtureProject(projectName);
-  useEnvironment(async (polarEnv: PolarRuntimeEnvironment) => {
+  useEnvironment(async (polarEnv: TrestleRuntimeEnvironment) => {
     return await polarEnv.run(TASK_CLEAN, {});
   });
 

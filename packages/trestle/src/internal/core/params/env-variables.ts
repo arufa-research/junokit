@@ -1,18 +1,18 @@
 import { ParamDefinitions, RuntimeArgs } from "../../../types";
 import { ArgumentsParser } from "../../cli/arguments-parser";
 import { unsafeObjectKeys } from "../../util/unsafe";
-import { PolarError } from "../errors";
+import { TrestleError } from "../errors";
 import { ERRORS } from "../errors-list";
 
 import ProcessEnv = NodeJS.ProcessEnv;
 
-const POLAR_ENV_ARGUMENT_PREFIX = "POLAR_";
+const TRESTLE_ENV_ARGUMENT_PREFIX = "TRESTLE_";
 
 export function paramNameToEnvVariable (paramName: string): string {
   // We create it starting from the result of ArgumentsParser.paramNameToCLA
   // so it's easier to explain and understand their equivalences.
   return ArgumentsParser.paramNameToCLA(paramName)
-    .replace(ArgumentsParser.PARAM_PREFIX, POLAR_ENV_ARGUMENT_PREFIX)
+    .replace(ArgumentsParser.PARAM_PREFIX, TRESTLE_ENV_ARGUMENT_PREFIX)
     .replace(/-/g, "_")
     .toUpperCase();
 }
@@ -48,7 +48,7 @@ export function getEnvRuntimeArgs (
       try {
         envArgs[paramName] = definition.type.parse(paramName, rawValue);
       } catch (error) {
-        throw new PolarError(
+        throw new TrestleError(
           ERRORS.ARGUMENTS.INVALID_ENV_VAR_VALUE,
           {
             varName: envVarName,

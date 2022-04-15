@@ -5,7 +5,7 @@ import { TASK_RUN } from "../../src/builtin-tasks/task-names";
 import { ERRORS } from "../../src/internal/core/errors-list";
 import { testFixtureOutputFile } from "../helpers/constants";
 import { useEnvironment } from "../helpers/environment";
-import { expectPolarErrorAsync } from "../helpers/errors";
+import { expectTrestleErrorAsync } from "../helpers/errors";
 import { useCleanFixtureProject, useFixtureProject } from "../helpers/project";
 
 const script1 = "scripts/1.js";
@@ -16,7 +16,7 @@ describe("Run task", function () {
   useEnvironment();
 
   it("Should fail if a script doesn't exist", async function () {
-    await expectPolarErrorAsync(
+    await expectTrestleErrorAsync(
       async () => await this.env.run(TASK_RUN, {
         scripts: ["./scripts/does-not-exist"]
       }),
@@ -47,7 +47,7 @@ scripts directory: script 1 executed
   });
 
   it("Should fail if any nonexistent scripts are passed", async function () {
-    await expectPolarErrorAsync(
+    await expectTrestleErrorAsync(
       async () =>
         await this.env.run(TASK_RUN, {
           scripts: [script1, script2, "scripts/3.js"]
@@ -58,7 +58,7 @@ scripts directory: script 1 executed
   });
 
   it("Should return the script's status code on failure", async function () {
-    await expectPolarErrorAsync(
+    await expectTrestleErrorAsync(
       async () =>
         await this.env.run(TASK_RUN, {
           scripts: ["scripts/other-scripts/1.js",
@@ -94,7 +94,7 @@ scripts directory: script 2 executed
   });
 
   it("Should not allow scripts outside of scripts dir", async function () {
-    await expectPolarErrorAsync(
+    await expectTrestleErrorAsync(
       async () =>
         await this.env.run(TASK_RUN, {
           scripts: ["1.js", script2, script1]

@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 
 import { task } from "../internal/core/config/config-env";
-import { PolarRuntimeEnvironment, TaskArguments } from "../types";
+import { TaskArguments, TrestleRuntimeEnvironment } from "../types";
 import { TASK_INSTALL } from "./task-names";
 
 export default function (): void {
@@ -10,12 +10,12 @@ export default function (): void {
 }
 
 async function taskRust (
-  _taskArgs: TaskArguments, env: PolarRuntimeEnvironment
+  _taskArgs: TaskArguments, env: TrestleRuntimeEnvironment
 ): Promise<boolean> {
   return await setupRust(env);
 }
 
-export async function setupRust (env: PolarRuntimeEnvironment): Promise<boolean> {
+export async function setupRust (env: TrestleRuntimeEnvironment): Promise<boolean> {
   execSync(`curl --proto '=https' --tlsv1.2 -sSf -y https://sh.rustup.rs | sh`);
   execSync(`export PATH="${process.env.HOME}/.cargo/bin:${process.env.PATH}"`); // eslint-disable-line  @typescript-eslint/restrict-template-expressions
   if (env.config.rust) {

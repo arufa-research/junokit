@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import semver from "semver";
 
 import { setupRust } from "../../builtin-tasks/install";
-import { PolarRuntimeEnvironment } from "../../types";
+import { TrestleRuntimeEnvironment } from "../../types";
 
 export function getRustcVersion (): string {
   try {
@@ -37,7 +37,7 @@ export function getWebAssemblyInstalled (): boolean {
 }
 
 export async function canCompile (
-  env: PolarRuntimeEnvironment
+  env: TrestleRuntimeEnvironment
 ): Promise<boolean> {
   const rustcCurrVersion = getRustcVersion();
   const wasmInstalled: boolean = getWebAssemblyInstalled();

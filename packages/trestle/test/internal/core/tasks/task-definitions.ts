@@ -14,10 +14,10 @@ import {
   RuntimeArgs,
   TaskDefinition
 } from "../../../../src/types";
-import { expectPolarError, expectPolarErrorAsync } from "../../../helpers/errors";
+import { expectTrestleError, expectTrestleErrorAsync } from "../../../helpers/errors";
 
 function expectThrowParamAlreadyDefinedError (f: () => any): void {
-  expectPolarError(f, ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED);
+  expectTrestleError(f, ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED);
 }
 
 function getLastPositionalParam (taskDefinition: TaskDefinition): ParamDefinitionAny {
@@ -67,7 +67,7 @@ describe("SimpleTaskDefinition", () => {
     });
 
     it("starts with an action that throws", async () => {
-      await expectPolarErrorAsync(
+      await expectTrestleErrorAsync(
         async () => await taskDefinition.action({}, {} as any, runSuperNop),
         ERRORS.TASK_DEFINITIONS.ACTION_NOT_SET
       );
@@ -162,33 +162,33 @@ describe("SimpleTaskDefinition", () => {
 
     describe("param name clashes with polar's ones", () => {
       function testClashWith (name: string): void {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addOptionalParam(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addFlag(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addPositionalParam(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addOptionalPositionalParam(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addVariadicPositionalParam(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addOptionalVariadicPositionalParam(name),
-          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_POLAR_PARAM
+          ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_TRESTLE_PARAM
         );
       }
 
@@ -214,14 +214,14 @@ describe("SimpleTaskDefinition", () => {
         });
 
         it("throws when trying to add a new positional param", () => {
-          expectPolarError(
+          expectTrestleError(
             () => taskDefinition.addPositionalParam("asd2"),
             ERRORS.TASK_DEFINITIONS.MANDATORY_PARAM_AFTER_OPTIONAL
           );
         });
 
         it("throws when trying to add a new variadic positional param", () => {
-          expectPolarError(
+          expectTrestleError(
             () => taskDefinition.addVariadicPositionalParam("asd2"),
             ERRORS.TASK_DEFINITIONS.MANDATORY_PARAM_AFTER_OPTIONAL
           );
@@ -272,28 +272,28 @@ describe("SimpleTaskDefinition", () => {
         });
 
         it("should throw on adding a positional param", () => {
-          expectPolarError(
+          expectTrestleError(
             () => taskDefinition.addPositionalParam("p"),
             ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC
           );
         });
 
         it("should throw on adding an optional positional param", () => {
-          expectPolarError(
+          expectTrestleError(
             () => taskDefinition.addOptionalPositionalParam("p"),
             ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC
           );
         });
 
         it("should throw on adding another variadic param", () => {
-          expectPolarError(
+          expectTrestleError(
             () => taskDefinition.addVariadicPositionalParam("p"),
             ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC
           );
         });
 
         it("should throw on adding an optional variadic param", () => {
-          expectPolarError(
+          expectTrestleError(
             () => taskDefinition.addOptionalVariadicPositionalParam("p"),
             ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC
           );
@@ -328,42 +328,42 @@ describe("SimpleTaskDefinition", () => {
 
     describe("addParam", () => {
       it("Should fail if the param name isn't camelCase", function () {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("A"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("Aa"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("0"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("0a"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("a "),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("a-1"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("a_"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("a_b"),
           ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING
         );
@@ -404,14 +404,14 @@ describe("SimpleTaskDefinition", () => {
       });
 
       it("should throw if a non-string default value is given but its type isn't set", () => {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("p", "desc", 123),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
       });
 
       it("should throw if a default value is set to a mandatory param", () => {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addParam("p", "desc", 123, types.int, false),
           ERRORS.TASK_DEFINITIONS.DEFAULT_IN_MANDATORY_PARAM
         );
@@ -446,7 +446,7 @@ describe("SimpleTaskDefinition", () => {
       });
 
       it("should throw if a non-string default value is given but its type isn't set", () => {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addOptionalParam("p", "desc", 123),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
@@ -510,14 +510,14 @@ describe("SimpleTaskDefinition", () => {
       });
 
       it("should throw if a non-string default value is given but its type isn't set", () => {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addPositionalParam("p", "desc", 123),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
       });
 
       it("should throw if a default value is set to a mandatory param", () => {
-        expectPolarError(
+        expectTrestleError(
           () =>
             taskDefinition.addPositionalParam(
               "p",
@@ -580,7 +580,7 @@ describe("SimpleTaskDefinition", () => {
       });
 
       it("should throw if a non-string default value is given but its type isn't set", () => {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addOptionalPositionalParam("p", "desc", 123),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
@@ -651,19 +651,19 @@ describe("SimpleTaskDefinition", () => {
       });
 
       it("should throw if a non-string default value is given but its type isn't set", () => {
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addVariadicPositionalParam("p", "desc", 123),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
 
-        expectPolarError(
+        expectTrestleError(
           () => taskDefinition.addVariadicPositionalParam("p", "desc", [123]),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
       });
 
       it("should throw if a default value is set to a mandatory param", () => {
-        expectPolarError(
+        expectTrestleError(
           () =>
             taskDefinition.addVariadicPositionalParam(
               "p",
@@ -675,7 +675,7 @@ describe("SimpleTaskDefinition", () => {
           ERRORS.TASK_DEFINITIONS.DEFAULT_IN_MANDATORY_PARAM
         );
 
-        expectPolarError(
+        expectTrestleError(
           () =>
             taskDefinition.addVariadicPositionalParam(
               "p",
@@ -760,13 +760,13 @@ describe("SimpleTaskDefinition", () => {
       });
 
       it("should throw if a non-string default value is given but its type isn't set", () => {
-        expectPolarError(
+        expectTrestleError(
           () =>
             taskDefinition.addOptionalVariadicPositionalParam("p", "desc", 123),
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE
         );
 
-        expectPolarError(
+        expectTrestleError(
           () =>
             taskDefinition.addOptionalVariadicPositionalParam("p", "desc", [
               123
@@ -925,13 +925,13 @@ describe("OverriddenTaskDefinition", () => {
       assert.isDefined(parentTask.paramDefinitions[definedParamName]);
 
       // expect PARAM_ALREADY_DEFINED for add flag param
-      expectPolarError(
+      expectTrestleError(
         () => overriddenTask.addFlag(definedParamName),
         ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED
       );
 
       // expect PARAM_ALREADY_DEFINED for add optional param using addParam method
-      expectPolarError(
+      expectTrestleError(
         () =>
           overriddenTask.addParam(
             definedParamName,
@@ -944,7 +944,7 @@ describe("OverriddenTaskDefinition", () => {
       );
 
       // expect PARAM_ALREADY_DEFINED for add optional param using addParam method
-      expectPolarError(
+      expectTrestleError(
         () =>
           overriddenTask.addOptionalParam(
             definedParamName,
@@ -957,7 +957,7 @@ describe("OverriddenTaskDefinition", () => {
     });
 
     it("should throw if addParam is called with isOptional = false", () => {
-      expectPolarError(
+      expectTrestleError(
         () => overriddenTask.addParam("p"),
         ERRORS.TASK_DEFINITIONS.OVERRIDE_NO_MANDATORY_PARAMS
       );
@@ -986,28 +986,28 @@ describe("OverriddenTaskDefinition", () => {
     });
 
     it("should throw if addPositionalParam is called", () => {
-      expectPolarError(
+      expectTrestleError(
         () => overriddenTask.addPositionalParam("p"),
         ERRORS.TASK_DEFINITIONS.OVERRIDE_NO_POSITIONAL_PARAMS
       );
     });
 
     it("should throw if addOptionalPositionalParam is called", () => {
-      expectPolarError(
+      expectTrestleError(
         () => overriddenTask.addOptionalPositionalParam("p"),
         ERRORS.TASK_DEFINITIONS.OVERRIDE_NO_POSITIONAL_PARAMS
       );
     });
 
     it("should throw if addVariadicPositionalParam is called", () => {
-      expectPolarError(
+      expectTrestleError(
         () => overriddenTask.addVariadicPositionalParam("p"),
         ERRORS.TASK_DEFINITIONS.OVERRIDE_NO_VARIADIC_PARAMS
       );
     });
 
     it("should throw if addOptionalVariadicPositionalParam is called", () => {
-      expectPolarError(
+      expectTrestleError(
         () => overriddenTask.addOptionalVariadicPositionalParam("p"),
         ERRORS.TASK_DEFINITIONS.OVERRIDE_NO_VARIADIC_PARAMS
       );

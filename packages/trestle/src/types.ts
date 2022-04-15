@@ -7,7 +7,7 @@
 // written in the user's config file.
 //
 // The other one, with the same name except without the User part, represents
-// the resolved value as used during the polar execution.
+// the resolved value as used during the trestle execution.
 //
 // Note that while many declarations are repeated here (i.e. network types'
 // fields), we don't use `extends` as that can interfere with plugin authors
@@ -79,12 +79,12 @@ export interface DeployInfo {
   deployTimestamp: string
 }
 
-export type PolarNetworkAccountsUserConfig = Account[];
+export type TrestleNetworkAccountsUserConfig = Account[];
 
-export interface PolarNetworkUserConfig {
+export interface TrestleNetworkUserConfig {
   endpoint: string
   httpHeaders?: Record<string, string>
-  accounts: PolarNetworkAccountsUserConfig
+  accounts: TrestleNetworkAccountsUserConfig
   gasLimit?: string | number
   seed?: Uint8Array
   broadCastMode?: string
@@ -95,26 +95,26 @@ export interface NetworksUserConfig {
   [networkName: string]: NetworkUserConfig | undefined
 }
 
-export type NetworkUserConfig = PolarNetworkUserConfig;
+export type NetworkUserConfig = TrestleNetworkUserConfig;
 
-export type PolarNetworkConfig = PolarNetworkUserConfig;
+export type TrestleNetworkConfig = TrestleNetworkUserConfig;
 
-export type NetworkConfig = PolarNetworkConfig;
+export type NetworkConfig = TrestleNetworkConfig;
 
 export interface Networks {
-  [networkName: string]: PolarNetworkConfig
+  [networkName: string]: TrestleNetworkConfig
 }
 
-export type PolarNetworkAccountsConfig =
-  | PolarNetworkHDAccountsConfig
-  | PolarNetworkAccountConfig[];
+export type TrestleNetworkAccountsConfig =
+  | TrestleNetworkHDAccountsConfig
+  | TrestleNetworkAccountConfig[];
 
-export interface PolarNetworkAccountConfig {
+export interface TrestleNetworkAccountConfig {
   privateKey: string
   balance: string
 }
 
-export interface PolarNetworkHDAccountsConfig {
+export interface TrestleNetworkHDAccountsConfig {
   mnemonic: string
   initialIndex: number
   count: number
@@ -122,7 +122,7 @@ export interface PolarNetworkHDAccountsConfig {
   accountsBalance: string
 }
 
-export interface PolarNetworkForkingConfig {
+export interface TrestleNetworkForkingConfig {
   enabled: boolean
   url: string
   blockNumber?: number
@@ -184,7 +184,7 @@ export interface Config {
   mocha?: Mocha.MochaOptions
 }
 
-export interface PolarUserConfig {
+export interface TrestleUserConfig {
   defaultNetwork?: string
   paths?: ProjectPathsUserConfig
   networks?: NetworksUserConfig
@@ -192,7 +192,7 @@ export interface PolarUserConfig {
   docker?: DockerConfig
 }
 
-export interface PolarConfig {
+export interface TrestleConfig {
   defaultNetwork: string
   paths: ProjectPathsConfig
   networks: Networks
@@ -204,14 +204,14 @@ export interface PolarConfig {
 
 export type ConfigExtender = (
   config: ResolvedConfig,
-  userConfig: Readonly<PolarUserConfig>
+  userConfig: Readonly<TrestleUserConfig>
 ) => void;
 
 /**
  * A function that receives a RuntimeEnv and
  * modify its properties or add new ones.
  */
-export type EnvironmentExtender = (env: PolarRuntimeEnvironment) => void;
+export type EnvironmentExtender = (env: TrestleRuntimeEnvironment) => void;
 
 /**
  * @type TaskArguments {object-like} - the input arguments for a task.
@@ -241,7 +241,7 @@ export interface RunSuperFunction<ArgT extends TaskArguments> {
 
 export type ActionType<ArgsT extends TaskArguments> = (
   taskArgs: ArgsT,
-  env: PolarRuntimeEnvironment,
+  env: TrestleRuntimeEnvironment,
   runSuper: RunSuperFunction<ArgsT>
 ) => PromiseAny;
 
@@ -255,7 +255,7 @@ interface RustVersion {
   version: string
 }
 
-export interface ResolvedConfig extends PolarUserConfig {
+export interface ResolvedConfig extends TrestleUserConfig {
   paths?: ProjectPathsConfig
   rust?: RustVersion
   networks: Networks
@@ -382,7 +382,7 @@ export interface TasksMap {
   [name: string]: TaskDefinition
 }
 
-export interface PolarRuntimeEnvironment {
+export interface TrestleRuntimeEnvironment {
   readonly config: ResolvedConfig
   readonly runtimeArgs: RuntimeArgs
   readonly tasks: TasksMap

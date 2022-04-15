@@ -1,7 +1,7 @@
-import type { Config, PolarNetworkUserConfig } from "../../../types";
+import type { Config, TrestleNetworkUserConfig } from "../../../types";
 const SCRT_CHAIN_NAME = "testnet";
 
-const cfg: PolarNetworkUserConfig = {
+const cfg: TrestleNetworkUserConfig = {
   accounts: [],
   endpoint: SCRT_CHAIN_NAME
 };

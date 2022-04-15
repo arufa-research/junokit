@@ -4,12 +4,12 @@
  * This doesn't unload any loaded Polar plugin, so those have to be unloaded
  * manually with `unloadModule`.
  */
-import { PolarContext } from "./context";
+import { TrestleContext } from "./context";
 import { getUserConfigPath } from "./core/project-structure";
 
-export function resetPolarContext (): void {
-  if (PolarContext.isCreated()) {
-    const ctx = PolarContext.getPolarContext();
+export function resetTrestleContext (): void {
+  if (TrestleContext.isCreated()) {
+    const ctx = TrestleContext.getTrestleContext();
     const globalAsAny = global as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     if (ctx.environment !== undefined) {
       for (const key of Object.keys(ctx.environment)) {
@@ -33,7 +33,7 @@ export function resetPolarContext (): void {
         unloadModule(configPath);
       }
     }
-    PolarContext.deletePolarContext();
+    TrestleContext.deleteTrestleContext();
   }
 
   // Unload all the polar's entry-points.

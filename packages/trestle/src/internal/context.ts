@@ -1,65 +1,65 @@
-import { ConfigExtender, PolarRuntimeEnvironment } from '../types';
+import { ConfigExtender, TrestleRuntimeEnvironment } from '../types';
 import { ExtenderManager } from './core/config/extenders';
-import { PolarError } from './core/errors';
+import { TrestleError } from './core/errors';
 import { ERRORS } from './core/errors-list';
 import { TasksDSL } from './core/tasks/dsl';
 
-export type GlobalWithPolarContext = NodeJS.Global & {
+export type GlobalWithTrestleContext = NodeJS.Global & {
   // eslint-disable-next-line no-use-before-define
-  __polarContext: PolarContext
+  __TrestleContext: TrestleContext
 };
 
-export class PolarContext {
+export class TrestleContext {
   public static isCreated (): boolean {
-    const globalWithPolarContext = global as unknown as GlobalWithPolarContext;
-    return globalWithPolarContext.__polarContext !== undefined;
+    const globalWithTrestleContext = global as unknown as GlobalWithTrestleContext;
+    return globalWithTrestleContext.__TrestleContext !== undefined;
   }
 
-  public static createPolarContext (): PolarContext {
+  public static createTrestleContext (): TrestleContext {
     if (this.isCreated()) {
-      throw new PolarError(ERRORS.GENERAL.CONTEXT_ALREADY_CREATED);
+      throw new TrestleError(ERRORS.GENERAL.CONTEXT_ALREADY_CREATED);
     }
 
-    const globalWithPolarContext = global as unknown as GlobalWithPolarContext;
-    const ctx = new PolarContext();
-    globalWithPolarContext.__polarContext = ctx;
+    const globalWithTrestleContext = global as unknown as GlobalWithTrestleContext;
+    const ctx = new TrestleContext();
+    globalWithTrestleContext.__TrestleContext = ctx;
     return ctx;
   }
 
-  public static getPolarContext (): PolarContext {
-    const globalWithPolarContext = global as unknown as GlobalWithPolarContext;
-    const ctx = globalWithPolarContext.__polarContext;
+  public static getTrestleContext (): TrestleContext {
+    const globalWithTrestleContext = global as unknown as GlobalWithTrestleContext;
+    const ctx = globalWithTrestleContext.__TrestleContext;
 
     if (ctx === undefined) {
-      throw new PolarError(ERRORS.GENERAL.CONTEXT_NOT_CREATED);
+      throw new TrestleError(ERRORS.GENERAL.CONTEXT_NOT_CREATED);
     }
 
     return ctx;
   }
 
-  public static deletePolarContext (): void {
+  public static deleteTrestleContext (): void {
     // eslint-disable-next-line
     const globalAsAny = global as any;
 
-    globalAsAny.__polarContext = undefined;
+    globalAsAny.__trestleContext = undefined;
   }
 
   public readonly tasksDSL = new TasksDSL();
   public readonly extendersManager = new ExtenderManager();
   public readonly loadedPlugins: string[] = [];
-  public environment?: PolarRuntimeEnvironment;
+  public environment?: TrestleRuntimeEnvironment;
   public readonly configExtenders: ConfigExtender[] = [];
 
-  public setRuntimeEnv (env: PolarRuntimeEnvironment): void {
+  public setRuntimeEnv (env: TrestleRuntimeEnvironment): void {
     if (this.environment !== undefined) {
-      throw new PolarError(ERRORS.GENERAL.CONTEXT_PRE_ALREADY_DEFINED);
+      throw new TrestleError(ERRORS.GENERAL.CONTEXT_PRE_ALREADY_DEFINED);
     }
     this.environment = env;
   }
 
-  public getRuntimeEnv (): PolarRuntimeEnvironment {
+  public getRuntimeEnv (): TrestleRuntimeEnvironment {
     if (this.environment === undefined) {
-      throw new PolarError(ERRORS.GENERAL.CONTEXT_PRE_NOT_DEFINED);
+      throw new TrestleError(ERRORS.GENERAL.CONTEXT_PRE_NOT_DEFINED);
     }
     return this.environment;
   }

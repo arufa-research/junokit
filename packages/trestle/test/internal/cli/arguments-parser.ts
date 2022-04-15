@@ -9,9 +9,9 @@ import {
   string
 } from "../../../src/internal/core/params/argument-types";
 import {
-  POLAR_PARAM_DEFINITIONS,
-  POLAR_SHORT_PARAM_SUBSTITUTIONS
-} from "../../../src/internal/core/params/polar-params";
+  TRESTLE_PARAM_DEFINITIONS,
+  TRESTLE_SHORT_PARAM_SUBSTITUTIONS
+} from "../../../src/internal/core/params/trestle-params";
 import {
   OverriddenTaskDefinition,
   SimpleTaskDefinition
@@ -21,20 +21,20 @@ import {
   TaskArguments,
   TaskDefinition
 } from "../../../src/types";
-import { expectPolarError } from "../../helpers/errors";
+import { expectTrestleError } from "../../helpers/errors";
 
 const SHOW_STACK = "--show-stack-traces";
 
-function parseAndexpectPolarError (
+function parseAndexpectTrestleError (
   argumentsParser: ArgumentsParser,
   envArgs: RuntimeArgs,
   rawCLAs: string[],
   errorDescriptor: ErrorDescriptor): void {
-    expectPolarError(
+    expectTrestleError(
     () =>
       argumentsParser.parseRuntimeArgs(
-        POLAR_PARAM_DEFINITIONS,
-        POLAR_SHORT_PARAM_SUBSTITUTIONS,
+        TRESTLE_PARAM_DEFINITIONS,
+        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       ),
@@ -79,17 +79,17 @@ describe("ArgumentsParser", () => {
   });
 
   it("Should throw if a param name CLA isn't all lowercase", () => {
-    expectPolarError(
+    expectTrestleError(
       () => ArgumentsParser.cLAToParamName("--show-Stack-traces"),
       ERRORS.ARGUMENTS.PARAM_NAME_INVALID_CASING
     );
 
-    expectPolarError(
+    expectTrestleError(
       () => ArgumentsParser.cLAToParamName("--shOw-stack-traces"),
       ERRORS.ARGUMENTS.PARAM_NAME_INVALID_CASING
     );
 
-    expectPolarError(
+    expectTrestleError(
       () => ArgumentsParser.cLAToParamName("--show-stack-tRaces"),
       ERRORS.ARGUMENTS.PARAM_NAME_INVALID_CASING
     );
@@ -113,14 +113,14 @@ describe("ArgumentsParser", () => {
     assert.isTrue(
       argumentsParser._isCLAParamName(
         "--show-stack-traces",
-        POLAR_PARAM_DEFINITIONS
+        TRESTLE_PARAM_DEFINITIONS
       )
     );
     assert.isFalse(
-      argumentsParser._isCLAParamName("sarasa", POLAR_PARAM_DEFINITIONS)
+      argumentsParser._isCLAParamName("sarasa", TRESTLE_PARAM_DEFINITIONS)
     );
     assert.isFalse(
-      argumentsParser._isCLAParamName("--sarasa", POLAR_PARAM_DEFINITIONS)
+      argumentsParser._isCLAParamName("--sarasa", TRESTLE_PARAM_DEFINITIONS)
     );
   });
 
@@ -139,8 +139,8 @@ describe("ArgumentsParser", () => {
         taskName,
         unparsedCLAs
       } = argumentsParser.parseRuntimeArgs(
-        POLAR_PARAM_DEFINITIONS,
-        POLAR_SHORT_PARAM_SUBSTITUTIONS,
+        TRESTLE_PARAM_DEFINITIONS,
+        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       );
@@ -165,8 +165,8 @@ describe("ArgumentsParser", () => {
         taskName,
         unparsedCLAs
       } = argumentsParser.parseRuntimeArgs(
-        POLAR_PARAM_DEFINITIONS,
-        POLAR_SHORT_PARAM_SUBSTITUTIONS,
+        TRESTLE_PARAM_DEFINITIONS,
+        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       );
@@ -185,7 +185,7 @@ describe("ArgumentsParser", () => {
         "--network",
         "local"
       ];
-      parseAndexpectPolarError(
+      parseAndexpectTrestleError(
         argumentsParser,
         envArgs,
         rawCLAs,
@@ -206,7 +206,7 @@ describe("ArgumentsParser", () => {
         argumentsParser._parseArgumentAt(
           rawCLAs,
           0,
-          POLAR_PARAM_DEFINITIONS,
+          TRESTLE_PARAM_DEFINITIONS,
           runtimeArgs
         )
       );
@@ -216,7 +216,7 @@ describe("ArgumentsParser", () => {
         argumentsParser._parseArgumentAt(
           rawCLAs,
           1,
-          POLAR_PARAM_DEFINITIONS,
+          TRESTLE_PARAM_DEFINITIONS,
           runtimeArgs
         )
       );
@@ -230,7 +230,7 @@ describe("ArgumentsParser", () => {
         "local",
         "--invalid-param"
       ];
-      parseAndexpectPolarError(
+      parseAndexpectTrestleError(
         argumentsParser,
         envArgs,
         rawCLAs,
@@ -246,7 +246,7 @@ describe("ArgumentsParser", () => {
         "local",
         "compile"
       ];
-      parseAndexpectPolarError(
+      parseAndexpectTrestleError(
         argumentsParser,
         envArgs,
         rawCLAs,
@@ -255,7 +255,7 @@ describe("ArgumentsParser", () => {
 
     it("should only add non-present arguments", () => {
       const runtimeArgs = argumentsParser._addBuilderDefaultArguments(
-        POLAR_PARAM_DEFINITIONS,
+        TRESTLE_PARAM_DEFINITIONS,
         envArgs,
         {
           showStackTraces: true
@@ -277,8 +277,8 @@ describe("ArgumentsParser", () => {
         taskName,
         unparsedCLAs
       } = argumentsParser.parseRuntimeArgs(
-        POLAR_PARAM_DEFINITIONS,
-        POLAR_SHORT_PARAM_SUBSTITUTIONS,
+        TRESTLE_PARAM_DEFINITIONS,
+        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       );
@@ -355,7 +355,7 @@ describe("ArgumentsParser", () => {
     });
 
     it("should fail when passing invalid parameter", () => {
-      expectPolarError(() => {
+      expectTrestleError(() => {
         argumentsParser.parseTaskArguments(
           taskDefinition,
           ["--invalid-parameter", "not_valid"]);
@@ -368,7 +368,7 @@ describe("ArgumentsParser", () => {
         "a variadic params"
       );
 
-      expectPolarError(() => {
+      expectTrestleError(() => {
         argumentsParser.parseTaskArguments(
           taskDefinition,
           ["--param", "testing", "--bleep", "1337"]);
@@ -379,13 +379,13 @@ describe("ArgumentsParser", () => {
       const definition = new SimpleTaskDefinition("compile", true);
       definition.addParam("param", "just a param");
       definition.addParam("bleep", "useless param", 1602, int, true);
-      expectPolarError(() => {
+      expectTrestleError(() => {
         argumentsParser.parseTaskArguments(definition, []);
       }, ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT);
     });
 
     it("should fail when passing unneeded arguments", () => {
-      expectPolarError(() => {
+      expectTrestleError(() => {
         argumentsParser.parseTaskArguments(taskDefinition, ["more", "arguments"]);
       }, ERRORS.ARGUMENTS.UNRECOGNIZED_POSITIONAL_ARG);
     });
@@ -415,7 +415,7 @@ describe("ArgumentsParser", () => {
         .addOptionalParam("b", "A boolean", true, boolean)
         .setAction(async () => {});
 
-      expectPolarError(
+      expectTrestleError(
         () => argumentsParser.parseTaskArguments(taskDefinition, rawCLAs),
         ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT
       );

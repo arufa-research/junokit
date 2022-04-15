@@ -1,21 +1,21 @@
 import { assert } from "chai";
 import * as path from "path";
 
-import { PolarContext } from "../../../../src/internal/context";
+import { TrestleContext } from "../../../../src/internal/context";
 import { loadConfigAndTasks } from "../../../../src/internal/core/config/config-loading";
 import { resolveProjectPaths } from "../../../../src/internal/core/config/config-resolution";
-import { resetPolarContext } from "../../../../src/internal/reset";
-import { PolarNetworkUserConfig, UserPaths } from "../../../../src/types";
+import { resetTrestleContext } from "../../../../src/internal/reset";
+import { TrestleNetworkUserConfig, UserPaths } from "../../../../src/types";
 import { useFixtureProject } from "../../../helpers/project";
 import { account } from "../../../mocks/account";
 
 describe("Config resolution", function () {
   beforeEach(() => {
-    PolarContext.createPolarContext();
+    TrestleContext.createTrestleContext();
   });
 
   afterEach(() => {
-    resetPolarContext();
+    resetTrestleContext();
   });
 
   describe("Default config merging", () => {
@@ -31,7 +31,7 @@ describe("Config resolution", function () {
       it("should return the config merged ", async () => {
         const config = await loadConfigAndTasks();
         assert.containsAllKeys(config.networks, ["localhost", "custom"]);
-        const ncfg = config.networks.localhost as PolarNetworkUserConfig;
+        const ncfg = config.networks.localhost;
         assert.equal(ncfg.endpoint, "http://127.0.0.1");
         assert.deepEqual(config.networks.localhost.accounts, [account]);
       });

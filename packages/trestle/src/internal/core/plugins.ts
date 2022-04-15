@@ -3,12 +3,12 @@ import * as path from "path";
 import * as semver from "semver";
 
 import { StrMap } from "../../types";
-import { PolarContext } from "../context";
-import { PolarError } from "../core/errors";
+import { TrestleContext } from "../context";
+import { TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { ExecutionMode, getExecutionMode } from "./execution-mode";
 
-const log = debug("polar:core:plugins");
+const log = debug("trestle:core:plugins");
 
 interface PackageJson {
   name: string
@@ -21,12 +21,12 @@ interface PackageJson {
 /**
  * Validates a plugin dependencies and loads it.
  * @param pluginName - The plugin name
- * @param PolarContext - The PolarContext
+ * @param TrestleContext - The TrestleContext
  * @param from - Where to resolve plugins and dependencies from. Only for
  * testing purposes.
  */
 export function usePlugin (
-  PolarContext: PolarContext,
+  TrestleContext: TrestleContext,
   pluginName: string,
   from?: string
 ): void {
@@ -34,18 +34,18 @@ export function usePlugin (
 
   // We have a special case for `ExecutionMode.EXECUTION_MODE_LINKED`
   //
-  // If polar is linked, a require without `from` would be executed in the
-  // context of polar, and not find any plugin (linked or not). We workaround
+  // If trestle is linked, a require without `from` would be executed in the
+  // context of trestle, and not find any plugin (linked or not). We workaround
   // this by using the CWD here.
   //
-  // This is not ideal, but the only reason to link polar is testing.
+  // This is not ideal, but the only reason to link trestle is testing.
   if (
     from === undefined &&
     getExecutionMode() === ExecutionMode.EXECUTION_MODE_LINKED
   ) {
     from = process.cwd();
 
-    log("polar is linked, searching for plugin starting from CWD", from);
+    log("trestle is linked, searching for plugin starting from CWD", from);
   }
 
   let globalFlag = "";
@@ -53,7 +53,7 @@ export function usePlugin (
   if (getExecutionMode() === ExecutionMode.EXECUTION_MODE_GLOBAL_INSTALLATION) {
     globalFlag = " --global";
     globalWarning =
-      "You are using a global installation of polar. Plugins and their dependencies must also be global.\n";
+      "You are using a global installation of trestle. Plugins and their dependencies must also be global.\n";
   }
 
   const pluginPackageJson = readPackageJson(pluginName, from);
@@ -61,7 +61,7 @@ export function usePlugin (
   if (pluginPackageJson === undefined) {
     const installExtraFlags = globalFlag;
 
-    throw new PolarError(ERRORS.PLUGINS.NOT_INSTALLED, {
+    throw new TrestleError(ERRORS.PLUGINS.NOT_INSTALLED, {
       plugin: pluginName,
       extraMessage: globalWarning,
       extraFlags: installExtraFlags
@@ -71,7 +71,7 @@ export function usePlugin (
   // We use the package.json's version of the name, as it is normalized.
   pluginName = pluginPackageJson.name;
 
-  if (PolarContext.loadedPlugins.includes(pluginName)) {
+  if (TrestleContext.loadedPlugins.includes(pluginName)) {
     return;
   }
 
@@ -84,7 +84,7 @@ export function usePlugin (
   const pluginPath = require.resolve(pluginName, options);
   loadPluginFile(pluginPath);
 
-  PolarContext.setPluginAsLoaded(pluginName);
+  TrestleContext.setPluginAsLoaded(pluginName);
 }
 
 function checkPeerDependencies (deps: StrMap, pluginName: string,
@@ -99,7 +99,7 @@ function checkPeerDependencies (deps: StrMap, pluginName: string,
     }
 
     if (dependencyPackageJson === undefined) {
-      throw new PolarError(ERRORS.PLUGINS.MISSING_DEPENDENCIES, {
+      throw new TrestleError(ERRORS.PLUGINS.MISSING_DEPENDENCIES, {
         plugin: pluginName,
         dependency: dependencyName,
         extraMessage: warning,
@@ -115,7 +115,7 @@ function checkPeerDependencies (deps: StrMap, pluginName: string,
         includePrerelease: true
       })
     ) {
-      throw new PolarError(ERRORS.PLUGINS.DEPENDENCY_VERSION_MISMATCH, {
+      throw new TrestleError(ERRORS.PLUGINS.DEPENDENCY_VERSION_MISMATCH, {
         plugin: pluginName,
         dependency: dependencyName,
         extraMessage: warning,

@@ -1,9 +1,9 @@
 import debug from "debug";
 
-import { PolarContext } from "./internal/context";
+import { TrestleContext } from "./internal/context";
 import { loadConfigAndTasks } from "./internal/core/config/config-loading";
 import { getEnvRuntimeArgs } from "./internal/core/params/env-variables";
-import { POLAR_PARAM_DEFINITIONS } from "./internal/core/params/polar-params";
+import { TRESTLE_PARAM_DEFINITIONS } from "./internal/core/params/trestle-params";
 import { Environment } from "./internal/core/runtime-env";
 import {
   disableReplWriterShowProxy,
@@ -11,20 +11,20 @@ import {
 } from "./internal/util/console";
 
 async function registerEnv (): Promise<void> {
-  if (!PolarContext.isCreated()) { return; }
+  if (!TrestleContext.isCreated()) { return; }
 
   require("source-map-support/register");
 
-  const ctx = PolarContext.createPolarContext();
+  const ctx = TrestleContext.createTrestleContext();
 
   if (isNodeCalledWithoutAScript()) { disableReplWriterShowProxy(); }
 
   const runtimeArgs = getEnvRuntimeArgs(
-    POLAR_PARAM_DEFINITIONS,
+    TRESTLE_PARAM_DEFINITIONS,
     process.env
   );
 
-  if (runtimeArgs.verbose) { debug.enable("polar*"); }
+  if (runtimeArgs.verbose) { debug.enable("trestle*"); }
 
   const config = await loadConfigAndTasks(runtimeArgs);
 

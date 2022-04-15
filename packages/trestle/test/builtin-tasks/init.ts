@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import { createProject } from "../../src/internal/cli/project-creation";
 import { ERRORS } from "../../src/internal/core/errors-list";
 import { useEnvironment } from "../helpers/environment";
-import { expectPolarErrorAsync } from "../helpers/errors";
+import { expectTrestleErrorAsync } from "../helpers/errors";
 import { useFixtureProject } from "../helpers/project";
 
 describe("Init task", () => {
@@ -37,7 +37,7 @@ describe("Init task", () => {
   it("When directory with same name exists", async function () {
     fs.mkdirSync("./testproject");
 
-    await expectPolarErrorAsync(
+    await expectTrestleErrorAsync(
       async () => await createProject("testproject"),
       ERRORS.GENERAL.INIT_INSIDE_PROJECT
     );

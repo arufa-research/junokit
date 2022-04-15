@@ -7,7 +7,7 @@ import {
   TaskArguments,
   TaskDefinition
 } from "../../types";
-import { PolarError } from "../core/errors";
+import { TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 
 export class ArgumentsParser {
@@ -33,7 +33,7 @@ export class ArgumentsParser {
 
   public static cLAToParamName (cLA: string): string {
     if (cLA.toLowerCase() !== cLA) {
-      throw new PolarError(ERRORS.ARGUMENTS.PARAM_NAME_INVALID_CASING, {
+      throw new TrestleError(ERRORS.ARGUMENTS.PARAM_NAME_INVALID_CASING, {
         param: cLA
       });
     }
@@ -84,7 +84,7 @@ export class ArgumentsParser {
         }
 
         if (!this._isCLAParamName(arg, paramDefs)) {
-          throw new PolarError(
+          throw new TrestleError(
             ERRORS.ARGUMENTS.UNRECOGNIZED_COMMAND_LINE_ARG,
             { argument: arg }
           );
@@ -149,7 +149,7 @@ export class ArgumentsParser {
       }
 
       if (!this._isCLAParamName(arg, taskDefinition.paramDefinitions)) {
-        throw new PolarError(ERRORS.ARGUMENTS.UNRECOGNIZED_PARAM_NAME, {
+        throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_PARAM_NAME, {
           param: arg
         });
       }
@@ -189,7 +189,7 @@ export class ArgumentsParser {
         continue;
       }
       if (!definition.isOptional) {
-        throw new PolarError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
+        throw new TrestleError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
           param: ArgumentsParser.paramNameToCLA(paramName)
         });
       }
@@ -226,7 +226,7 @@ export class ArgumentsParser {
     const definition = paramDefinitions[paramName];
 
     if (parsedArguments[paramName] !== undefined) {
-      throw new PolarError(ERRORS.ARGUMENTS.REPEATED_PARAM, {
+      throw new TrestleError(ERRORS.ARGUMENTS.REPEATED_PARAM, {
         param: claArg
       });
     }
@@ -238,7 +238,7 @@ export class ArgumentsParser {
       const value = rawCLAs[index];
 
       if (value === undefined) {
-        throw new PolarError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
+        throw new TrestleError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
           param: ArgumentsParser.paramNameToCLA(paramName)
         });
       }
@@ -262,7 +262,7 @@ export class ArgumentsParser {
 
       if (rawArg === undefined) {
         if (!definition.isOptional) {
-          throw new PolarError(ERRORS.ARGUMENTS.MISSING_POSITIONAL_ARG, {
+          throw new TrestleError(ERRORS.ARGUMENTS.MISSING_POSITIONAL_ARG, {
             param: definition.name
           });
         }
@@ -284,7 +284,7 @@ export class ArgumentsParser {
       !hasVariadicParam &&
       rawPositionalParamArgs.length > positionalParamDefinitions.length
     ) {
-      throw new PolarError(ERRORS.ARGUMENTS.UNRECOGNIZED_POSITIONAL_ARG, {
+      throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_POSITIONAL_ARG, {
         argument: rawPositionalParamArgs[positionalParamDefinitions.length]
       });
     }

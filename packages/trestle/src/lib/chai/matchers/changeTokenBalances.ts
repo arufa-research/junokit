@@ -1,8 +1,8 @@
 // import chalk from "chalk";
 // import { Account as WasmAccount } from "secretjs";
 
-// import { PolarContext } from "../../../internal/context";
-// import { PolarError } from "../../../internal/core/errors";
+// import { TrestleContext } from "../../../internal/context";
+// import { TrestleError } from "../../../internal/core/errors";
 // import { ERRORS } from "../../../internal/core/errors-list";
 // import type {
 //   Account, Coin, UserAccount
@@ -69,7 +69,7 @@
 //   accountAddresses: string[],
 //   token: string
 // ): Promise<number[]> {
-//   const client = getClient(PolarContext.getPolarContext().getRuntimeEnv().network);
+//   const client = getClient(TrestleContext.getTrestleContext().getRuntimeEnv().network);
 
 //   return await Promise.all(
 //     accountAddresses.map(async (accountAddr) => {
@@ -88,7 +88,7 @@
 //   logResponse?: boolean
 // ): Promise<number[]> {
 //   if (typeof transaction !== 'function') {
-//     throw new PolarError(ERRORS.GENERAL.NOT_A_FUNCTION, {
+//     throw new TrestleError(ERRORS.GENERAL.NOT_A_FUNCTION, {
 //       param: transaction
 //     });
 //   }

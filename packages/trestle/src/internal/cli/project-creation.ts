@@ -5,7 +5,7 @@ import os from "os";
 import path from "path";
 
 import { TRESTLE_NAME } from "../../lib/contants";
-import { PolarError } from "../core/errors";
+import { TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { ExecutionMode, getExecutionMode } from "../core/execution-mode";
 import { getPackageJson, getPackageRoot } from "../util/packageInfo";
@@ -42,7 +42,7 @@ function copySampleProject (projectName: string): void {
         return false;
       }
       if (fsExtra.pathExistsSync(dest)) {
-        throw new PolarError(ERRORS.GENERAL.INIT_INSIDE_PROJECT, {
+        throw new TrestleError(ERRORS.GENERAL.INIT_INSIDE_PROJECT, {
           clashingFile: relPath
         });
       }

@@ -1,6 +1,6 @@
 import { assert, AssertionError } from "chai";
 
-import { PolarError } from "../../src/internal/core/errors";
+import { TrestleError } from "../../src/internal/core/errors";
 import { ErrorDescriptor } from "../../src/internal/core/errors-list";
 
 export async function expectErrorAsync (
@@ -33,7 +33,7 @@ export async function expectErrorAsync (
   throw noError; // eslint-disable-line @typescript-eslint/no-throw-literal
 }
 
-export function expectPolarError (
+export function expectTrestleError (
   f: () => any,
   errorDescriptor: ErrorDescriptor,
   matchMessage?: string | RegExp,
@@ -42,15 +42,15 @@ export function expectPolarError (
   try {
     const returnValue = f();
     if (returnValue instanceof Promise) {
-      throw new Error("Please use expectPolarErrorAsync() when working with async code");
+      throw new Error("Please use expectTrestleErrorAsync() when working with async code");
     }
   } catch (error) {
-    assert.instanceOf(error, PolarError, errorMessage);
+    assert.instanceOf(error, TrestleError, errorMessage);
     assert.equal(error.number, errorDescriptor.number, errorMessage);
     assert.notMatch(
       error.message,
       /%[a-zA-Z][a-zA-Z0-9]*%/,
-      "PolarError has an non-replaced variable tag"
+      "TrestleError has an non-replaced variable tag"
     );
 
     if (typeof matchMessage === "string") {
@@ -62,37 +62,37 @@ export function expectPolarError (
     return;
   }
   throw new AssertionError( // eslint-disable-line @typescript-eslint/no-throw-literal
-    `PolarError number ${errorDescriptor.number} expected, but no Error was thrown`
+    `TrestleError number ${errorDescriptor.number} expected, but no Error was thrown`
   );
 }
 
-export async function expectPolarErrorAsync (
+export async function expectTrestleErrorAsync (
   f: () => Promise<any>,
   errorDescriptor: ErrorDescriptor,
   matchMessage?: string | RegExp
 ): Promise<void> {
   const error = new AssertionError(
-    `PolarError number ${errorDescriptor.number} expected, but no Error was thrown`
+    `TrestleError number ${errorDescriptor.number} expected, but no Error was thrown`
   );
 
   const match = String(matchMessage);
   const notExactMatch = new AssertionError(
-    `PolarError was correct, but should have include "${match}" but got "`
+    `TrestleError was correct, but should have include "${match}" but got "`
   );
 
   const notRegexpMatch = new AssertionError(
-    `PolarError was correct, but should have matched regex ${match} but got "`
+    `TrestleError was correct, but should have matched regex ${match} but got "`
   );
 
   try {
     await f();
   } catch (error) {
-    assert.instanceOf(error, PolarError);
+    assert.instanceOf(error, TrestleError);
     assert.equal(error.number, errorDescriptor.number);
     assert.notMatch(
       error.message,
       /%[a-zA-Z][a-zA-Z0-9]*%/,
-      "PolarError has an non-replaced variable tag"
+      "TrestleError has an non-replaced variable tag"
     );
 
     if (matchMessage !== undefined) {

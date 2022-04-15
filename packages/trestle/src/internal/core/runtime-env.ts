@@ -4,22 +4,22 @@ import type {
   EnvironmentExtender,
   Network,
   ParamDefinitionAny,
-  PolarRuntimeEnvironment,
   ResolvedConfig,
   RunSuperFunction,
   RunTaskFunction,
   RuntimeArgs,
   TaskArguments,
   TaskDefinition,
-  TasksMap
+  TasksMap,
+  TrestleRuntimeEnvironment
 } from "../../types";
-import { PolarError } from "../core/errors";
+import { TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { OverriddenTaskDefinition } from "./tasks/task-definitions";
 
-const log = debug("polar:core:pre");
+const log = debug("trestle:core:pre");
 
-export class Environment implements PolarRuntimeEnvironment {
+export class Environment implements TrestleRuntimeEnvironment {
   private static readonly _BLACKLISTED_PROPERTIES: string[] = [
     "injectToGlobal",
     "_runTaskDefinition"
@@ -30,14 +30,14 @@ export class Environment implements PolarRuntimeEnvironment {
   private readonly _extenders: EnvironmentExtender[];
 
   /**
-   * Initializes the polar Runtime Environment and the given
+   * Initializes the trestle Runtime Environment and the given
    * extender functions.
    *
    * @remarks The extenders' execution order is given by the order
-   * of the requires in the polar's config file and its plugins.
+   * of the requires in the trestle's config file and its plugins.
    *
-   * @param config The polar's config object.
-   * @param runtimeArgs The parsed polar's arguments.
+   * @param config The trestle's config object.
+   * @param runtimeArgs The parsed trestle's arguments.
    * @param tasks A map of tasks.
    * @param extenders A list of extenders.
    * @param networkRequired if true it will assert that a requested network is defined.
@@ -54,7 +54,7 @@ export class Environment implements PolarRuntimeEnvironment {
     const ncfg = config.networks[runtimeArgs.network];
     // network configuration is required for all tasks except few setup tasks
     if (!ncfg && networkRequired) {
-      throw new PolarError(ERRORS.NETWORK.CONFIG_NOT_FOUND, {
+      throw new TrestleError(ERRORS.NETWORK.CONFIG_NOT_FOUND, {
         network: runtimeArgs.network
       });
     }
@@ -86,7 +86,7 @@ export class Environment implements PolarRuntimeEnvironment {
     log("Running task %s", name);
 
     if (taskDefinition === undefined) {
-      throw new PolarError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
+      throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
         task: name
       });
     }
@@ -100,7 +100,7 @@ export class Environment implements PolarRuntimeEnvironment {
   };
 
   /**
-   * Injects the properties of `this` (the polar Runtime Environment) into the global scope.
+   * Injects the properties of `this` (the trestle Runtime Environment) into the global scope.
    *
    * @param blacklist a list of property names that won't be injected.
    *
@@ -153,7 +153,7 @@ export class Environment implements PolarRuntimeEnvironment {
       runSuperFunction.isDefined = true;
     } else {
       runSuperFunction = async () => {
-        throw new PolarError(ERRORS.TASK_DEFINITIONS.RUNSUPER_NOT_AVAILABLE, {
+        throw new TrestleError(ERRORS.TASK_DEFINITIONS.RUNSUPER_NOT_AVAILABLE, {
           taskName: taskDefinition.name
         });
       };
@@ -182,7 +182,7 @@ export class Environment implements PolarRuntimeEnvironment {
    * Also, populate missing, non-mandatory arguments with default param values (if any).
    *
    * @private
-   * @throws PolarError if any of the following are true:
+   * @throws TrestleError if any of the following are true:
    *  > a required argument is missing
    *  > an argument's value's type doesn't match the defined param type
    *
@@ -205,7 +205,7 @@ export class Environment implements PolarRuntimeEnvironment {
     ];
 
     const initResolvedArguments: {
-      errors: PolarError[]
+      errors: TrestleError[]
       values: TaskArguments
     } = { errors: [], values: {} };
 
@@ -260,7 +260,7 @@ export class Environment implements PolarRuntimeEnvironment {
       }
 
       // undefined & mandatory argument -> error
-      throw new PolarError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
+      throw new TrestleError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
         param: name
       });
     }

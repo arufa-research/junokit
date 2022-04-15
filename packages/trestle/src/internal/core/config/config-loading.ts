@@ -1,7 +1,7 @@
 import path from "path";
 
 import type { ResolvedConfig, RuntimeArgs } from "../../../types";
-import { PolarContext } from "../../context";
+import { TrestleContext } from "../../context";
 import { loadPluginFile } from "../plugins";
 import { getUserConfigPath } from "../project-structure";
 import { resolveConfig } from "./config-resolution";
@@ -49,6 +49,6 @@ export async function loadConfigAndTasks (
     configPath,
     defaultConfig,
     userConfig,
-    PolarContext.getPolarContext().configExtenders
+    TrestleContext.getTrestleContext().configExtenders
   );
 }

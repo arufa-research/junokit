@@ -7,16 +7,16 @@ import debug from "debug";
 import semver from "semver";
 
 import { TASK_HELP } from "../../builtin-tasks/task-names";
-import { PolarRuntimeEnvironment, RuntimeArgs, TaskArguments } from "../../types";
-import { PolarContext } from "../context";
+import { RuntimeArgs, TaskArguments, TrestleRuntimeEnvironment } from "../../types";
+import { TrestleContext } from "../context";
 import { loadConfigAndTasks } from "../core/config/config-loading";
-import { PolarError, PolarPluginError } from "../core/errors";
+import { PolarPluginError, TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { getEnvRuntimeArgs } from "../core/params/env-variables";
 import {
-  POLAR_PARAM_DEFINITIONS,
-  POLAR_SHORT_PARAM_SUBSTITUTIONS
-} from "../core/params/polar-params";
+  TRESTLE_PARAM_DEFINITIONS,
+  TRESTLE_SHORT_PARAM_SUBSTITUTIONS
+} from "../core/params/trestle-params";
 import { isCwdInsideProject } from "../core/project-structure";
 import { Environment } from "../core/runtime-env";
 import { isSetupTask } from "../core/tasks/builtin-tasks";
@@ -24,7 +24,7 @@ import { getPackageJson, PackageJson } from "../util/packageInfo";
 import { ArgumentsParser } from "./arguments-parser";
 
 const TRESTLE_NAME = "trestle";
-const log = debug("polar:core:cli");
+const log = debug("trestle:core:cli");
 
 async function printVersionMessage (packageJson: PackageJson): Promise<void> {
   console.log(packageJson.version);
@@ -33,15 +33,15 @@ async function printVersionMessage (packageJson: PackageJson): Promise<void> {
 function ensureValidNodeVersion (packageJson: PackageJson): void {
   const requirement = packageJson.engines.node;
   if (!semver.satisfies(process.version, requirement)) {
-    throw new PolarError(ERRORS.GENERAL.INVALID_NODE_VERSION, {
+    throw new TrestleError(ERRORS.GENERAL.INVALID_NODE_VERSION, {
       requirement
     });
   }
 }
 
-function printErrRecur (error: PolarError): void {
+function printErrRecur (error: TrestleError): void {
   if (error.parent) {
-    if (error.parent instanceof PolarError) {
+    if (error.parent instanceof TrestleError) {
       printErrRecur(error.parent);
     } else {
       console.error(error.parent);
@@ -49,7 +49,7 @@ function printErrRecur (error: PolarError): void {
   }
 }
 
-function printStackTraces (showStackTraces: boolean, error: PolarError): void {
+function printStackTraces (showStackTraces: boolean, error: TrestleError): void {
   if (error === undefined) { return; }
   if (showStackTraces) {
     printErrRecur(error);
@@ -59,7 +59,7 @@ function printStackTraces (showStackTraces: boolean, error: PolarError): void {
 }
 
 interface EnvAndArgs {
-  env: PolarRuntimeEnvironment
+  env: TrestleRuntimeEnvironment
   taskName: string
   taskArguments: TaskArguments
 }
@@ -83,7 +83,7 @@ export async function gatherArguments (): Promise<RuntimeArgsAndPackageJson> {
   ensureValidNodeVersion(packageJson);
 
   const envVariableArguments = getEnvRuntimeArgs(
-    POLAR_PARAM_DEFINITIONS,
+    TRESTLE_PARAM_DEFINITIONS,
     process.env);
 
   const argumentsParser = new ArgumentsParser();
@@ -92,14 +92,14 @@ export async function gatherArguments (): Promise<RuntimeArgsAndPackageJson> {
     taskName: maybeTaskName,
     unparsedCLAs
   } = argumentsParser.parseRuntimeArgs(
-    POLAR_PARAM_DEFINITIONS,
-    POLAR_SHORT_PARAM_SUBSTITUTIONS,
+    TRESTLE_PARAM_DEFINITIONS,
+    TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
     envVariableArguments,
     process.argv.slice(2)
   );
 
   if (runtimeArgs.verbose) {
-    debug.enable("polar*");
+    debug.enable("trestle*");
   }
 
   showStackTraces = runtimeArgs.showStackTraces;
@@ -120,13 +120,13 @@ export async function loadEnvironmentAndArgs (
   argumentsParser: ArgumentsParser,
   unparsedCLAs: string[]
 ): Promise<EnvAndArgs> {
-  const ctx = PolarContext.createPolarContext();
+  const ctx = TrestleContext.createTrestleContext();
   const config = await loadConfigAndTasks(runtimeArgs);
   const envExtenders = ctx.extendersManager.getExtenders();
   const taskDefinitions = ctx.tasksDSL.getTaskDefinitions();
   let taskName = maybeTaskName ?? TASK_HELP;
   if (taskDefinitions[taskName] == null) {
-    throw new PolarError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
+    throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
       task: taskName
     });
   }
@@ -149,7 +149,7 @@ export async function loadEnvironmentAndArgs (
 
   // Being inside of a project is non-mandatory for help and init
   if (!isSetup && !isCwdInsideProject()) {
-    throw new PolarError(ERRORS.GENERAL.NOT_INSIDE_PROJECT, { task: origTaskName });
+    throw new TrestleError(ERRORS.GENERAL.NOT_INSIDE_PROJECT, { task: origTaskName });
   }
 
   const env = new Environment(
@@ -170,7 +170,7 @@ export async function loadEnvironmentAndArgs (
 
 /* eslint-disable sonarjs/cognitive-complexity */
 async function main (): Promise<void> {
-  log(`Initiating polar task !`);
+  log(`Initiating trestle task !`);
   let showStackTraces = false;
   try {
     const {
@@ -196,9 +196,9 @@ async function main (): Promise<void> {
     );
     await env.run(taskName, taskArguments);
 
-    log(`Quitting polar after successfully running task ${taskName}`);
+    log(`Quitting trestle after successfully running task ${taskName}`);
   } catch (error) {
-    if (PolarError.isPolarError(error)) {
+    if (TrestleError.isTrestleError(error)) {
       console.error(chalk.red(`Error ${error.message}`));
     } else if (PolarPluginError.isPolarPluginError(error)) {
       console.error(

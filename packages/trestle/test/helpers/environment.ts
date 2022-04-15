@@ -1,30 +1,30 @@
 import debug from "debug";
 
-import { PolarContext } from "../../src/internal/context";
+import { TrestleContext } from "../../src/internal/context";
 import { loadConfigAndTasks } from "../../src/internal/core/config/config-loading";
-import { PolarError } from "../../src/internal/core/errors";
+import { TrestleError } from "../../src/internal/core/errors";
 import { ERRORS } from "../../src/internal/core/errors-list";
 import { getEnvRuntimeArgs } from "../../src/internal/core/params/env-variables";
-import { POLAR_PARAM_DEFINITIONS } from "../../src/internal/core/params/polar-params";
+import { TRESTLE_PARAM_DEFINITIONS } from "../../src/internal/core/params/trestle-params";
 import { Environment } from "../../src/internal/core/runtime-env";
-import { resetPolarContext } from "../../src/internal/reset";
-import { NetworkConfig, PromiseAny, PolarRuntimeEnvironment, PolarNetworkConfig } from "../../src/types";
+import { resetTrestleContext } from "../../src/internal/reset";
+import { NetworkConfig, PromiseAny, TrestleNetworkConfig, TrestleRuntimeEnvironment } from "../../src/types";
 
 declare module "mocha" {
   interface Context {
-    env: PolarRuntimeEnvironment
+    env: TrestleRuntimeEnvironment
   }
 }
 
-let ctx: PolarContext;
+let ctx: TrestleContext;
 
-export const defaultNetCfg: PolarNetworkConfig = {
+export const defaultNetCfg: TrestleNetworkConfig = {
   accounts: [],
   endpoint: "http://localhost:1337/"
 };
 
 export function useEnvironment (
-  beforeEachFn?: (polarRuntimeEnv: PolarRuntimeEnvironment) => PromiseAny
+  beforeEachFn?: (polarRuntimeEnv: TrestleRuntimeEnvironment) => PromiseAny
 ): void {
   beforeEach("Load environment", async function () {
     this.env = await getEnv(defaultNetCfg);
@@ -34,26 +34,28 @@ export function useEnvironment (
   });
 
   afterEach("reset builder context", function () {
-    resetPolarContext();
+    resetTrestleContext();
   });
 }
 
-export async function getEnv (defaultNetworkCfg?: NetworkConfig): Promise<PolarRuntimeEnvironment> {
-  if (PolarContext.isCreated()) {
-    ctx = PolarContext.getPolarContext();
+export async function getEnv (
+  defaultNetworkCfg?: NetworkConfig
+): Promise<TrestleRuntimeEnvironment> {
+  if (TrestleContext.isCreated()) {
+    ctx = TrestleContext.getTrestleContext();
 
     // The most probable reason for this to happen is that this file was imported
     // from the config file
     if (ctx.environment === undefined) {
-      throw new PolarError(ERRORS.GENERAL.LIB_IMPORTED_FROM_THE_CONFIG);
+      throw new TrestleError(ERRORS.GENERAL.LIB_IMPORTED_FROM_THE_CONFIG);
     }
 
     return ctx.environment;
   }
 
-  ctx = PolarContext.createPolarContext();
+  ctx = TrestleContext.createTrestleContext();
   const runtimeArgs = getEnvRuntimeArgs(
-    POLAR_PARAM_DEFINITIONS,
+    TRESTLE_PARAM_DEFINITIONS,
     process.env
   );
 

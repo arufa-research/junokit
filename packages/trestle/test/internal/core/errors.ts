@@ -2,7 +2,7 @@
 import { assert } from "chai";
 
 import {
-  PolarError, PolarPluginError
+  TrestleError, PolarPluginError
 } from "../../../src/internal/core/errors";
 import {
   ERROR_RANGES,
@@ -19,39 +19,39 @@ const mockErrorDescriptor: ErrorDescriptor = {
   shouldBeReported: false
 };
 
-describe("PolarError", () => {
+describe("TrestleError", () => {
   describe("Type guard", () => {
-    it("Should return true for PolarErrors", () => {
+    it("Should return true for TrestleErrors", () => {
       assert.isTrue(
-        PolarError.isPolarError(new PolarError(mockErrorDescriptor))
+        TrestleError.isTrestleError(new TrestleError(mockErrorDescriptor))
       );
     });
 
     it("Should return false for everything else", () => {
-      assert.isFalse(PolarError.isPolarError(new Error()));
+      assert.isFalse(TrestleError.isTrestleError(new Error()));
       assert.isFalse(
-        PolarError.isPolarError(new PolarPluginError("asd", "asd"))
+        TrestleError.isTrestleError(new PolarPluginError("asd", "asd"))
       );
-      assert.isFalse(PolarError.isPolarError(undefined));
-      assert.isFalse(PolarError.isPolarError(null));
-      assert.isFalse(PolarError.isPolarError(123));
-      assert.isFalse(PolarError.isPolarError("123"));
-      assert.isFalse(PolarError.isPolarError({ asd: 123 }));
+      assert.isFalse(TrestleError.isTrestleError(undefined));
+      assert.isFalse(TrestleError.isTrestleError(null));
+      assert.isFalse(TrestleError.isTrestleError(123));
+      assert.isFalse(TrestleError.isTrestleError("123"));
+      assert.isFalse(TrestleError.isTrestleError({ asd: 123 }));
     });
   });
 
   describe("Without parent error", () => {
     it("should have the right error number", () => {
-      const error = new PolarError(mockErrorDescriptor);
+      const error = new TrestleError(mockErrorDescriptor);
       assert.equal(error.number, mockErrorDescriptor.number);
     });
 
     it("should format the error code to 4 digits", () => {
-      const error = new PolarError(mockErrorDescriptor);
+      const error = new TrestleError(mockErrorDescriptor);
       assert.equal(error.message.substr(0, 10), "PE123: err");
 
       assert.equal(
-        new PolarError({
+        new TrestleError({
           number: 1,
           message: "",
           title: "Title",
@@ -63,12 +63,12 @@ describe("PolarError", () => {
     });
 
     it("should have the right error message", () => {
-      const error = new PolarError(mockErrorDescriptor);
+      const error = new TrestleError(mockErrorDescriptor);
       assert.equal(error.message, `PE123: ${mockErrorDescriptor.message}`);
     });
 
     it("should format the error message with the template params", () => {
-      const error = new PolarError(
+      const error = new TrestleError(
         {
           number: 12,
           message: "%a% %b% %c%",
@@ -82,24 +82,24 @@ describe("PolarError", () => {
     });
 
     it("shouldn't have a parent", () => {
-      assert.isUndefined(new PolarError(mockErrorDescriptor).parent);
+      assert.isUndefined(new TrestleError(mockErrorDescriptor).parent);
     });
 
     it("Should work with instanceof", () => {
-      const error = new PolarError(mockErrorDescriptor);
-      assert.instanceOf(error, PolarError);
+      const error = new TrestleError(mockErrorDescriptor);
+      assert.instanceOf(error, TrestleError);
     });
   });
 
   describe("With parent error", () => {
     it("should have the right parent error", () => {
       const parent = new Error();
-      const error = new PolarError(mockErrorDescriptor, {}, parent);
+      const error = new TrestleError(mockErrorDescriptor, {}, parent);
       assert.equal(error.parent, parent);
     });
 
     it("should format the error message with the template params", () => {
-      const error = new PolarError(
+      const error = new TrestleError(
         {
           number: 12,
           message: "%a% %b% %c%",
@@ -115,8 +115,8 @@ describe("PolarError", () => {
 
     it("Should work with instanceof", () => {
       const parent = new Error();
-      const error = new PolarError(mockErrorDescriptor, {}, parent);
-      assert.instanceOf(error, PolarError);
+      const error = new TrestleError(mockErrorDescriptor, {}, parent);
+      assert.instanceOf(error, TrestleError);
     });
   });
 });
@@ -215,7 +215,7 @@ describe("PolarPluginError", () => {
       assert.isFalse(PolarPluginError.isPolarPluginError(new Error()));
       assert.isFalse(
         PolarPluginError.isPolarPluginError(
-          new PolarError(ERRORS.GENERAL.NOT_INSIDE_PROJECT)
+          new TrestleError(ERRORS.GENERAL.NOT_INSIDE_PROJECT)
         )
       );
       assert.isFalse(PolarPluginError.isPolarPluginError(undefined));
@@ -307,17 +307,17 @@ describe("PolarPluginError", () => {
 // describe("applyErrorMessageTemplate", () => {
 //  describe("Variable names", () => {
 //    it("Should reject invalid variable names", () => {
-//      expectPolarError(
+//      expectTrestleError(
 //        () => applyErrorMessageTemplate("", { "1": 1 }),
 //        ERRORS.INTERNAL.TEMPLATE_INVALID_VARIABLE_NAME
 //      );
 //
-//      expectPolarError(
+//      expectTrestleError(
 //        () => applyErrorMessageTemplate("", { "asd%": 1 }),
 //        ERRORS.INTERNAL.TEMPLATE_INVALID_VARIABLE_NAME
 //      );
 //
-//      expectPolarError(
+//      expectTrestleError(
 //        () => applyErrorMessageTemplate("", { "asd asd": 1 }),
 //        ERRORS.INTERNAL.TEMPLATE_INVALID_VARIABLE_NAME
 //      );
@@ -326,17 +326,17 @@ describe("PolarPluginError", () => {
 //
 //  describe("Values", () => {
 //    it("shouldn't contain valid variable tags", () => {
-//      expectPolarError(
+//      expectTrestleError(
 //        () => applyErrorMessageTemplate("%asd%", { asd: "%as%" }),
 //        ERRORS.INTERNAL.TEMPLATE_VALUE_CONTAINS_VARIABLE_TAG
 //      );
 //
-//      expectPolarError(
+//      expectTrestleError(
 //        () => applyErrorMessageTemplate("%asd%", { asd: "%a123%" }),
 //        ERRORS.INTERNAL.TEMPLATE_VALUE_CONTAINS_VARIABLE_TAG
 //      );
 //
-//      expectPolarError(
+//      expectTrestleError(
 //        () =>
 //          applyErrorMessageTemplate("%asd%", {
 //            asd: { toString: () => "%asd%" },
@@ -346,7 +346,7 @@ describe("PolarPluginError", () => {
 //    });
 //
 //    it("Shouldn't contain the %% tag", () => {
-//      expectPolarError(
+//      expectTrestleError(
 //        () => applyErrorMessageTemplate("%asd%", { asd: "%%" }),
 //        ERRORS.INTERNAL.TEMPLATE_VALUE_CONTAINS_VARIABLE_TAG
 //      );
@@ -444,7 +444,7 @@ describe("PolarPluginError", () => {
 //
 //    describe("Missing variable tag", () => {
 //      it("Should fail if a viable tag is missing and its value is not", () => {
-//        expectPolarError(
+//        expectTrestleError(
 //          () => applyErrorMessageTemplate("", { asd: "123" }),
 //          ERRORS.INTERNAL.TEMPLATE_VARIABLE_TAG_MISSING
 //        );

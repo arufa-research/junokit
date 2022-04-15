@@ -3,8 +3,8 @@ import chalk from "chalk";
 import fs from "fs-extra";
 import path from "path";
 
-import { PolarContext } from "../../internal/context";
-import { PolarError } from "../../internal/core/errors";
+import { TrestleContext } from "../../internal/context";
+import { TrestleError } from "../../internal/core/errors";
 import { ERRORS } from "../../internal/core/errors-list";
 import {
   ARTIFACTS_DIR,
@@ -20,9 +20,8 @@ import type {
   ContractFunction,
   DeployInfo,
   InstantiateInfo,
-  Network,
-  PolarRuntimeEnvironment,
   StdFee,
+  TrestleRuntimeEnvironment,
   UserAccount
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
@@ -118,7 +117,9 @@ export class Contract {
   readonly executeAbi: Abi;
   readonly responseAbis: Abi[] = [];
 
-  private readonly env: PolarRuntimeEnvironment = PolarContext.getPolarContext().getRuntimeEnv();
+  private readonly env: TrestleRuntimeEnvironment =
+  TrestleContext.getTrestleContext().getRuntimeEnv();
+
   private client?: CosmWasmClient;
 
   public codeId: number;
@@ -207,12 +208,12 @@ export class Contract {
 
   async parseSchema (): Promise<void> {
     if (!fs.existsSync(this.querySchemaPath)) {
-      throw new PolarError(ERRORS.ARTIFACTS.QUERY_SCHEMA_NOT_FOUND, {
+      throw new TrestleError(ERRORS.ARTIFACTS.QUERY_SCHEMA_NOT_FOUND, {
         param: this.contractName
       });
     }
     if (!fs.existsSync(this.executeSchemaPath)) {
-      throw new PolarError(ERRORS.ARTIFACTS.EXEC_SCHEMA_NOT_FOUND, {
+      throw new TrestleError(ERRORS.ARTIFACTS.EXEC_SCHEMA_NOT_FOUND, {
         param: this.contractName
       });
     }
@@ -318,7 +319,6 @@ export class Contract {
       return info;
     }
     const signingClient = await getSigningClient(this.env.network, accountVal);
-    const memo1 = "instantiating";
     const initTimestamp = String(new Date());
     label = (this.env.runtimeArgs.command === "test")
       ? `deploy ${this.contractName} ${initTimestamp}` : label;
@@ -351,7 +351,7 @@ export class Contract {
     callArgs: Record<string, unknown>
   ): Promise<any> { // eslint-disable-line  @typescript-eslint/no-explicit-any
     if (this.contractAddress === "mock_address") {
-      throw new PolarError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
+      throw new TrestleError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
         param: this.contractName
       });
     }
@@ -373,7 +373,7 @@ export class Contract {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
     if (this.contractAddress === "mock_address") {
-      throw new PolarError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
+      throw new TrestleError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
         param: this.contractName
       });
     }

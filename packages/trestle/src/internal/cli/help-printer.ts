@@ -5,7 +5,7 @@ import {
   ParamDefinitionsMap,
   TasksMap
 } from "../../types";
-import { PolarError } from "../core/errors";
+import { TrestleError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { cmpStr } from "../util/strings";
 import { ArgumentsParser } from "./arguments-parser";
@@ -61,7 +61,7 @@ export class HelpPrinter {
     const taskDefinition = this._tasks[taskName];
 
     if (taskDefinition === undefined) {
-      throw new PolarError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
+      throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
         task: taskName
       });
     }

@@ -5,7 +5,7 @@ This template consists of initialization, compilation and deployment modules.
 ### Initialize a project
 
 ```bash
-polar init <project-name>
+trestle init <project-name>
 ```
 
 This will create a directory <project-name> inside current directory with boiler-plate code.
@@ -21,5 +21,5 @@ cd <project-name>
 Compile the project and generate `.wasm` files:
 
 ```bash
-polar compile
+trestle compile
 ```

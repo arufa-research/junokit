@@ -6,7 +6,7 @@ import path from "path";
 import { copyTemplatetoDestination, fetchRepository, setUpTempDirectory } from "../util/fetch";
 import { createConfirmationPrompt, installDependencies, printSuggestedCommands, printWelcomeMessage } from "./project-creation";
 
-const TEMPLATES_GIT_REMOTE = 'arufa-research/polar-templates';
+const TEMPLATES_GIT_REMOTE = 'arufa-research/trestle-templates';
 const DEFAULT_TEMPLATE = 'counter';
 
 function isYarnProject (destination: string): boolean {
@@ -80,7 +80,7 @@ async function checkDir (destination: string, force: boolean): Promise<void> {
 }
 
 /**
- * Ensures that the template passed by user exists in arufa-research/polar-templates,
+ * Ensures that the template passed by user exists in arufa-research/trestle-templates,
  * otherwise user can select a template from the existing templates or exit initialization
  * @param basePath path to temporary directory (contains all templates)
  * @param templateName template name passed by user (bare if no template name is passed)
@@ -131,10 +131,10 @@ function _normalizeDestination (destination?: string): string {
 }
 
 /**
- * Initialize a template from 'arufa-research/polar-templates' with given name
+ * Initialize a template from 'arufa-research/trestle-templates' with given name
  * and destination
  * @param force --force flag. If true then contents in destination directory are overwritten
- * @param templateName templateName to initialize from arufa-research/polar-templates.
+ * @param templateName templateName to initialize from arufa-research/trestle-templates.
  * @param destination destination directory to initialize template to.
  * Defaults to current working directory
  *  - If template name is not passed, the default template is initialized.

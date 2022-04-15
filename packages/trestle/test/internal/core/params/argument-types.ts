@@ -6,7 +6,7 @@ import * as path from "path";
 
 import { ERRORS } from "../../../../src/internal/core/errors-list";
 import * as types from "../../../../src/internal/core/params/argument-types";
-import { expectPolarError } from "../../../helpers/errors";
+import { expectTrestleError } from "../../../helpers/errors";
 
 describe("argumentTypes", () => {
   it("should set the right name to all the argument types", () => {
@@ -35,27 +35,27 @@ describe("argumentTypes", () => {
     });
 
     it("should throw the right error on invalid values", () => {
-      expectPolarError(
+      expectTrestleError(
         () => types.boolean.parse("arg", "asd1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.boolean.parse("arg", "f"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.boolean.parse("arg", "t"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.boolean.parse("arg", "1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.boolean.parse("arg", "0"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.boolean.parse("arg", ""),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
@@ -87,39 +87,39 @@ describe("argumentTypes", () => {
     });
 
     it("should fail with incorrect values", () => {
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", ""),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "1."),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", ".1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "0.1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "asdas"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "a1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "1a"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "1 1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.int.parse("arg", "x123"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
@@ -161,47 +161,47 @@ describe("argumentTypes", () => {
     });
 
     it("should fail with incorrect values", () => {
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", ""),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "."),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", ".."),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "1..1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "1.asd"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "asd.123"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "asdas"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "a1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "1a"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "1 1"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
-      expectPolarError(
+      expectTrestleError(
         () => types.float.parse("arg", "x123"),
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE
       );
@@ -227,7 +227,7 @@ describe("argumentTypes", () => {
     });
 
     it("Should throw if the file doesnt exist", () => {
-      expectPolarError(
+      expectTrestleError(
         () => types.inputFile.parse("A file", "NON_EXISTENT_FILE"),
         ERRORS.ARGUMENTS.INVALID_INPUT_FILE
       );
@@ -253,7 +253,7 @@ describe("argumentTypes", () => {
         }
       });
 
-      expectPolarError(
+      expectTrestleError(
         () => types.inputFile.parse("A file", "A"),
         ERRORS.ARGUMENTS.INVALID_INPUT_FILE
       );
@@ -262,7 +262,7 @@ describe("argumentTypes", () => {
     });
 
     it("Should throw if a directory is given", () => {
-      expectPolarError(
+      expectTrestleError(
         () => types.inputFile.parse("A file", __dirname),
         ERRORS.ARGUMENTS.INVALID_INPUT_FILE
       );
@@ -271,17 +271,17 @@ describe("argumentTypes", () => {
 
   describe("JSON type", () => {
     it("Should fail if the argument isn't JSON", () => {
-      expectPolarError(
+      expectTrestleError(
         () => types.json.parse("j", "a"),
         ERRORS.ARGUMENTS.INVALID_JSON_ARGUMENT
       );
 
-      expectPolarError(
+      expectTrestleError(
         () => types.json.parse("j", "{a:1"),
         ERRORS.ARGUMENTS.INVALID_JSON_ARGUMENT
       );
 
-      expectPolarError(
+      expectTrestleError(
         () => types.json.parse("j", "[1],"),
         ERRORS.ARGUMENTS.INVALID_JSON_ARGUMENT
       );

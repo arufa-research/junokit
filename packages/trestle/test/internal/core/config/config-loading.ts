@@ -4,23 +4,25 @@ import path from "path";
 import {
   TASK_CLEAN,
   TASK_HELP,
-  TASK_INIT,
+  TASK_INIT
 } from "../../../../src/builtin-tasks/task-names";
-import { PolarContext } from "../../../../src/internal/context";
+import { TrestleContext } from "../../../../src/internal/context";
 import { loadConfigAndTasks } from "../../../../src/internal/core/config/config-loading";
 import { ERRORS } from "../../../../src/internal/core/errors-list";
-import { resetPolarContext } from "../../../../src/internal/reset";
+import { resetTrestleContext } from "../../../../src/internal/reset";
 import { useEnvironment } from "../../../helpers/environment";
-import { expectPolarErrorAsync } from "../../../helpers/errors";
+import { expectTrestleErrorAsync } from "../../../helpers/errors";
 import {
   getFixtureProjectPath,
   useFixtureProject
 } from "../../../helpers/project";
 import { account } from "../../../mocks/account";
 
+const CONFIG_PROJECT = "config-project";
+
 describe("config loading", function () {
   describe("default config path", function () {
-    useFixtureProject("config-project");
+    useFixtureProject(CONFIG_PROJECT);
     useEnvironment();
 
     it("should load the default config if none is given", function () {
@@ -35,15 +37,15 @@ describe("config loading", function () {
       useFixtureProject("invalid-config");
 
       beforeEach(function () {
-        PolarContext.createPolarContext();
+        TrestleContext.createTrestleContext();
       });
 
       afterEach(function () {
-        resetPolarContext();
+        resetTrestleContext();
       });
 
       it("Should throw the right error", function () {
-        expectPolarErrorAsync(
+        expectTrestleErrorAsync(
           () => loadConfigAndTasks(),
           ERRORS.GENERAL.INVALID_CONFIG
         ).catch((err) => console.log(err));
@@ -55,11 +57,11 @@ describe("config loading", function () {
     useFixtureProject("custom-config-file");
 
     beforeEach(function () {
-      PolarContext.createPolarContext();
+      TrestleContext.createTrestleContext();
     });
 
     afterEach(function () {
-      resetPolarContext();
+      resetTrestleContext();
     });
 
     it("should accept a relative path from the CWD", async function () {
@@ -93,7 +95,7 @@ describe("config loading", function () {
   });
 
   describe("Tasks loading", function () {
-    useFixtureProject("config-project");
+    useFixtureProject(CONFIG_PROJECT);
     useEnvironment();
 
     it("Should define the default tasks", function () {
@@ -110,16 +112,16 @@ describe("config loading", function () {
   });
 
   describe("Config env", function () {
-    useFixtureProject("config-project");
+    useFixtureProject(CONFIG_PROJECT);
 
     afterEach(function () {
-      resetPolarContext();
+      resetTrestleContext();
     });
 
     it("should remove everything from global state after loading", async function () {
       const globalAsAny: any = global;
 
-      PolarContext.createPolarContext();
+      TrestleContext.createTrestleContext();
       await loadConfigAndTasks();
 
       assert.isUndefined(globalAsAny.internalTask);
@@ -128,9 +130,9 @@ describe("config loading", function () {
       assert.isUndefined(globalAsAny.extendEnvironment);
       assert.isUndefined(globalAsAny.usePlugin);
 
-      resetPolarContext();
+      resetTrestleContext();
 
-      PolarContext.createPolarContext();
+      TrestleContext.createTrestleContext();
       await loadConfigAndTasks();
 
       assert.isUndefined(globalAsAny.internalTask);
@@ -138,8 +140,7 @@ describe("config loading", function () {
       assert.isUndefined(globalAsAny.types);
       assert.isUndefined(globalAsAny.extendEnvironment);
       assert.isUndefined(globalAsAny.usePlugin);
-      resetPolarContext();
+      resetTrestleContext();
     });
   });
-
 });

@@ -4,7 +4,7 @@ import path from "path";
 
 import { ERRORS } from "../../src/internal/core/errors-list";
 import { compile } from "../../src/lib/compile/compile";
-import { expectPolarErrorAsync } from "../helpers/errors";
+import { expectTrestleErrorAsync } from "../helpers/errors";
 import { useFixtureProject } from "../helpers/project";
 
 describe("Compile task", () => {
@@ -33,7 +33,7 @@ describe("Compile task", () => {
   describe("Should not compile multiple contract with same name", function () {
     useFixtureProject("multiproject-error");
     it("Should give an error of same contract names", async function () {
-      await expectPolarErrorAsync(
+      await expectTrestleErrorAsync(
         async () => await compile(false, [], false, false),
         ERRORS.GENERAL.SAME_CONTRACT_NAMES
       );
@@ -53,7 +53,7 @@ describe("Compile task", () => {
     useFixtureProject("errorproject");
     it("Should raise Polar error", async function () {
       // check for Exception
-      await expectPolarErrorAsync(
+      await expectTrestleErrorAsync(
         async () => await compile(false, [], false, false),
         ERRORS.GENERAL.RUST_COMPILE_ERROR
       );

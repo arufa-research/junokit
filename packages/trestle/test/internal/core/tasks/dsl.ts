@@ -3,7 +3,7 @@ import { assert } from "chai";
 
 import { ERRORS } from "../../../../src/internal/core/errors-list";
 import { TasksDSL } from "../../../../src/internal/core/tasks/dsl";
-import { expectPolarErrorAsync } from "../../../helpers/errors";
+import { expectTrestleErrorAsync } from "../../../helpers/errors";
 
 describe("TasksDSL", () => {
   let dsl: TasksDSL;
@@ -49,7 +49,7 @@ describe("TasksDSL", () => {
     const runSuperNop: any = async (): Promise<void> => {};
     runSuperNop.isDefined = false;
 
-    await expectPolarErrorAsync(
+    await expectTrestleErrorAsync(
       async () => await task.action({}, {} as any, runSuperNop),
       ERRORS.TASK_DEFINITIONS.ACTION_NOT_SET
     );

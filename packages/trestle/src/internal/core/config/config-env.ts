@@ -5,7 +5,7 @@ import {
   EnvironmentExtender,
   TaskArguments
 } from "../../../types";
-import { PolarContext } from "../../context";
+import { TrestleContext } from "../../context";
 import * as argumentTypes from "../params/argument-types";
 import { usePlugin as usePluginImplementation } from "../plugins";
 
@@ -25,7 +25,7 @@ export function task<ArgsT extends TaskArguments> (
   descriptionOrAction?: string | ActionType<ArgsT>,
   action?: ActionType<ArgsT>
 ): ConfigurableTaskDefinition {
-  const ctx = PolarContext.getPolarContext();
+  const ctx = TrestleContext.getTrestleContext();
   const dsl = ctx.tasksDSL;
 
   if (descriptionOrAction === undefined) {
@@ -55,7 +55,7 @@ export function internalTask<ArgsT extends TaskArguments> (
   descriptionOrAction?: string | ActionType<ArgsT>,
   action?: ActionType<ArgsT>
 ): ConfigurableTaskDefinition {
-  const ctx = PolarContext.getPolarContext();
+  const ctx = TrestleContext.getTrestleContext();
   const dsl = ctx.tasksDSL;
 
   if (descriptionOrAction === undefined) {
@@ -73,27 +73,27 @@ export const types = argumentTypes;
 
 /**
  * Register an environment extender what will be run after the
- * polar Runtime Environment is initialized.
+ * trestle Runtime Environment is initialized.
  *
- * @param extender A function that receives the polar Runtime
+ * @param extender A function that receives the trestle Runtime
  * Environment.
  */
 export function extendEnvironment (extender: EnvironmentExtender): void {
-  const ctx = PolarContext.getPolarContext();
+  const ctx = TrestleContext.getTrestleContext();
   const extenderManager = ctx.extendersManager;
   extenderManager.add(extender);
 }
 
 export function extendConfig (extender: ConfigExtender): void {
-  const ctx = PolarContext.getPolarContext();
+  const ctx = TrestleContext.getTrestleContext();
   ctx.configExtenders.push(extender);
 }
 
 /**
- * Loads a polar plugin
+ * Loads a trestle plugin
  * @param pluginName The plugin name.
  */
 export function usePlugin (pluginName: string): void {
-  const ctx = PolarContext.getPolarContext();
+  const ctx = TrestleContext.getTrestleContext();
   usePluginImplementation(ctx, pluginName);
 }

@@ -5,7 +5,7 @@ import {
   validateConfig
 } from "../../../../src/internal/core/config/config-validation";
 import { ERRORS } from "../../../../src/internal/core/errors-list";
-import { expectPolarError } from "../../../helpers/errors";
+import { expectTrestleError } from "../../../helpers/errors";
 
 const accountStatic = {
   name: "staticAccount",
@@ -26,7 +26,7 @@ describe("Config validation", function () {
 
     it("Should fail with invalid types (paths)", function () {
       for (const cfg of invalidPaths) {
-        expectPolarError(
+        expectTrestleError(
           () => validateConfig(cfg),
           ERRORS.GENERAL.INVALID_CONFIG,
           undefined,
@@ -78,7 +78,7 @@ describe("Config validation", function () {
         }
       };
 
-      expectPolarError(
+      expectTrestleError(
         () => validateConfig(cfg),
         ERRORS.GENERAL.INVALID_CONFIG,
         `Account name ${accountStatic.name} already exists at index 0`);
@@ -87,12 +87,12 @@ describe("Config validation", function () {
     describe("Invalid types", function () {
       describe("Networks object", function () {
         it("Should fail with invalid types (networks)", function () {
-          expectPolarError(
+          expectTrestleError(
             () => validateConfig({ networks: 123 }),
             ERRORS.GENERAL.INVALID_CONFIG
           );
 
-          expectPolarError(
+          expectTrestleError(
             () =>
               validateConfig({
                 networks: {
@@ -107,7 +107,7 @@ describe("Config validation", function () {
       describe("HTTP network config", function () {
         describe("Accounts field", function () {
           it("Shouldn't work with invalid types", function () {
-            expectPolarError(
+            expectTrestleError(
               () =>
                 validateConfig({
                   networks: {
@@ -120,7 +120,7 @@ describe("Config validation", function () {
               ERRORS.GENERAL.INVALID_CONFIG
             );
 
-            expectPolarError(
+            expectTrestleError(
               () =>
                 validateConfig({
                   networks: {
@@ -133,7 +133,7 @@ describe("Config validation", function () {
               ERRORS.GENERAL.INVALID_CONFIG
             );
 
-            expectPolarError(
+            expectTrestleError(
               () =>
                 validateConfig({
                   networks: {
@@ -149,7 +149,7 @@ describe("Config validation", function () {
 
           describe("OtherAccountsConfig", function () {
             it("Should fail with invalid types", function () {
-              expectPolarError(
+              expectTrestleError(
                 () =>
                   validateConfig({
                     networks: {

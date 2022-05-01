@@ -1,38 +1,56 @@
-use cosmwasm_std::{Addr, Coin};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct InstantiateMsg {
-    pub arbiter: String,
-    pub recipient: String,
-    /// When end height set and block height exceeds this value, the escrow is expired.
-    /// Once an escrow is expired, it can be returned to the original funder (via "refund").
-    pub end_height: Option<u64>,
-    /// When end time (in seconds since epoch 00:00:00 UTC on 1 January 1970) is set and
-    /// block time exceeds this value, the escrow is expired.
-    /// Once an escrow is expired, it can be returned to the original funder (via "refund").
-    pub end_time: Option<u64>,
+use cosmwasm_std::Uint128;
+
+#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema)]
+pub struct InitialBalance {
+    pub address: String,
+    pub amount: Uint128,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[derive(Serialize, Deserialize, JsonSchema)]
+pub struct InstantiateMsg {
+    pub name: String,
+    pub symbol: String,
+    pub decimals: u8,
+    pub initial_balances: Vec<InitialBalance>,
+}
+
+#[derive(Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ExecuteMsg {
     Approve {
-        // release some coins - if quantity is None, release all coins in balance
-        quantity: Option<Vec<Coin>>,
+        spender: String,
+        amount: Uint128,
     },
-    Refund {},
+    Transfer {
+        recipient: String,
+        amount: Uint128,
+    },
+    TransferFrom {
+        owner: String,
+        recipient: String,
+        amount: Uint128,
+    },
+    Burn {
+        amount: Uint128,
+    },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum QueryMsg {
-    /// Returns a human-readable representation of the arbiter.
-    Arbiter {},
+    Balance { address: String },
+    Allowance { owner: String, spender: String },
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct ArbiterResponse {
-    pub arbiter: Addr,
+#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema)]
+pub struct BalanceResponse {
+    pub balance: Uint128,
+}
+
+#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema)]
+pub struct AllowanceResponse {
+    pub allowance: Uint128,
 }

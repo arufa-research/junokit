@@ -1,4 +1,9 @@
 pub mod contract;
 mod error;
-pub mod msg;
-pub mod state;
+mod msg;
+mod state;
+
+pub use msg::{
+    AllowanceResponse, BalanceResponse, ExecuteMsg, InitialBalance, InstantiateMsg, QueryMsg,
+};
+pub use state::Constants;

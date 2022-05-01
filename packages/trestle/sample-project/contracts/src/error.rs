@@ -6,15 +6,21 @@ pub enum ContractError {
     #[error("{0}")]
     Std(#[from] StdError),
 
-    #[error("Unauthorized")]
-    Unauthorized {},
+    #[error("Name is not in the expected format (3-30 UTF-8 bytes)")]
+    NameWrongFormat {},
 
-    #[error("Escrow expired (end_height {end_height:?} end_time {end_time:?})")]
-    Expired {
-        end_height: Option<u64>,
-        end_time: Option<u64>,
-    },
+    #[error("Ticker symbol is not in expected format [A-Z]{{3,6}}")]
+    TickerWrongSymbolFormat {},
 
-    #[error("Escrow not expired")]
-    NotExpired {},
+    #[error("Decimals must not exceed 18")]
+    DecimalsExceeded {},
+
+    #[error("Insufficient allowance (allowance {allowance}, required={required})")]
+    InsufficientAllowance { allowance: u128, required: u128 },
+
+    #[error("Insufficient funds (balance {balance}, required={required})")]
+    InsufficientFunds { balance: u128, required: u128 },
+
+    #[error("Corrupted data found (16 byte expected)")]
+    CorruptedDataFound {},
 }

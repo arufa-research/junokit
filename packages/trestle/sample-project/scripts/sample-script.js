@@ -1,9 +1,10 @@
 const { Contract, getAccountByName, getLogs } = require("juno-trestle");
 
-async function run () {
+async function run() {
   const contract_owner = getAccountByName("account_1");
-  const contract = new Contract("cw_escrow");
-  await contract.setUpclient ();
+  const other = getAccountByName("account_2");
+  const contract = new Contract("cw_erc20");
+  await contract.setUpclient();
   await contract.parseSchema();
 
   console.log("Client setup done!! ");
@@ -17,33 +18,32 @@ async function run () {
   );
   console.log(deploy_response);
 
-  const contract_info = await contract.instantiate({"arbiter": "juno1njamu5g4n0vahggrxn4ma2s4vws5x4w3u64z8h","recipient":"juno1njamu5g4n0vahggrxn4ma2s4vws5x4w3u64z8h","end_height": 1000000000000,/*"end_time": 0*/}, "deploy test", contract_owner);
+  const contract_info = await contract.instantiate(
+    {
+      "name": "ERC", "symbol": "ER", "decimals": 10,
+      "initial_balances": [{
+        "address": contract_owner.account.address,
+        "amount": "100000000"
+      }]
+    }, "deploy test", contract_owner);
   console.log(contract_info);
 
-  // use below line if contract initiation done using another contract
   // const contract_addr = "secret76597235472354792347952394";
   // contract.instantiatedWithAddress(contract_addr);
+  let balance_before = await contract.query.balance({ "address": contract_owner.account.address });
+  console.log(balance_before);
 
-  const inc_response = await contract.tx.increment({account: contract_owner});
-  console.log(inc_response);
-  // to get logs as a key:value object
-  // console.log(getLogs(inc_response));
-
-  const response = await contract.query.get_count();
-  console.log(response);
-
-  const transferAmount = [{"denom": "ujunox", "amount": "15000000"}] // 15 SCRT
-  const customFees = { // custom fees
-    amount: [{ amount: "750000", denom: "ujunox" }],
-    gas: "3000000",
-  }
-  const ex_response = await contract.tx.increment(
-    {account: contract_owner, transferAmount: transferAmount}
+  let transfer_response = await contract.tx.transfer(
+    { account: contract_owner },
+    {
+      recipient: other.account.address,
+      amount: "50000000"
+    }
   );
-  // const ex_response = await contract.tx.increment(
-  //   {account: contract_owner, transferAmount: transferAmount, customFees: customFees}
-  // );
-  console.log(ex_response);
+  console.log(transfer_response);
+
+  let balance_after = await contract.query.balance({ "address": contract_owner.account.address });
+  console.log(balance_after);
 }
 
 module.exports = { default: run };

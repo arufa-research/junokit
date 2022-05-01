@@ -1,9 +1,11 @@
-use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
 use std::env::current_dir;
 use std::fs::create_dir_all;
 
-use cw_escrow::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
-use cw_escrow::state::State;
+use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
+
+use cw_erc20::{
+    AllowanceResponse, BalanceResponse, Constants, ExecuteMsg, InstantiateMsg, QueryMsg,
+};
 
 fn main() {
     let mut out_dir = current_dir().unwrap();
@@ -14,5 +16,7 @@ fn main() {
     export_schema(&schema_for!(InstantiateMsg), &out_dir);
     export_schema(&schema_for!(ExecuteMsg), &out_dir);
     export_schema(&schema_for!(QueryMsg), &out_dir);
-    export_schema(&schema_for!(State), &out_dir);
+    export_schema(&schema_for!(BalanceResponse), &out_dir);
+    export_schema(&schema_for!(AllowanceResponse), &out_dir);
+    export_schema(&schema_for!(Constants), &out_dir);
 }

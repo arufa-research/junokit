@@ -6,6 +6,6 @@
   "dependencies": {
     "@types/chai": "^4.3.0",
     "chai": "^4.3.4",
-    "juno-trestle": "^0.1.1"
+    "juno-trestle": "^0.1.2"
   }
 }

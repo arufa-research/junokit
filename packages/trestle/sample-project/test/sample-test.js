@@ -56,7 +56,7 @@ describe("erc-20", () => {
     }
   );
   console.log(transfer_response);
-  let balance_after = await ;
+  
   await expect(contract.query.balance({ "address": contract_owner.account.address })).to.respondWith({"balance": "50000000"});
   });
 });

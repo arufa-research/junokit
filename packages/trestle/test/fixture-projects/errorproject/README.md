@@ -1,3 +1,3 @@
-# Secret Contracts Counter Example
+# Juno Contracts Counter Example
 
 This template contains counter example contracts.

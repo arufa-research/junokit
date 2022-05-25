@@ -19,7 +19,7 @@
 //     const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
 
 //     // Get the wallet address
-//     const accAddress = pubkeyToAddress(pubkey, 'secret');
+//     const accAddress = pubkeyToAddress(pubkey, 'juno');
 
 //     accounts.push({
 //       name: "account_" + i.toString(),

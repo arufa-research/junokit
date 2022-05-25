@@ -12,7 +12,7 @@ declare namespace Chai {
     respondWith(responseMessage: any): AsyncAssertion // eslint-disable-line  @typescript-eslint/no-explicit-any
     properHex(length: number): void
     properAddress(): void
-    properSecretAddress(): void
+    properJunoAddress(): void
     changeScrtBalance(
       account: string, balanceChange: number, includeFee?: boolean, logResponse?: boolean
     ): AsyncAssertion

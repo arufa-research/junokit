@@ -1,4 +1,4 @@
-# Secret Contracts Test
+# Juno Contracts Test
 
-This template contains trestle tests.
+This template contains contract integration tests.
 

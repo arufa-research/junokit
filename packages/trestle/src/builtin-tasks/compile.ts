@@ -6,7 +6,7 @@ import type { TrestleRuntimeEnvironment } from "../types";
 import { TASK_COMPILE } from "./task-names";
 
 export default function (): void {
-  task(TASK_COMPILE, "Compile all secret contracts")
+  task(TASK_COMPILE, "Compile all juno contracts")
     .addOptionalParam("docker", "Compiling with docker", false, boolean)
     .addOptionalVariadicPositionalParam(
       "sourceDir",

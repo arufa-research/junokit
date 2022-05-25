@@ -5,7 +5,7 @@ import './types';
 // import { supportChangeTokenBalances } from './matchers/changeTokenBalances';
 import { supportProperAddress } from './matchers/properAddress';
 import { supportProperHex } from './matchers/properHex';
-import { supportProperJunoAddress } from './matchers/properSecretAddress';
+import { supportProperJunoAddress } from './matchers/properJunoAddress';
 import { supportResponse } from './matchers/response';
 import { supportReverted } from './matchers/revert';
 import { supportRevertedWith } from './matchers/revertWith';

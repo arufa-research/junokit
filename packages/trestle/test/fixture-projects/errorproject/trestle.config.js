@@ -12,8 +12,8 @@ module.exports = {
     },
     // Holodeck Testnet
     testnet: {
-      endpoint: 'http://bootstrap.secrettestnet.io:26657',
-      chainId: 'holodeck-2',
+      endpoint: 'http://bootstrap.junotestnet.io:26657',
+      chainId: 'uni-2',
       trustNode: true,
       keyringBackend: 'test',
       accounts: ['a', 'b'],

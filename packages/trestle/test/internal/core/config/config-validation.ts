@@ -9,7 +9,7 @@ import { expectTrestleError } from "../../../helpers/errors";
 
 const accountStatic = {
   name: "staticAccount",
-  address: 'secret13kulyh3gnm5rzhz0plxrtdmx6g0tup3t3k7eke',
+  address: 'juno1nzc35yqy2qj4y25ftaww7zahj6l4k6qu97wlfn',
   mnemonic: "misery into cram ugly primary since describe crystal mother tackle slow source"
 };
 

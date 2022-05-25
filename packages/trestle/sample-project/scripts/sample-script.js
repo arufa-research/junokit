@@ -1,8 +1,8 @@
 const { Contract, getAccountByName, getLogs } = require("juno-trestle");
 
 async function run() {
-  const contract_owner = getAccountByName("account_1");
-  const other = getAccountByName("account_0");
+  const contract_owner = getAccountByName("account_0");
+  const other = getAccountByName("account_1");
   const contract = new Contract("cw_erc20");
   await contract.setUpclient();
   await contract.parseSchema();
@@ -28,8 +28,6 @@ async function run() {
     }, "deploy test", contract_owner);
   console.log(contract_info);
 
-  // const contract_addr = "juno1nzc35yqy2qj4y25ftaww7zahj6l4k6qu97wlfn";
-  // contract.instantiatedWithAddress(contract_addr);
   let balance_before = await contract.query.balance({ "address": contract_owner.account.address });
   console.log(balance_before);
 

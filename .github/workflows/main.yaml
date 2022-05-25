@@ -29,6 +29,15 @@ jobs:
             ${{ runner.OS }}-
       - name: Install
         run: yarn install
+      - run: |
+          curl --proto '=https' --tlsv1.2 -sSf -y https://sh.rustup.rs | sh
+          export PATH="${HOME}/.cargo/bin:${PATH}"
+
+          rustup default stable
+          rustup target list --installed
+          rustup target add wasm32-unknown-unknown
+        
+          sudo apt install build-essential
       - name: Execute lint
         run: yarn lint
       - run: yarn build

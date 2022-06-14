@@ -26,10 +26,10 @@ jobs:
         restore-keys: |
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
-    - name: Install trestle
-      run: npm i -g juno-trestle
+    - name: Install junokit
+      run: npm i -g junokit
     - name: Run commands
-      run: trestle help
-    - run: trestle install
-    - run: trestle init blue
-    - run: cd blue && trestle compile
+      run: junokit help
+    - run: junokit install
+    - run: junokit init blue
+    - run: cd blue && junokit compile

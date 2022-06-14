@@ -1,0 +1,11 @@
+{
+  "name": "sample-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@types/chai": "^4.3.0",
+    "chai": "^4.3.4",
+    "junokit": "^0.0.1"
+  }
+}

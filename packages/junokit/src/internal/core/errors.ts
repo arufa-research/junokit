@@ -2,19 +2,19 @@ import { getClosestCallerPackage } from '../util/caller-package';
 import { replaceAll } from '../util/strings';
 import { ErrorDescriptor, ERRORS, getErrorCode } from './errors-list';
 
-export class TrestleError extends Error {
-  public static isTrestleError (other: any): other is TrestleError { // eslint-disable-line  
+export class JunokitError extends Error {
+  public static isJunokitError (other: any): other is JunokitError { // eslint-disable-line  
     return (
-      other !== undefined && other !== null && other._isTrestleError === true
+      other !== undefined && other !== null && other._isJunokitError === true
     );
   }
 
-  public static isTrestleErrorType (
+  public static isJunokitErrorType (
     other: any, // eslint-disable-line  
     descriptor: ErrorDescriptor
-  ): other is TrestleError {
+  ): other is JunokitError {
     return (
-      TrestleError.isTrestleError(other) &&
+      JunokitError.isJunokitError(other) &&
       other.errorDescriptor.number === descriptor.number
     );
   }
@@ -24,7 +24,7 @@ export class TrestleError extends Error {
   public readonly messageArguments: Record<string, any>; // eslint-disable-line  @typescript-eslint/no-explicit-any
   public readonly parent?: Error;
 
-  private readonly _isTrestleError: boolean;
+  private readonly _isJunokitError: boolean;
 
   constructor (
     errorDescriptor: ErrorDescriptor,
@@ -48,30 +48,30 @@ export class TrestleError extends Error {
       this.parent = parentError;
     }
 
-    this._isTrestleError = true;
-    Object.setPrototypeOf(this, TrestleError.prototype);
+    this._isJunokitError = true;
+    Object.setPrototypeOf(this, JunokitError.prototype);
   }
 }
 
 /**
- * This class is used to throw errors from trestle plugins made by third parties.
+ * This class is used to throw errors from junokit plugins made by third parties.
  */
-export class TrestlePluginError extends Error {
-  public static isTrestlePluginError (other: any): other is TrestlePluginError { // eslint-disable-line  
+export class JunokitPluginError extends Error {
+  public static isJunokitPluginError (other: any): other is JunokitPluginError { // eslint-disable-line  
     return (
       other !== undefined &&
       other !== null &&
-      other._isTrestlePluginError === true
+      other._isJunokitPluginError === true
     );
   }
 
   public readonly parent?: Error;
   public readonly pluginName: string;
 
-  private readonly _isTrestlePluginError: boolean;
+  private readonly _isJunokitPluginError: boolean;
 
   /**
-   * Creates a TrestlePluginError.
+   * Creates a JunokitPluginError.
    *
    * @param pluginName The name of the plugin.
    * @param message An error message that will be shown to the user.
@@ -106,8 +106,8 @@ export class TrestlePluginError extends Error {
       this.parent = messageOrParent;
     }
 
-    this._isTrestlePluginError = true;
-    Object.setPrototypeOf(this, TrestlePluginError.prototype);
+    this._isJunokitPluginError = true;
+    Object.setPrototypeOf(this, JunokitPluginError.prototype);
   }
 }
 
@@ -169,11 +169,11 @@ function _applyErrorMessageTemplate (
   return template;
 }
 
-export function assertTrestleInvariant (
+export function assertJunokitInvariant (
   invariant: boolean,
   message: string
 ): asserts invariant {
   if (!invariant) {
-    throw new TrestleError(ERRORS.GENERAL.ASSERTION_ERROR, { message });
+    throw new JunokitError(ERRORS.GENERAL.ASSERTION_ERROR, { message });
   }
 }

@@ -1,7 +1,7 @@
 /**
- * This function resets the Trestle context.
+ * This function resets the Junokit context.
  *
- * This doesn't unload any loaded Trestle plugin, so those have to be unloaded
+ * This doesn't unload any loaded Junokit plugin, so those have to be unloaded
  * manually with `unloadModule`.
  */
 import { JunokitContext } from "./context";
@@ -26,7 +26,7 @@ export function resetJunokitContext (): void {
       try {
         configPath = getUserConfigPath();
       } catch (error) {
-        // We weren't in a Trestle project
+        // We weren't in a Junokit project
       }
 
       if (configPath !== undefined) {
@@ -36,7 +36,7 @@ export function resetJunokitContext (): void {
     JunokitContext.deleteJunokitContext();
   }
 
-  // Unload all the Trestle's entry-points.
+  // Unload all the Junokit's entry-points.
   unloadModule("../register");
   unloadModule("./cli/cli");
   unloadModule("./lib/lib");

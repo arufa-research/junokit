@@ -5,10 +5,10 @@ import {
   TaskArguments,
   TaskDefinition
 } from "../../../types";
-import { TrestleError } from "../errors";
+import { JunokitError } from "../errors";
 import { ErrorDescriptor, ERRORS } from "../errors-list";
 import * as types from "../params/argument-types";
-import { JUNOKIT_PARAM_DEFINITIONS } from "../params/trestle-params";
+import { JUNOKIT_PARAM_DEFINITIONS } from "../params/junokit-params";
 
 /**
  * This class creates a task definition, which consists of:
@@ -35,7 +35,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
   /**
    * Creates an empty task definition.
    *
-   * This definition will have no params, and will throw a TRESTLE_ERROR205 if executed.
+   * This definition will have no params, and will throw a JUNOKIT_ERROR205 if executed.
    *
    * @param name The task's name.
    * @param isInternal `true` if the task is internal, `false` otherwise.
@@ -48,7 +48,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     this._hasVariadicParam = false;
     this._hasOptionalPositionalParam = false;
     this.action = () => {
-      throw new TrestleError(ERRORS.TASK_DEFINITIONS.ACTION_NOT_SET, {
+      throw new JunokitError(ERRORS.TASK_DEFINITIONS.ACTION_NOT_SET, {
         taskName: name
       });
     };
@@ -77,7 +77,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
    * Adds a paramater to the task's definition.
    *
    * @remarks This will throw if the `name` is already used by this task or
-   * by trestle's global parameters.
+   * by junokit's global parameters.
    *
    * @param name The parameter's name.
    * @param description The parameter's description.
@@ -105,7 +105,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
       }
 
       if (typeof defaultValue !== "string") {
-        throw new TrestleError(
+        throw new JunokitError(
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE,
           {
             paramName: name,
@@ -194,7 +194,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
    * Adds a positional paramater to the task's definition.
    *
    * @remarks This will throw if the `name` is already used by this task or
-   * by trestle's global parameters.
+   * by junokit's global parameters.
    * @remarks This will throw if `isOptional` is `false` and an optional positional
    * param was already set.
    * @remarks This will throw if a variadic positional param is already set.
@@ -225,7 +225,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
       }
 
       if (typeof defaultValue !== "string") {
-        throw new TrestleError(
+        throw new JunokitError(
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE,
           {
             paramName: name,
@@ -321,7 +321,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
       }
 
       if (!this._isStringArray(defaultValue)) {
-        throw new TrestleError(
+        throw new JunokitError(
           ERRORS.TASK_DEFINITIONS.DEFAULT_VALUE_WRONG_TYPE,
           {
             paramName: name,
@@ -411,11 +411,11 @@ export class SimpleTaskDefinition implements TaskDefinition {
   /**
    * Validates if the given param's name is after a variadic parameter.
    * @param name the param's name.
-   * @throws TRESTLE_ERROR200
+   * @throws JUNOKIT_ERROR200
    */
   private _validateNotAfterVariadicParam (name: string): void {
     if (this._hasVariadicParam) {
-      throw new TrestleError(ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC, {
+      throw new JunokitError(ERRORS.TASK_DEFINITIONS.PARAM_AFTER_VARIADIC, {
         paramName: name,
         taskName: this.name
       });
@@ -426,19 +426,19 @@ export class SimpleTaskDefinition implements TaskDefinition {
    * Validates if the param's name is already used.
    * @param name the param's name.
    *
-   * @throws TRESTLE_ERROR201 if `name` is already used as a param.
-   * @throws TRESTLE_ERROR202 if `name` is already used as a param by TRESTLE
+   * @throws JUNOKIT_ERROR201 if `name` is already used as a param.
+   * @throws JUNOKIT_ERROR202 if `name` is already used as a param by JUNOKIT
    */
   private _validateNameNotUsed (name: string): void {
     if (this._hasParamDefined(name)) {
-      throw new TrestleError(ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED, {
+      throw new JunokitError(ERRORS.TASK_DEFINITIONS.PARAM_ALREADY_DEFINED, {
         paramName: name,
         taskName: this.name
       });
     }
 
     if (Object.keys(JUNOKIT_PARAM_DEFINITIONS).includes(name)) {
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.TASK_DEFINITIONS.PARAM_CLASHES_WITH_JUNOKIT_PARAM,
         {
           paramName: name,
@@ -465,14 +465,14 @@ export class SimpleTaskDefinition implements TaskDefinition {
    * @param name the param's name to be added.
    * @param isOptional true if the new param is optional, false otherwise.
    *
-   * @throws TRESTLE_ERROR203 if validation fail
+   * @throws JUNOKIT_ERROR203 if validation fail
    */
   private _validateNoMandatoryParamAfterOptionalOnes (
     name: string,
     isOptional: boolean
   ): void {
     if (!isOptional && this._hasOptionalPositionalParam) {
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.TASK_DEFINITIONS.MANDATORY_PARAM_AFTER_OPTIONAL,
         {
           paramName: name,
@@ -486,7 +486,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     const pattern = /^[a-z]+([a-zA-Z0-9])*$/;
     const match = name.match(pattern);
     if (match === null) {
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.TASK_DEFINITIONS.INVALID_PARAM_NAME_CASING,
         {
           paramName: name,
@@ -502,7 +502,7 @@ export class SimpleTaskDefinition implements TaskDefinition {
     name: string
   ): void {
     if (defaultValue !== undefined && !isOptional) {
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.TASK_DEFINITIONS.DEFAULT_IN_MANDATORY_PARAM,
         {
           paramName: name,
@@ -696,8 +696,8 @@ export class OverriddenTaskDefinition implements TaskDefinition {
 
   /**
    * Add a flag param to the overridden task.
-   * @throws TRESTLE_ERROR201 if param name was already defined in any parent task.
-   * @throws TRESTLE_ERROR209 if param name is not in camelCase.
+   * @throws JUNOKIT_ERROR201 if param name was already defined in any parent task.
+   * @throws JUNOKIT_ERROR209 if param name is not in camelCase.
    */
   public addFlag (name: string, description?: string): this {
     this.parentTaskDefinition.addFlag(name, description);
@@ -705,7 +705,7 @@ export class OverriddenTaskDefinition implements TaskDefinition {
   }
 
   private _throwNoParamsOverrideError (errorDescriptor: ErrorDescriptor): never {
-    throw new TrestleError(errorDescriptor, {
+    throw new JunokitError(errorDescriptor, {
       taskName: this.name
     });
   }

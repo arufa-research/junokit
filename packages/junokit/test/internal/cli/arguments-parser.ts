@@ -10,8 +10,8 @@ import {
 } from "../../../src/internal/core/params/argument-types";
 import {
   JUNOKIT_PARAM_DEFINITIONS,
-  TRESTLE_SHORT_PARAM_SUBSTITUTIONS
-} from "../../../src/internal/core/params/trestle-params";
+  JUNOKIT_SHORT_PARAM_SUBSTITUTIONS
+} from "../../../src/internal/core/params/junokit-params";
 import {
   OverriddenTaskDefinition,
   SimpleTaskDefinition
@@ -34,7 +34,7 @@ function parseAndexpectJunokitError (
     () =>
       argumentsParser.parseRuntimeArgs(
         JUNOKIT_PARAM_DEFINITIONS,
-        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
+        JUNOKIT_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       ),
@@ -124,8 +124,8 @@ describe("ArgumentsParser", () => {
     );
   });
 
-  describe("trestle arguments", () => {
-    it("should parse trestle arguments with task", () => {
+  describe("junokit arguments", () => {
+    it("should parse junokit arguments with task", () => {
       const rawCLAs: string[] = [
         SHOW_STACK,
         "--network",
@@ -140,7 +140,7 @@ describe("ArgumentsParser", () => {
         unparsedCLAs
       } = argumentsParser.parseRuntimeArgs(
         JUNOKIT_PARAM_DEFINITIONS,
-        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
+        JUNOKIT_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       );
@@ -151,7 +151,7 @@ describe("ArgumentsParser", () => {
       assert.equal("--task-param", unparsedCLAs[0]);
     });
 
-    it("should parse trestle arguments after taskname", () => {
+    it("should parse junokit arguments after taskname", () => {
       const rawCLAs: string[] = [
         "compile",
         "--task-param",
@@ -166,7 +166,7 @@ describe("ArgumentsParser", () => {
         unparsedCLAs
       } = argumentsParser.parseRuntimeArgs(
         JUNOKIT_PARAM_DEFINITIONS,
-        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
+        JUNOKIT_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       );
@@ -192,7 +192,7 @@ describe("ArgumentsParser", () => {
         ERRORS.ARGUMENTS.UNRECOGNIZED_COMMAND_LINE_ARG);
     });
 
-    it("should parse a trestle argument", () => {
+    it("should parse a junokit argument", () => {
       const rawCLAs: string[] = [
         "--show-stack-traces",
         "--network",
@@ -223,7 +223,7 @@ describe("ArgumentsParser", () => {
       assert.equal(runtimeArgs.network, "local");
     });
 
-    it("should fail trying to parse trestle with invalid argument", () => {
+    it("should fail trying to parse junokit with invalid argument", () => {
       const rawCLAs: string[] = [
         SHOW_STACK,
         "--network",
@@ -278,7 +278,7 @@ describe("ArgumentsParser", () => {
         unparsedCLAs
       } = argumentsParser.parseRuntimeArgs(
         JUNOKIT_PARAM_DEFINITIONS,
-        TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
+        JUNOKIT_SHORT_PARAM_SUBSTITUTIONS,
         envArgs,
         rawCLAs
       );

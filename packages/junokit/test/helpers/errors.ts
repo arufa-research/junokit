@@ -1,6 +1,6 @@
 import { assert, AssertionError } from "chai";
 
-import { TrestleError } from "../../src/internal/core/errors";
+import { JunokitError } from "../../src/internal/core/errors";
 import { ErrorDescriptor } from "../../src/internal/core/errors-list";
 
 export async function expectErrorAsync (
@@ -45,12 +45,12 @@ export function expectJunokitError (
       throw new Error("Please use expectJunokitErrorAsync() when working with async code");
     }
   } catch (error) {
-    assert.instanceOf(error, TrestleError, errorMessage);
+    assert.instanceOf(error, JunokitError, errorMessage);
     assert.equal(error.number, errorDescriptor.number, errorMessage);
     assert.notMatch(
       error.message,
       /%[a-zA-Z][a-zA-Z0-9]*%/,
-      "TrestleError has an non-replaced variable tag"
+      "JunokitError has an non-replaced variable tag"
     );
 
     if (typeof matchMessage === "string") {
@@ -62,7 +62,7 @@ export function expectJunokitError (
     return;
   }
   throw new AssertionError( // eslint-disable-line @typescript-eslint/no-throw-literal
-    `TrestleError number ${errorDescriptor.number} expected, but no Error was thrown`
+    `JunokitError number ${errorDescriptor.number} expected, but no Error was thrown`
   );
 }
 
@@ -72,27 +72,27 @@ export async function expectJunokitErrorAsync (
   matchMessage?: string | RegExp
 ): Promise<void> {
   const error = new AssertionError(
-    `TrestleError number ${errorDescriptor.number} expected, but no Error was thrown`
+    `JunokitError number ${errorDescriptor.number} expected, but no Error was thrown`
   );
 
   const match = String(matchMessage);
   const notExactMatch = new AssertionError(
-    `TrestleError was correct, but should have include "${match}" but got "`
+    `JunokitError was correct, but should have include "${match}" but got "`
   );
 
   const notRegexpMatch = new AssertionError(
-    `TrestleError was correct, but should have matched regex ${match} but got "`
+    `JunokitError was correct, but should have matched regex ${match} but got "`
   );
 
   try {
     await f();
   } catch (error) {
-    assert.instanceOf(error, TrestleError);
+    assert.instanceOf(error, JunokitError);
     assert.equal(error.number, errorDescriptor.number);
     assert.notMatch(
       error.message,
       /%[a-zA-Z][a-zA-Z0-9]*%/,
-      "TrestleError has an non-replaced variable tag"
+      "JunokitError has an non-replaced variable tag"
     );
 
     if (matchMessage !== undefined) {

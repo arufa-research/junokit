@@ -3,9 +3,9 @@ import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { Account as WasmAccount } from "@cosmjs/stargate";
 
 import { JunokitContext } from "../internal/context";
-import { TrestleError } from "../internal/core/errors";
+import { JunokitError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
-import { Account, Coin, Network, TrestleRuntimeEnvironment, UserAccount } from "../types";
+import { Account, Coin, JunokitRuntimeEnvironment, Network, UserAccount } from "../types";
 import { getClient } from "./client";
 
 // TODO: Throw error if client is not initialized
@@ -14,7 +14,7 @@ export class UserAccountI implements UserAccount {
   client?: CosmWasmClient;
   network: Network;
 
-  constructor (account: Account, env: TrestleRuntimeEnvironment) {
+  constructor (account: Account, env: JunokitRuntimeEnvironment) {
     this.account = account;
     this.network = env.network;
   }
@@ -30,7 +30,7 @@ export class UserAccountI implements UserAccount {
   async getBalance (searchDenom: string): Promise<Coin> {
     const info = await this.client?.getBalance(this.account.address, searchDenom);
     if (info === undefined) {
-      throw new TrestleError(ERRORS.GENERAL.BALANCE_UNDEFINED);
+      throw new JunokitError(ERRORS.GENERAL.BALANCE_UNDEFINED);
     }
     return info;
   }
@@ -54,14 +54,14 @@ export class UserAccountI implements UserAccount {
 export function getAccountByName (
   name: string
 ): (Account | UserAccount) {
-  const env: TrestleRuntimeEnvironment = JunokitContext.getJunokitContext().getRuntimeEnv();
+  const env: JunokitRuntimeEnvironment = JunokitContext.getJunokitContext().getRuntimeEnv();
   if (env.network.config.accounts === undefined) {
-    throw new TrestleError(ERRORS.GENERAL.ACCOUNT_DOES_NOT_EXIST, { name: name });
+    throw new JunokitError(ERRORS.GENERAL.ACCOUNT_DOES_NOT_EXIST, { name: name });
   }
   for (const value of env.network.config.accounts) {
     if (value.name === name) {
       return new UserAccountI(value, env);
     }
   }
-  throw new TrestleError(ERRORS.GENERAL.ACCOUNT_DOES_NOT_EXIST, { name: name });
+  throw new JunokitError(ERRORS.GENERAL.ACCOUNT_DOES_NOT_EXIST, { name: name });
 }

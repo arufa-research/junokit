@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { join } from "path";
 const fsp = fs.promises;
 
-export const JS_CONFIG_FILENAME = "trestle.config.js";
+export const JS_CONFIG_FILENAME = "junokit.config.js";
 
 export const CONTRACTS_DIR = "contracts";
 export const ARTIFACTS_DIR = "artifacts";

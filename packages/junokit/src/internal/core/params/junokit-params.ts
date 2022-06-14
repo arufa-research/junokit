@@ -14,7 +14,7 @@ export const JUNOKIT_PARAM_DEFINITIONS: ParamDefinitions = {
   command: {
     name: "command",
     defaultValue: "",
-    description: "Name of trestle task ran.",
+    description: "Name of junokit task ran.",
     type: types.string,
     isFlag: false,
     isOptional: true,
@@ -61,7 +61,7 @@ export const JUNOKIT_PARAM_DEFINITIONS: ParamDefinitions = {
   config: {
     name: "config",
     defaultValue: undefined,
-    description: "Path to trestle config file.",
+    description: "Path to junokit config file.",
     type: types.inputFile,
     isFlag: false,
     isOptional: true,
@@ -79,7 +79,7 @@ export const JUNOKIT_PARAM_DEFINITIONS: ParamDefinitions = {
 };
 
 // reverse lookup map for short parameters
-export const TRESTLE_SHORT_PARAM_SUBSTITUTIONS: ShortParamSubstitutions =
+export const JUNOKIT_SHORT_PARAM_SUBSTITUTIONS: ShortParamSubstitutions =
   Object.entries(JUNOKIT_PARAM_DEFINITIONS)
     .reduce((out: Record<string, string>, kv: [string, ParamDefinition<unknown>]) => {
       const [name, value] = kv;

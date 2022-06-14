@@ -73,9 +73,9 @@ export const types = argumentTypes;
 
 /**
  * Register an environment extender what will be run after the
- * trestle Runtime Environment is initialized.
+ * junokit Runtime Environment is initialized.
  *
- * @param extender A function that receives the trestle Runtime
+ * @param extender A function that receives the junokit Runtime
  * Environment.
  */
 export function extendEnvironment (extender: EnvironmentExtender): void {
@@ -90,7 +90,7 @@ export function extendConfig (extender: ConfigExtender): void {
 }
 
 /**
- * Loads a trestle plugin
+ * Loads a junokit plugin
  * @param pluginName The plugin name.
  */
 export function usePlugin (pluginName: string): void {

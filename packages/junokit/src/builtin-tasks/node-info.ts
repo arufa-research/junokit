@@ -1,6 +1,6 @@
 import { task } from "../internal/core/config/config-env";
 import { getClient } from "../lib/client";
-import { TaskArguments, TrestleRuntimeEnvironment } from "../types";
+import { JunokitRuntimeEnvironment, TaskArguments } from "../types";
 import { TASK_NODE_INFO } from "./task-names";
 
 export default function (): void {
@@ -8,7 +8,7 @@ export default function (): void {
     .setAction(nodeInfo);
 }
 
-async function nodeInfo (_taskArgs: TaskArguments, env: TrestleRuntimeEnvironment): Promise<void> {
+async function nodeInfo (_taskArgs: TaskArguments, env: JunokitRuntimeEnvironment): Promise<void> {
   const client = await getClient(env.network);
   console.log("Network:", env.network.name);
   console.log("ChainId:", await client.getChainId());

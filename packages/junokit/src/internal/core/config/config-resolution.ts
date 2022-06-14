@@ -21,11 +21,11 @@ function mergeUserAndDefaultConfigs (
 }
 
 /**
- * This functions resolves the trestle config by merging the user provided config
- * and the trestle default config.
+ * This functions resolves the junokit config by merging the user provided config
+ * and the junokit default config.
  *
  * @param userConfigPath the user config filepath
- * @param defaultConfig  the trestle's default config object
+ * @param defaultConfig  the junokit's default config object
  * @param userConfig     the user config object
  * @param configExtenders An array of ConfigExtenders
  *

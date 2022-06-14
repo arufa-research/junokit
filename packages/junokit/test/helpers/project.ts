@@ -3,7 +3,7 @@ import * as fsExtra from "fs-extra";
 import path from "path";
 
 import { TASK_CLEAN } from "../../src/builtin-tasks/task-names";
-import { TrestleRuntimeEnvironment } from "../../src/types";
+import { JunokitRuntimeEnvironment } from "../../src/types";
 import { testFixtureOutputFile } from "./constants";
 import { useEnvironment } from "./environment";
 
@@ -66,8 +66,8 @@ export function useFixtureProjectCopy (srcProjectName: string): void {
  */
 export function useCleanFixtureProject (projectName: string): void {
   useFixtureProject(projectName);
-  useEnvironment(async (trestleEnv: TrestleRuntimeEnvironment) => {
-    return await trestleEnv.run(TASK_CLEAN, {});
+  useEnvironment(async (junokitEnv: JunokitRuntimeEnvironment) => {
+    return await junokitEnv.run(TASK_CLEAN, {});
   });
 
   beforeEach(function () {

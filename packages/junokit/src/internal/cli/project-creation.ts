@@ -4,8 +4,8 @@ import fsExtra from "fs-extra";
 import os from "os";
 import path from "path";
 
-import { TRESTLE_NAME } from "../../lib/contants";
-import { TrestleError } from "../core/errors";
+import { JUNOKIT_NAME } from "../../lib/contants";
+import { JunokitError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { ExecutionMode, getExecutionMode } from "../core/execution-mode";
 import { getPackageJson, getPackageRoot } from "../util/packageInfo";
@@ -19,7 +19,7 @@ export async function printWelcomeMessage (): Promise<void> {
   const packageJson = await getPackageJson();
 
   console.log(
-    chalk.cyan(`★ Welcome to ${TRESTLE_NAME} v${packageJson.version}`));
+    chalk.cyan(`★ Welcome to ${JUNOKIT_NAME} v${packageJson.version}`));
 }
 
 function copySampleProject (projectName: string): void {
@@ -42,7 +42,7 @@ function copySampleProject (projectName: string): void {
         return false;
       }
       if (fsExtra.pathExistsSync(dest)) {
-        throw new TrestleError(ERRORS.GENERAL.INIT_INSIDE_PROJECT, {
+        throw new JunokitError(ERRORS.GENERAL.INIT_INSIDE_PROJECT, {
           clashingFile: relPath
         });
       }
@@ -60,8 +60,8 @@ export function printSuggestedCommands (projectName: string): void {
 
   console.log(`Begin by typing:`);
   console.log(`  cd ${projectName}`);
-  console.log(`  ${TRESTLE_NAME} help`);
-  console.log(`  ${TRESTLE_NAME} compile`);
+  console.log(`  ${JUNOKIT_NAME} help`);
+  console.log(`  ${JUNOKIT_NAME} compile`);
 }
 
 async function printPluginInstallationInstructions (): Promise<void> {

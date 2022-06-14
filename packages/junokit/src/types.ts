@@ -211,7 +211,7 @@ export type ConfigExtender = (
  * A function that receives a RuntimeEnv and
  * modify its properties or add new ones.
  */
-export type EnvironmentExtender = (env: TrestleRuntimeEnvironment) => void;
+export type EnvironmentExtender = (env: JunokitRuntimeEnvironment) => void;
 
 /**
  * @type TaskArguments {object-like} - the input arguments for a task.
@@ -241,7 +241,7 @@ export interface RunSuperFunction<ArgT extends TaskArguments> {
 
 export type ActionType<ArgsT extends TaskArguments> = (
   taskArgs: ArgsT,
-  env: TrestleRuntimeEnvironment,
+  env: JunokitRuntimeEnvironment,
   runSuper: RunSuperFunction<ArgsT>
 ) => PromiseAny;
 
@@ -262,12 +262,12 @@ export interface ResolvedConfig extends JunokitUserConfig {
 }
 
 /**
- * Trestle arguments:
+ * Junokit arguments:
  * + network: the network to be used (default="default").
  * + showStackTraces: flag to show stack traces.
- * + version: flag to show Trestle's version.
- * + help: flag to show Trestle's help message.
- * + config: used to specify Trestle's config file.
+ * + version: flag to show Junokit's version.
+ * + help: flag to show Junokit's help message.
+ * + config: used to specify Junokit's config file.
  */
 export interface RuntimeArgs {
   network: string
@@ -382,7 +382,7 @@ export interface TasksMap {
   [name: string]: TaskDefinition
 }
 
-export interface TrestleRuntimeEnvironment {
+export interface JunokitRuntimeEnvironment {
   readonly config: ResolvedConfig
   readonly runtimeArgs: RuntimeArgs
   readonly tasks: TasksMap

@@ -1,6 +1,6 @@
-import { ConfigExtender, TrestleRuntimeEnvironment } from '../types';
+import { ConfigExtender, JunokitRuntimeEnvironment } from '../types';
 import { ExtenderManager } from './core/config/extenders';
-import { TrestleError } from './core/errors';
+import { JunokitError } from './core/errors';
 import { ERRORS } from './core/errors-list';
 import { TasksDSL } from './core/tasks/dsl';
 
@@ -17,7 +17,7 @@ export class JunokitContext {
 
   public static createJunokitContext (): JunokitContext {
     if (this.isCreated()) {
-      throw new TrestleError(ERRORS.GENERAL.CONTEXT_ALREADY_CREATED);
+      throw new JunokitError(ERRORS.GENERAL.CONTEXT_ALREADY_CREATED);
     }
 
     const globalWithJunokitContext = global as unknown as GlobalWithJunokitContext;
@@ -31,7 +31,7 @@ export class JunokitContext {
     const ctx = globalWithJunokitContext.__junokitContext;
 
     if (ctx === undefined) {
-      throw new TrestleError(ERRORS.GENERAL.CONTEXT_NOT_CREATED);
+      throw new JunokitError(ERRORS.GENERAL.CONTEXT_NOT_CREATED);
     }
 
     return ctx;
@@ -47,19 +47,19 @@ export class JunokitContext {
   public readonly tasksDSL = new TasksDSL();
   public readonly extendersManager = new ExtenderManager();
   public readonly loadedPlugins: string[] = [];
-  public environment?: TrestleRuntimeEnvironment;
+  public environment?: JunokitRuntimeEnvironment;
   public readonly configExtenders: ConfigExtender[] = [];
 
-  public setRuntimeEnv (env: TrestleRuntimeEnvironment): void {
+  public setRuntimeEnv (env: JunokitRuntimeEnvironment): void {
     if (this.environment !== undefined) {
-      throw new TrestleError(ERRORS.GENERAL.CONTEXT_PRE_ALREADY_DEFINED);
+      throw new JunokitError(ERRORS.GENERAL.CONTEXT_PRE_ALREADY_DEFINED);
     }
     this.environment = env;
   }
 
-  public getRuntimeEnv (): TrestleRuntimeEnvironment {
+  public getRuntimeEnv (): JunokitRuntimeEnvironment {
     if (this.environment === undefined) {
-      throw new TrestleError(ERRORS.GENERAL.CONTEXT_PRE_NOT_DEFINED);
+      throw new JunokitError(ERRORS.GENERAL.CONTEXT_PRE_NOT_DEFINED);
     }
     return this.environment;
   }

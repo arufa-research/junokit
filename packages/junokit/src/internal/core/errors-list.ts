@@ -18,70 +18,70 @@ export const ERRORS = {
   GENERAL: {
     NOT_INSIDE_PROJECT: {
       number: 1,
-      message: 'You are not inside a trestle project.',
-      title: 'You are not inside a trestle project',
-      description: `You are trying to run trestle outside of a trestle project.
+      message: 'You are not inside a junokit project.',
+      title: 'You are not inside a junokit project',
+      description: `You are trying to run junokit outside of a junokit project.
 
-You can learn how to use trestle by reading the [Getting Started guide](../getting-started).`,
+You can learn how to use junokit by reading the [Getting Started guide](../getting-started).`,
       shouldBeReported: false
     },
     INVALID_NODE_VERSION: {
       number: 2,
       message:
-        "trestle doesn't support your Node.js version. It should be %requirement%.",
+        "junokit doesn't support your Node.js version. It should be %requirement%.",
       title: 'Unsupported Node.js',
-      description: `trestle doesn't support your Node.js version.
+      description: `junokit doesn't support your Node.js version.
 
 Please upgrade your version of Node.js and try again.`,
       shouldBeReported: false
     },
     UNSUPPORTED_OPERATION: {
       number: 3,
-      message: '%operation% is not supported in trestle.',
+      message: '%operation% is not supported in junokit.',
       title: 'Unsupported operation',
       description: `You are tying to perform an unsupported operation.
 
 Unless you are creating a task or plugin, this is probably a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     CONTEXT_ALREADY_CREATED: {
       number: 4,
       message: 'JunokitContext is already created.',
-      title: 'trestle was already initialized',
-      description: `trestle initialization was executed twice. This is a bug.
+      title: 'junokit was already initialized',
+      description: `junokit initialization was executed twice. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     CONTEXT_NOT_CREATED: {
       number: 5,
       message: 'JunokitContext is not created.',
-      title: "trestle wasn't initialized",
-      description: `trestle initialization failed. This is a bug.
+      title: "junokit wasn't initialized",
+      description: `junokit initialization failed. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     CONTEXT_PRE_NOT_DEFINED: {
       number: 6,
       message:
-        'trestle Runtime Environment is not defined in the JunokitContext.',
-      title: 'trestle Runtime Environment not created',
-      description: `trestle initialization failed. This is a bug.
+        'junokit Runtime Environment is not defined in the JunokitContext.',
+      title: 'junokit Runtime Environment not created',
+      description: `junokit initialization failed. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     CONTEXT_PRE_ALREADY_DEFINED: {
       number: 7,
       message:
-        'trestle Runtime Environment is already defined in the JunokitContext',
-      title: 'Tried to create the trestle Runtime Environment twice',
-      description: `The trestle initialization process was executed twice. This is a bug.
+        'junokit Runtime Environment is already defined in the JunokitContext',
+      title: 'Tried to create the junokit Runtime Environment twice',
+      description: `The junokit initialization process was executed twice. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     INVALID_CONFIG: {
@@ -90,35 +90,35 @@ Please [report it](https://github.com/arufa-research/trestle/issues/new) to help
 
 %errors%
 
-To learn more about trestle's configuration, please go to https://trestle.dev/config/`,
-      title: 'Invalid trestle config',
+To learn more about junokit's configuration, please go to https://junokit.dev/config/`,
+      title: 'Invalid junokit config',
       description: `You have one or more errors in your config file.
 
-Check the error message for details, or go to [documentation](https://trestle.dev/config/) to learn more.`,
+Check the error message for details, or go to [documentation](https://junokit.dev/config/) to learn more.`,
       shouldBeReported: false
     },
     LIB_IMPORTED_FROM_THE_CONFIG: {
       number: 9,
-      message: `Error while loading trestle's configuration.
-You probably imported trestle instead of trestle/config`,
+      message: `Error while loading junokit's configuration.
+You probably imported junokit instead of junokit/config`,
       title: 'Failed to load config file',
       description: `There was an error while loading your config file.
 
-The most common source of errors is trying to import \`trestle\` instead of \`trestle/config\`.
+The most common source of errors is trying to import \`junokit\` instead of \`junokit/config\`.
 
 Please make sure your config file is correct.`,
       shouldBeReported: false
     },
     USER_CONFIG_MODIFIED: {
       number: 10,
-      message: `Error while loading trestle's configuration.
+      message: `Error while loading junokit's configuration.
 You or one of your plugins is trying to modify the userConfig.%path% value from a config extender`,
       title: "Attempted to modify the user's config",
       description: `An attempt to modify the user's config was made.
 
 This is probably a bug in one of your plugins.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     ASSERTION_ERROR: {
@@ -126,39 +126,39 @@ Please [report it](https://github.com/arufa-research/trestle/issues/new) to help
       message: 'An internal invariant was violated: %message%',
       title: 'Invariant violation',
       description: `An internal invariant was violated.
-This is probably caused by a programming error in trestle or in one of the used plugins.
+This is probably caused by a programming error in junokit or in one of the used plugins.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     NON_LOCAL_INSTALLATION: {
       number: 12,
       message:
-        'Trying to use a non-local installation of trestle, which is not supported.\nPlease install trestle locally using npm or Yarn, and try again.',
-      title: 'trestle is not installed or installed globally',
-      description: `You tried to run trestle from a global installation or not installing it at all. This is not supported.
+        'Trying to use a non-local installation of junokit, which is not supported.\nPlease install junokit locally using npm or Yarn, and try again.',
+      title: 'junokit is not installed or installed globally',
+      description: `You tried to run junokit from a global installation or not installing it at all. This is not supported.
 
-Please install trestle locally using npm or Yarn, and try again.`,
+Please install junokit locally using npm or Yarn, and try again.`,
       shouldBeReported: false
     },
     TS_NODE_NOT_INSTALLED: {
       number: 13,
-      message: `Your trestle project uses typescript, but ts-node is not installed.
+      message: `Your junokit project uses typescript, but ts-node is not installed.
 
 Please run: npm install --save-dev ts-node`,
       title: 'ts-node not installed',
-      description: `You are running a trestle project that uses typescript, but you haven't installed ts-node.
+      description: `You are running a junokit project that uses typescript, but you haven't installed ts-node.
 
 Please run this and try again: npm install --save-dev ts-node`,
       shouldBeReported: false
     },
     TYPESCRIPT_NOT_INSTALLED: {
       number: 14,
-      message: `Your trestle project uses typescript, but it's not installed.
+      message: `Your junokit project uses typescript, but it's not installed.
 
 Please run: npm install --save-dev typescript`,
       title: 'typescript not installed',
-      description: `You are running a trestle project that uses typescript, but it's not installed.
+      description: `You are running a junokit project that uses typescript, but it's not installed.
 
 Please run this and try again: npm install --save-dev typescript`,
       shouldBeReported: false
@@ -183,9 +183,9 @@ Please check that the configured keypair are correct.`,
     },
     INIT_INSIDE_PROJECT: {
       number: 17,
-      message: "trestle project file was detected: '%clashingFile%'. Move the file or use an empty directory.",
-      title: "Directory contains a trestle file",
-      description: `You are trying to run trestle in a directory that contains trestle project file.`,
+      message: "junokit project file was detected: '%clashingFile%'. Move the file or use an empty directory.",
+      title: "Directory contains a junokit file",
+      description: `You are trying to run junokit in a directory that contains junokit project file.`,
       shouldBeReported: false
     },
     RUST_COMPILE_ERROR: {
@@ -200,7 +200,7 @@ Please check that the configured keypair are correct.`,
       message: "Error. Script '%script%' failed during load: %error%",
       title: "Script can't load",
       description: `Script failed during load.
-      Please check trestle output for more details.`,
+      Please check junokit output for more details.`,
       shouldBeReported: false
     },
     NO_DEFAULT_EXPORT_IN_SCRIPT: {
@@ -208,7 +208,7 @@ Please check that the configured keypair are correct.`,
       message: "Error. '%script%' doesn't have an exported default function.",
       title: "No exported default function",
       description: `Script doesn't export a default function.   
-      Please check trestle output for more details.`,
+      Please check junokit output for more details.`,
       shouldBeReported: false
     },
     ACCOUNT_NOT_PASSED: {
@@ -234,9 +234,9 @@ Please check that the configured keypair are correct.`,
     },
     ACCOUNT_DOES_NOT_EXIST: {
       number: 24,
-      message: "Account with %name% doesn't exist in trestle.config.js.",
+      message: "Account with %name% doesn't exist in junokit.config.js.",
       title: "Account doesn't exist",
-      description: `Account not present in trestle config.`,
+      description: `Account not present in junokit config.`,
       shouldBeReported: false
     },
     BALANCE_UNDEFINED: {
@@ -280,17 +280,17 @@ Please check that the configured keypair are correct.`,
       number: 100,
       message: "Network %network% doesn't exist",
       title: "Selected network doesn't exist",
-      description: `You are trying to run trestle with a non-existent network.
+      description: `You are trying to run junokit with a non-existent network.
 
-Read the [documentation](https://trestle.org/config/#networks-configuration) to learn how to define custom networks.`,
+Read the [documentation](https://junokit.org/config/#networks-configuration) to learn how to define custom networks.`,
       shouldBeReported: false
     },
     INVALID_GLOBAL_CHAIN_ID: {
       number: 101,
       message:
-        'trestle was set to use chain id %configChainId%, but connected to a chain with id %connectionChainId%.',
+        'junokit was set to use chain id %configChainId%, but connected to a chain with id %connectionChainId%.',
       title: 'Connected to the wrong network',
-      description: `Your config specifies a chain id for the network you are trying to used, but trestle detected anotherone.
+      description: `Your config specifies a chain id for the network you are trying to used, but junokit detected anotherone.
 
 Please make sure you are setting your config correctly.`,
       shouldBeReported: false
@@ -310,7 +310,7 @@ Please check that you are sending a \`data\` parameter.`,
         'Account %account% is not managed by the node you are connected to.',
       title: 'Unrecognized account',
       description: `You are trying to send a transaction or sign some data with an
-account not managed by your Ethereum node nor trestle.
+account not managed by your Ethereum node nor junokit.
 
 Please double check your accounts and the \`from\` parameter in your RPC calls.`,
       shouldBeReported: false
@@ -342,7 +342,7 @@ Please make sure that your Ethereum node has unlocked accounts.`,
       title: 'Invalid HD path',
       description: `An invalid HD/BIP32 derivation path was provided in your config.
 
-Read the [documentation](https://trestle.org/config/#hd-wallet-config) to learn how to define HD accounts correctly.`,
+Read the [documentation](https://junokit.org/config/#hd-wallet-config) to learn how to define HD accounts correctly.`,
       shouldBeReported: false
     },
     INVALID_RPC_QUANTITY_VALUE: {
@@ -421,9 +421,9 @@ Please double check your task definitions.`,
     PARAM_CLASHES_WITH_JUNOKIT_PARAM: {
       number: 202,
       message:
-        'Could not set param %paramName% for task %taskName% because its name is used as a param for trestle.',
-      title: 'trestle and task param names clash',
-      description: `Could not add a param to your task because its name is used as a param for trestle.
+        'Could not set param %paramName% for task %taskName% because its name is used as a param for junokit.',
+      title: 'junokit and task param names clash',
+      description: `Could not add a param to your task because its name is used as a param for junokit.
 
 Please double check your task definitions.`,
       shouldBeReported: false
@@ -539,7 +539,7 @@ What makes these types special is that they can be represented as strings, so yo
       number: 300,
       message: "Invalid environment variable %varName%'s value: %value%",
       title: 'Invalid environment variable value',
-      description: `You are setting one of trestle arguments using an environment variable, but it has an incorrect value.
+      description: `You are setting one of junokit arguments using an environment variable, but it has an incorrect value.
 
 Please double check your environment variables.`,
       shouldBeReported: false
@@ -548,7 +548,7 @@ Please double check your environment variables.`,
       number: 301,
       message: 'Invalid value %value% for argument %name% of type %type%',
       title: 'Invalid argument type',
-      description: `One of your trestle or task's arguments has an invalid type.
+      description: `One of your junokit or task's arguments has an invalid type.
 
 Please double check your arguments.`,
       shouldBeReported: false
@@ -578,20 +578,20 @@ Please double check the name of the task you are trying to run.`,
       message:
         'Unrecognised command line argument %argument%.\nNote that task arguments must come after the task name.',
       title: 'Unrecognized command line argument',
-      description: `trestle couldn't recognize one of your command line arguments.
+      description: `junokit couldn't recognize one of your command line arguments.
 
 This may be because you are writing it before the task name. It should come after it.
 
-Please double check how you invoked trestle.`,
+Please double check how you invoked junokit.`,
       shouldBeReported: false
     },
     UNRECOGNIZED_PARAM_NAME: {
       number: 305,
       message: 'Unrecognized param %param%',
       title: 'Unrecognized param',
-      description: `trestle couldn't recognize one of your tasks' parameters.
+      description: `junokit couldn't recognize one of your tasks' parameters.
 
-Please double check how you invoked trestle or run your task.`,
+Please double check how you invoked junokit or run your task.`,
       shouldBeReported: false
     },
     MISSING_TASK_ARGUMENT: {
@@ -600,7 +600,7 @@ Please double check how you invoked trestle or run your task.`,
       title: 'Missing task argument',
       description: `You tried to run a task, but one of its required arguments was missing.
 
-Please double check how you invoked trestle or run your task.`,
+Please double check how you invoked junokit or run your task.`,
       shouldBeReported: false
     },
     MISSING_POSITIONAL_ARG: {
@@ -609,7 +609,7 @@ Please double check how you invoked trestle or run your task.`,
       title: 'Missing task positional argument',
       description: `You tried to run a task, but one of its required arguments was missing.
 
-Please double check how you invoked trestle or run your task.`,
+Please double check how you invoked junokit or run your task.`,
       shouldBeReported: false
     },
     UNRECOGNIZED_POSITIONAL_ARG: {
@@ -618,7 +618,7 @@ Please double check how you invoked trestle or run your task.`,
       title: 'Unrecognized task positional argument',
       description: `You tried to run a task with more positional arguments than needed.
 
-Please double check how you invoked trestle or run your task.`,
+Please double check how you invoked junokit or run your task.`,
       shouldBeReported: false
     },
     REPEATED_PARAM: {
@@ -627,16 +627,16 @@ Please double check how you invoked trestle or run your task.`,
       title: 'Repeated task parameter',
       description: `You tried to run a task with a repeated parameter.
 
-Please double check how you invoked trestle or run your task.`,
+Please double check how you invoked junokit or run your task.`,
       shouldBeReported: false
     },
     PARAM_NAME_INVALID_CASING: {
       number: 310,
       message: 'Invalid param %param%. Command line params must be lowercase.',
       title: 'Invalid casing in command line parameter',
-      description: `You tried to run trestle with a parameter with invalid casing. They must be lowercase.
+      description: `You tried to run junokit with a parameter with invalid casing. They must be lowercase.
 
-Please double check how you invoked trestle.`,
+Please double check how you invoked junokit.`,
       shouldBeReported: false
     },
     INVALID_JSON_ARGUMENT: {
@@ -645,7 +645,7 @@ Please double check how you invoked trestle.`,
       title: 'Invalid JSON parameter',
       description: `You tried to run a task with an invalid JSON parameter.
 
-Please double check how you invoked trestle or run your task.`,
+Please double check how you invoked junokit or run your task.`,
       shouldBeReported: false
     },
     RUNNING_SUBTASK_FROM_CLI: {
@@ -715,7 +715,7 @@ You must always use slashes (/) in Solidity imports.`,
     INVALID_IMPORT_PROTOCOL: {
       number: 406,
       message:
-        "Invalid import %imported% from %from%. trestle doesn't support imports via %protocol%.",
+        "Invalid import %imported% from %from%. junokit doesn't support imports via %protocol%.",
       title: 'Invalid import: trying to use an unsupported protocol',
       description: `A Solidity file is trying to import another one using an unsupported protocol, like http.
 
@@ -725,7 +725,7 @@ You can only import files thar are available locally or installed through npm.`,
     INVALID_IMPORT_ABSOLUTE_PATH: {
       number: 407,
       message:
-        "Invalid import %imported% from %from%. trestle doesn't support imports with absolute paths.",
+        "Invalid import %imported% from %from%. junokit doesn't support imports with absolute paths.",
       title: 'Invalid import: absolute paths unsupported',
       description: `A Solidity file is trying to import another one using its absolute path.
 
@@ -739,7 +739,7 @@ This is not supported, as it would lead to hard to reproduce compilations.`,
       title: 'Invalid import: file outside of the project',
       description: `A Solidity file is trying to import another one that is outside of the project.
 
-This is not supported by trestle.`,
+This is not supported by junokit.`,
       shouldBeReported: false
     },
     INVALID_IMPORT_WRONG_CASING: {
@@ -749,7 +749,7 @@ This is not supported by trestle.`,
       title: 'Invalid import: wrong file casing',
       description: `A Solidity file is trying to import another one but its source name casing was wrong.
 
-trestle's compiler is case sensitive to ensure projects are portable across different operating systems.`,
+junokit's compiler is case sensitive to ensure projects are portable across different operating systems.`,
       shouldBeReported: false
     },
     WRONG_SOURCE_NAME_CASING: {
@@ -759,7 +759,7 @@ trestle's compiler is case sensitive to ensure projects are portable across diff
       title: 'Incorrect source name casing',
       description: `You tried to resolve a Solidity file with an incorrect casing.
 
-trestle's compiler is case sensitive to ensure projects are portable across different operating systems.`,
+junokit's compiler is case sensitive to ensure projects are portable across different operating systems.`,
       shouldBeReported: false
     },
     IMPORTED_LIBRARY_NOT_INSTALLED: {
@@ -818,9 +818,9 @@ Please check your Internet connection.`,
       number: 504,
       message: "The solc compiler couldn't be obtained for version %version%",
       title: "The solc compiler couldn't be obtained",
-      description: `trestle couldn't obtain a valid solc compiler.
+      description: `junokit couldn't obtain a valid solc compiler.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     }
   },
@@ -831,14 +831,14 @@ Please [report it](https://github.com/arufa-research/trestle/issues/new) to help
       title: 'Compilation failed',
       description: `Your smart contracts failed to compile.
 
-Please check trestle's output for more details.`,
+Please check junokit's output for more details.`,
       shouldBeReported: false
     },
     RUN_FILE_NOT_FOUND: {
       number: 601,
       message: "Script %script% doesn't exist.",
       title: "Script doesn't exist",
-      description: `Tried to use \`trestle run\` to execut a non-existing script.
+      description: `Tried to use \`junokit run\` to execut a non-existing script.
 
 Please double check your script's path`,
       shouldBeReported: false
@@ -849,14 +849,14 @@ Please double check your script's path`,
       title: 'Error running script',
       description: `Running a script resulted in an error.
 
-Please check trestle's output for more details.`,
+Please check junokit's output for more details.`,
       shouldBeReported: false
     },
     FLATTEN_CYCLE: {
       number: 603,
-      message: "trestle flatten doesn't support cyclic dependencies.",
+      message: "junokit flatten doesn't support cyclic dependencies.",
       title: 'Flatten detected cyclic dependencies',
-      description: `trestle flatten doesn't support cyclic dependencies.
+      description: `junokit flatten doesn't support cyclic dependencies.
 
 We recommend not using this kind of dependencies.`,
       shouldBeReported: false
@@ -871,9 +871,9 @@ We recommend not using this kind of dependencies.`,
     JSONRPC_UNSUPPORTED_NETWORK: {
       number: 605,
       message:
-        'Unsupported network for JSON-RPC server. Only trestle is currently supported.',
+        'Unsupported network for JSON-RPC server. Only junokit is currently supported.',
       title: 'Unsupported network for JSON-RPC server.',
-      description: `JSON-RPC server can only be started when running the trestle Network.
+      description: `JSON-RPC server can only be started when running the junokit Network.
 
 To start the JSON-RPC server, retry the command without the --network parameter.`,
       shouldBeReported: false
@@ -891,7 +891,7 @@ To start the JSON-RPC server, retry the command without the --network parameter.
       number: 607,
       message: `You specified a fork block number but not an URL.`,
       title: 'Missing fork URL',
-      description: `You passed a block number to fork from, but not URL. trestle cannot fork
+      description: `You passed a block number to fork from, but not URL. junokit cannot fork
 if the URL of the JSON-RPC weren't set.`,
       shouldBeReported: false
     },
@@ -915,9 +915,9 @@ or go to [solang](https://solang.readthedocs.io/en/latest/installing.html) to le
     },
     INK_NOT_FOUND_ARTIFACT: {
       number: 610,
-      message: `Ink compiles successfully, but trestle cannot find the compiled artifact.`,
+      message: `Ink compiles successfully, but junokit cannot find the compiled artifact.`,
       title: 'Ink not found arifacts',
-      description: `If you think this is a bug in trestle, please report it here: https://github.com/patractlabs/trestle/issues/new`,
+      description: `If you think this is a bug in junokit, please report it here: https://github.com/patractlabs/junokit/issues/new`,
       shouldBeReported: false
     },
     INK_DUPLICATE_NAME: {
@@ -940,7 +940,7 @@ or go to [solang](https://solang.readthedocs.io/en/latest/installing.html) to le
       number: 613,
       message: "Scripts don't exist: %scripts%.",
       title: "Scripts don't exist.",
-      description: `Tried to use \`trestle run\` to execute a non-existing script(s).
+      description: `Tried to use \`junokit run\` to execute a non-existing script(s).
   
   Please double check your script's path`,
       shouldBeReported: false
@@ -965,7 +965,7 @@ Please replace %contractName% for one of these options wherever you are trying t
 %candidates%
 `,
       title: 'Multiple artifacts found',
-      description: `There are multiple artifacts that match the given contract name, and trestle doesn't know which one to use.
+      description: `There are multiple artifacts that match the given contract name, and junokit doesn't know which one to use.
 
 Please use the fully qualified name of the contract to disambiguate it.`,
       shouldBeReported: false
@@ -977,7 +977,7 @@ Please use the fully qualified name of the contract to disambiguate it.`,
       title: 'Incorrect artifact path casing',
       description: `You tried to get an artifact file with an incorrect casing.
 
-trestle's artifact resolution is case sensitive to ensure projects are portable across different operating systems.`,
+junokit's artifact resolution is case sensitive to ensure projects are portable across different operating systems.`,
       shouldBeReported: true
     },
     QUERY_SCHEMA_NOT_FOUND: {
@@ -1007,7 +1007,7 @@ Please double check that schema have been generated.`,
       title: "Plugin not installed",
       description: `You are trying to use a plugin that hasn't been installed.
   
-  Please follow trestle's instructions to resolve this.`,
+  Please follow junokit's instructions to resolve this.`,
       shouldBeReported: false
     },
     MISSING_DEPENDENCIES: {
@@ -1017,7 +1017,7 @@ Please run: npm install --save-dev %missingDependenciesVersions%`,
       title: 'Plugin dependencies not installed',
       description: `You are trying to use a plugin with unmet dependencies.
 
-Please follow trestle's instructions to resolve this.`,
+Please follow junokit's instructions to resolve this.`,
       shouldBeReported: false
     },
     DEPENDENCY_VERSION_MISMATCH: {
@@ -1028,7 +1028,7 @@ Please follow trestle's instructions to resolve this.`,
       title: "Plugin dependencies's version mismatch",
       description: `You are trying to use a plugin that requires a different version of one of its dependencies.
   
-  Please follow trestle's instructions to resolve this.`,
+  Please follow junokit's instructions to resolve this.`,
       shouldBeReported: false
     },
     OLD_STYLE_IMPORT_DETECTED: {
@@ -1050,7 +1050,7 @@ Please follow trestle's instructions to resolve this.`,
       title: 'Invalid error message template',
       description: `An error message template contains an invalid variable name. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     TEMPLATE_VALUE_CONTAINS_VARIABLE_TAG: {
@@ -1060,7 +1060,7 @@ Please [report it](https://github.com/arufa-research/trestle/issues/new) to help
       title: 'Invalid error message replacement',
       description: `Tried to replace an error message variable with a value that contains another variable name. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     TEMPLATE_VARIABLE_TAG_MISSING: {
@@ -1069,7 +1069,7 @@ Please [report it](https://github.com/arufa-research/trestle/issues/new) to help
       title: 'Missing replacement value from error message template',
       description: `An error message template is missing a replacement value. This is a bug.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     },
     WRONG_ARTIFACT_PATH: {
@@ -1079,7 +1079,7 @@ Please [report it](https://github.com/arufa-research/trestle/issues/new) to help
       title: "Inferred artifact path doesn't exist",
       description: `The inferred artifact path doesn't exist.
 
-Please [report it](https://github.com/arufa-research/trestle/issues/new) to help us improve trestle.`,
+Please [report it](https://github.com/arufa-research/junokit/issues/new) to help us improve junokit.`,
       shouldBeReported: true
     }
   },
@@ -1130,7 +1130,7 @@ If you aren't overriding compilation-related tasks, please report this as a bug.
       title: 'Incorrect source name casing',
       description: `You tried to resolve a Solidity file with an incorrect casing.
 
-trestle's compiler is case sensitive to ensure projects are portable across different operating systems.`,
+junokit's compiler is case sensitive to ensure projects are portable across different operating systems.`,
       shouldBeReported: true
     },
     FILE_NOT_FOUND: {
@@ -1139,7 +1139,7 @@ trestle's compiler is case sensitive to ensure projects are portable across diff
       title: 'Solidity source file not found',
       description: `A source name should correspond to an existing Solidity file but it doesn't.
 
-trestle's compiler is case sensitive to ensure projects are portable across different operating systems.`,
+junokit's compiler is case sensitive to ensure projects are portable across different operating systems.`,
       shouldBeReported: true
     },
     NODE_MODULES_AS_LOCAL: {
@@ -1199,7 +1199,7 @@ export const ERROR_RANGES: {
   BUILTIN_TASKS: { min: 600, max: 699, title: 'Built-in tasks errors' },
   ARTIFACTS: { min: 700, max: 799, title: 'Artifacts related errors' },
   PLUGINS: { min: 800, max: 899, title: 'Plugin system errors' },
-  INTERNAL: { min: 900, max: 999, title: 'Internal trestle errors' },
+  INTERNAL: { min: 900, max: 999, title: 'Internal junokit errors' },
   SOURCE_NAMES: { min: 1000, max: 1099, title: 'Source name errors' },
   CONTRACT_NAMES: { min: 1100, max: 1199, title: 'Contract name errors' }
 };

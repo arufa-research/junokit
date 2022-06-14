@@ -2,7 +2,7 @@ import { boolean } from "../../src/internal/core/params/argument-types";
 import { task } from "../internal/core/config/config-env";
 import { canCompile } from "../lib/compile/checkEnv";
 import { compile } from "../lib/compile/compile";
-import type { TrestleRuntimeEnvironment } from "../types";
+import type { JunokitRuntimeEnvironment } from "../types";
 import { TASK_COMPILE } from "./task-names";
 
 export default function (): void {
@@ -27,7 +27,7 @@ export interface TaskArgs {
 
 async function compileTask (
   { docker, sourceDir, force, skipSchema }: TaskArgs,
-  env: TrestleRuntimeEnvironment
+  env: JunokitRuntimeEnvironment
 ): Promise<void> {
   // check if proper version of rust wasm compiler is installed
   // If not, install it

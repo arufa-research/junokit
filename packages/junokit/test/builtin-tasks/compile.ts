@@ -51,7 +51,7 @@ describe("Compile task", () => {
 
   describe("Compile fail when contract has compile errors", function () {
     useFixtureProject("errorproject");
-    it("Should raise trestle error", async function () {
+    it("Should raise junokit error", async function () {
       // check for Exception
       await expectJunokitErrorAsync(
         async () => await compile(false, [], false, false),

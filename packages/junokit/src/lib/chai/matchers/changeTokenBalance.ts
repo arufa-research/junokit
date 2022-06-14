@@ -2,7 +2,7 @@
 // import { Account as WasmAccount } from "secretjs";
 
 // import { JunokitContext } from "../../../internal/context";
-// import { TrestleError } from "../../../internal/core/errors";
+// import { JunokitError } from "../../../internal/core/errors";
 // import { ERRORS } from "../../../internal/core/errors-list";
 // import type {
 //   Account, Coin, UserAccount
@@ -64,7 +64,7 @@
 //   logResponse?: boolean
 // ): Promise<number> {
 //   if (typeof transaction !== 'function') {
-//     throw new TrestleError(ERRORS.GENERAL.NOT_A_FUNCTION, {
+//     throw new JunokitError(ERRORS.GENERAL.NOT_A_FUNCTION, {
 //       param: transaction
 //     });
 //   }

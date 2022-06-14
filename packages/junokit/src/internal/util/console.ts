@@ -7,7 +7,7 @@ export function isNodeCalledWithoutAScript (): boolean {
 /**
  * Starting at node 10, proxies are shown in the console by default, instead
  * of actually inspecting them. This makes all our lazy loading efforts wicked,
- * so we disable it in trestle/register.
+ * so we disable it in junokit/register.
  */
 export function disableReplWriterShowProxy (): void {
   const repl = require('repl'); // eslint-disable-line @typescript-eslint/no-var-requires

@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import path from "path";
 
 import { JunokitContext } from "../../internal/context";
-import { TrestleError } from "../../internal/core/errors";
+import { JunokitError } from "../../internal/core/errors";
 import { ERRORS } from "../../internal/core/errors-list";
 import {
   ARTIFACTS_DIR,
@@ -20,8 +20,8 @@ import type {
   ContractFunction,
   DeployInfo,
   InstantiateInfo,
+  JunokitRuntimeEnvironment,
   StdFee,
-  TrestleRuntimeEnvironment,
   UserAccount
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
@@ -117,7 +117,7 @@ export class Contract {
   readonly executeAbi: Abi;
   readonly responseAbis: Abi[] = [];
 
-  private readonly env: TrestleRuntimeEnvironment =
+  private readonly env: JunokitRuntimeEnvironment =
   JunokitContext.getJunokitContext().getRuntimeEnv();
 
   private client?: CosmWasmClient;
@@ -208,12 +208,12 @@ export class Contract {
 
   async parseSchema (): Promise<void> {
     if (!fs.existsSync(this.querySchemaPath)) {
-      throw new TrestleError(ERRORS.ARTIFACTS.QUERY_SCHEMA_NOT_FOUND, {
+      throw new JunokitError(ERRORS.ARTIFACTS.QUERY_SCHEMA_NOT_FOUND, {
         param: this.contractName
       });
     }
     if (!fs.existsSync(this.executeSchemaPath)) {
-      throw new TrestleError(ERRORS.ARTIFACTS.EXEC_SCHEMA_NOT_FOUND, {
+      throw new JunokitError(ERRORS.ARTIFACTS.EXEC_SCHEMA_NOT_FOUND, {
         param: this.contractName
       });
     }
@@ -351,7 +351,7 @@ export class Contract {
     callArgs: Record<string, unknown>
   ): Promise<any> { // eslint-disable-line  @typescript-eslint/no-explicit-any
     if (this.contractAddress === "mock_address") {
-      throw new TrestleError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
+      throw new JunokitError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
         param: this.contractName
       });
     }
@@ -373,7 +373,7 @@ export class Contract {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
     if (this.contractAddress === "mock_address") {
-      throw new TrestleError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
+      throw new JunokitError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
         param: this.contractName
       });
     }

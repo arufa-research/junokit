@@ -2,10 +2,10 @@ import debug from "debug";
 import * as findUp from "find-up";
 import * as path from "path";
 
-const log = debug("trestle:core:execution-mode");
+const log = debug("junokit:core:execution-mode");
 
 /**
- * This module defines different trestle execution modes and autodetects them.
+ * This module defines different junokit execution modes and autodetects them.
  *
  * IMPORTANT: This will have to be revisited once Yarn PnP and npm's tink get
  * widely adopted.
@@ -24,7 +24,7 @@ export function getExecutionMode (): ExecutionMode {
 
   if (!isInstalled) {
     // When running the tests with ts-node we set the CWD to the root of
-    // trestle. We could check if the __filename ends with .ts
+    // junokit. We could check if the __filename ends with .ts
     if (__dirname.startsWith(workingDirectoryOnLoad)) {
       return ExecutionMode.EXECUTION_MODE_TS_NODE_TESTS;
     }
@@ -54,7 +54,7 @@ export function getExecutionMode (): ExecutionMode {
  * This is a somewhat more limited detection, but we use it if
  * is-installed-globally fails.
  *
- * If a user installs trestle locally, and executes it from outside the
+ * If a user installs junokit locally, and executes it from outside the
  * directory that contains the `node_module` with the installation, this will
  * fail and return `false`.
  */

@@ -7,24 +7,24 @@ import debug from "debug";
 import semver from "semver";
 
 import { TASK_HELP } from "../../builtin-tasks/task-names";
-import { RuntimeArgs, TaskArguments, TrestleRuntimeEnvironment } from "../../types";
+import { JunokitRuntimeEnvironment, RuntimeArgs, TaskArguments } from "../../types";
 import { JunokitContext } from "../context";
 import { loadConfigAndTasks } from "../core/config/config-loading";
-import { TrestleError, TrestlePluginError } from "../core/errors";
+import { JunokitError, JunokitPluginError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { getEnvRuntimeArgs } from "../core/params/env-variables";
 import {
   JUNOKIT_PARAM_DEFINITIONS,
-  TRESTLE_SHORT_PARAM_SUBSTITUTIONS
-} from "../core/params/trestle-params";
+  JUNOKIT_SHORT_PARAM_SUBSTITUTIONS
+} from "../core/params/junokit-params";
 import { isCwdInsideProject } from "../core/project-structure";
 import { Environment } from "../core/runtime-env";
 import { isSetupTask } from "../core/tasks/builtin-tasks";
 import { getPackageJson, PackageJson } from "../util/packageInfo";
 import { ArgumentsParser } from "./arguments-parser";
 
-const TRESTLE_NAME = "trestle";
-const log = debug("trestle:core:cli");
+const JUNOKIT_NAME = "junokit";
+const log = debug("junokit:core:cli");
 
 async function printVersionMessage (packageJson: PackageJson): Promise<void> {
   console.log(packageJson.version);
@@ -33,15 +33,15 @@ async function printVersionMessage (packageJson: PackageJson): Promise<void> {
 function ensureValidNodeVersion (packageJson: PackageJson): void {
   const requirement = packageJson.engines.node;
   if (!semver.satisfies(process.version, requirement)) {
-    throw new TrestleError(ERRORS.GENERAL.INVALID_NODE_VERSION, {
+    throw new JunokitError(ERRORS.GENERAL.INVALID_NODE_VERSION, {
       requirement
     });
   }
 }
 
-function printErrRecur (error: TrestleError): void {
+function printErrRecur (error: JunokitError): void {
   if (error.parent) {
-    if (error.parent instanceof TrestleError) {
+    if (error.parent instanceof JunokitError) {
       printErrRecur(error.parent);
     } else {
       console.error(error.parent);
@@ -49,17 +49,17 @@ function printErrRecur (error: TrestleError): void {
   }
 }
 
-function printStackTraces (showStackTraces: boolean, error: TrestleError): void {
+function printStackTraces (showStackTraces: boolean, error: JunokitError): void {
   if (error === undefined) { return; }
   if (showStackTraces) {
     printErrRecur(error);
   } else {
-    console.error(`For more info run ${TRESTLE_NAME} with --show-stack-traces or add --help to display task-specific help.`);
+    console.error(`For more info run ${JUNOKIT_NAME} with --show-stack-traces or add --help to display task-specific help.`);
   }
 }
 
 interface EnvAndArgs {
-  env: TrestleRuntimeEnvironment
+  env: JunokitRuntimeEnvironment
   taskName: string
   taskArguments: TaskArguments
 }
@@ -93,13 +93,13 @@ export async function gatherArguments (): Promise<RuntimeArgsAndPackageJson> {
     unparsedCLAs
   } = argumentsParser.parseRuntimeArgs(
     JUNOKIT_PARAM_DEFINITIONS,
-    TRESTLE_SHORT_PARAM_SUBSTITUTIONS,
+    JUNOKIT_SHORT_PARAM_SUBSTITUTIONS,
     envVariableArguments,
     process.argv.slice(2)
   );
 
   if (runtimeArgs.verbose) {
-    debug.enable("trestle*");
+    debug.enable("junokit*");
   }
 
   showStackTraces = runtimeArgs.showStackTraces;
@@ -126,7 +126,7 @@ export async function loadEnvironmentAndArgs (
   const taskDefinitions = ctx.tasksDSL.getTaskDefinitions();
   let taskName = maybeTaskName ?? TASK_HELP;
   if (taskDefinitions[taskName] == null) {
-    throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
+    throw new JunokitError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
       task: taskName
     });
   }
@@ -149,7 +149,7 @@ export async function loadEnvironmentAndArgs (
 
   // Being inside of a project is non-mandatory for help and init
   if (!isSetup && !isCwdInsideProject()) {
-    throw new TrestleError(ERRORS.GENERAL.NOT_INSIDE_PROJECT, { task: origTaskName });
+    throw new JunokitError(ERRORS.GENERAL.NOT_INSIDE_PROJECT, { task: origTaskName });
   }
 
   const env = new Environment(
@@ -170,7 +170,7 @@ export async function loadEnvironmentAndArgs (
 
 /* eslint-disable sonarjs/cognitive-complexity */
 async function main (): Promise<void> {
-  log(`Initiating trestle task !`);
+  log(`Initiating junokit task !`);
   let showStackTraces = false;
   try {
     const {
@@ -196,11 +196,11 @@ async function main (): Promise<void> {
     );
     await env.run(taskName, taskArguments);
 
-    log(`Quitting trestle after successfully running task ${taskName}`);
+    log(`Quitting junokit after successfully running task ${taskName}`);
   } catch (error) {
-    if (TrestleError.isTrestleError(error)) {
+    if (JunokitError.isJunokitError(error)) {
       console.error(chalk.red(`Error ${error.message}`));
-    } else if (TrestlePluginError.isTrestlePluginError(error)) {
+    } else if (JunokitPluginError.isJunokitPluginError(error)) {
       console.error(
         chalk.red(`Error in plugin ${error.pluginName ?? ""}: ${error.message}`)
       );

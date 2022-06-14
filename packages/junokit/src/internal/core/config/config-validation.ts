@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 import type { NetworkConfig } from "../../../types";
 import { parseZodError } from "../../util/zod-errors";
-import { TrestleError } from '../errors';
+import { JunokitError } from '../errors';
 import { ERRORS } from '../errors-list';
 import CfgErrors from "./config-errors";
 
@@ -48,7 +48,7 @@ export function validateConfig (config: any) { // eslint-disable-line
   }
 
   const errorList = `  * ${errors.toString()}`;
-  throw new TrestleError(ERRORS.GENERAL.INVALID_CONFIG, { errors: errorList });
+  throw new JunokitError(ERRORS.GENERAL.INVALID_CONFIG, { errors: errorList });
 }
 
 export function getValidationErrors (config: any): CfgErrors { // eslint-disable-line  

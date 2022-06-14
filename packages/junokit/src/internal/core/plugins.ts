@@ -4,11 +4,11 @@ import * as semver from "semver";
 
 import { StrMap } from "../../types";
 import { JunokitContext } from "../context";
-import { TrestleError } from "../core/errors";
+import { JunokitError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { ExecutionMode, getExecutionMode } from "./execution-mode";
 
-const log = debug("trestle:core:plugins");
+const log = debug("junokit:core:plugins");
 
 interface PackageJson {
   name: string
@@ -34,18 +34,18 @@ export function usePlugin (
 
   // We have a special case for `ExecutionMode.EXECUTION_MODE_LINKED`
   //
-  // If trestle is linked, a require without `from` would be executed in the
-  // context of trestle, and not find any plugin (linked or not). We workaround
+  // If junokit is linked, a require without `from` would be executed in the
+  // context of junokit, and not find any plugin (linked or not). We workaround
   // this by using the CWD here.
   //
-  // This is not ideal, but the only reason to link trestle is testing.
+  // This is not ideal, but the only reason to link junokit is testing.
   if (
     from === undefined &&
     getExecutionMode() === ExecutionMode.EXECUTION_MODE_LINKED
   ) {
     from = process.cwd();
 
-    log("trestle is linked, searching for plugin starting from CWD", from);
+    log("junokit is linked, searching for plugin starting from CWD", from);
   }
 
   let globalFlag = "";
@@ -53,7 +53,7 @@ export function usePlugin (
   if (getExecutionMode() === ExecutionMode.EXECUTION_MODE_GLOBAL_INSTALLATION) {
     globalFlag = " --global";
     globalWarning =
-      "You are using a global installation of trestle. Plugins and their dependencies must also be global.\n";
+      "You are using a global installation of junokit. Plugins and their dependencies must also be global.\n";
   }
 
   const pluginPackageJson = readPackageJson(pluginName, from);
@@ -61,7 +61,7 @@ export function usePlugin (
   if (pluginPackageJson === undefined) {
     const installExtraFlags = globalFlag;
 
-    throw new TrestleError(ERRORS.PLUGINS.NOT_INSTALLED, {
+    throw new JunokitError(ERRORS.PLUGINS.NOT_INSTALLED, {
       plugin: pluginName,
       extraMessage: globalWarning,
       extraFlags: installExtraFlags
@@ -99,7 +99,7 @@ function checkPeerDependencies (deps: StrMap, pluginName: string,
     }
 
     if (dependencyPackageJson === undefined) {
-      throw new TrestleError(ERRORS.PLUGINS.MISSING_DEPENDENCIES, {
+      throw new JunokitError(ERRORS.PLUGINS.MISSING_DEPENDENCIES, {
         plugin: pluginName,
         dependency: dependencyName,
         extraMessage: warning,
@@ -115,7 +115,7 @@ function checkPeerDependencies (deps: StrMap, pluginName: string,
         includePrerelease: true
       })
     ) {
-      throw new TrestleError(ERRORS.PLUGINS.DEPENDENCY_VERSION_MISMATCH, {
+      throw new JunokitError(ERRORS.PLUGINS.DEPENDENCY_VERSION_MISMATCH, {
         plugin: pluginName,
         dependency: dependencyName,
         extraMessage: warning,

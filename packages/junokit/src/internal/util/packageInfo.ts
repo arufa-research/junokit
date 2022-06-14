@@ -31,7 +31,7 @@ export async function getPackageJson (): Promise<PackageJson> {
   return await fsExtra.readJSON(path.join(root, 'package.json'));
 }
 
-export function getTrestleVersion (): string | null {
+export function getJunokitVersion (): string | null {
   const packageJsonPath = findClosestPackageJson(__filename);
 
   if (packageJsonPath === null) {

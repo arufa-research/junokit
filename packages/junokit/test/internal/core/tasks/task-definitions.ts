@@ -160,7 +160,7 @@ describe("SimpleTaskDefinition", () => {
       });
     });
 
-    describe("param name clashes with trestle's ones", () => {
+    describe("param name clashes with junokit's ones", () => {
       function testClashWith (name: string): void {
         expectJunokitError(
           () => taskDefinition.addParam(name),
@@ -193,9 +193,9 @@ describe("SimpleTaskDefinition", () => {
       }
 
       it("Should throw if a param clashes", () => {
-        // This is constructed to force a type error here if a trestle arg is
+        // This is constructed to force a type error here if a junokit arg is
         // added and not tested.
-        const trestleArgs: RuntimeArgs = {
+        const junokitArgs: RuntimeArgs = {
           showStackTraces: true,
           network: "",
           version: false,
@@ -203,7 +203,7 @@ describe("SimpleTaskDefinition", () => {
           verbose: false
         };
 
-        Object.keys(trestleArgs).forEach((name) => testClashWith(name));
+        Object.keys(junokitArgs).forEach((name) => testClashWith(name));
       });
     });
 

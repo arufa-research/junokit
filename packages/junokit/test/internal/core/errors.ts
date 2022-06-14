@@ -2,7 +2,7 @@
 import { assert } from "chai";
 
 import {
-  TrestleError, TrestlePluginError
+  JunokitError, JunokitPluginError
 } from "../../../src/internal/core/errors";
 import {
   ERROR_RANGES,
@@ -19,39 +19,39 @@ const mockErrorDescriptor: ErrorDescriptor = {
   shouldBeReported: false
 };
 
-describe("TrestleError", () => {
+describe("JunokitError", () => {
   describe("Type guard", () => {
-    it("Should return true for TrestleErrors", () => {
+    it("Should return true for JunokitErrors", () => {
       assert.isTrue(
-        TrestleError.isTrestleError(new TrestleError(mockErrorDescriptor))
+        JunokitError.isJunokitError(new JunokitError(mockErrorDescriptor))
       );
     });
 
     it("Should return false for everything else", () => {
-      assert.isFalse(TrestleError.isTrestleError(new Error()));
+      assert.isFalse(JunokitError.isJunokitError(new Error()));
       assert.isFalse(
-        TrestleError.isTrestleError(new TrestlePluginError("asd", "asd"))
+        JunokitError.isJunokitError(new JunokitPluginError("asd", "asd"))
       );
-      assert.isFalse(TrestleError.isTrestleError(undefined));
-      assert.isFalse(TrestleError.isTrestleError(null));
-      assert.isFalse(TrestleError.isTrestleError(123));
-      assert.isFalse(TrestleError.isTrestleError("123"));
-      assert.isFalse(TrestleError.isTrestleError({ asd: 123 }));
+      assert.isFalse(JunokitError.isJunokitError(undefined));
+      assert.isFalse(JunokitError.isJunokitError(null));
+      assert.isFalse(JunokitError.isJunokitError(123));
+      assert.isFalse(JunokitError.isJunokitError("123"));
+      assert.isFalse(JunokitError.isJunokitError({ asd: 123 }));
     });
   });
 
   describe("Without parent error", () => {
     it("should have the right error number", () => {
-      const error = new TrestleError(mockErrorDescriptor);
+      const error = new JunokitError(mockErrorDescriptor);
       assert.equal(error.number, mockErrorDescriptor.number);
     });
 
     it("should format the error code to 4 digits", () => {
-      const error = new TrestleError(mockErrorDescriptor);
+      const error = new JunokitError(mockErrorDescriptor);
       assert.equal(error.message.substr(0, 10), "PE123: err");
 
       assert.equal(
-        new TrestleError({
+        new JunokitError({
           number: 1,
           message: "",
           title: "Title",
@@ -63,12 +63,12 @@ describe("TrestleError", () => {
     });
 
     it("should have the right error message", () => {
-      const error = new TrestleError(mockErrorDescriptor);
+      const error = new JunokitError(mockErrorDescriptor);
       assert.equal(error.message, `PE123: ${mockErrorDescriptor.message}`);
     });
 
     it("should format the error message with the template params", () => {
-      const error = new TrestleError(
+      const error = new JunokitError(
         {
           number: 12,
           message: "%a% %b% %c%",
@@ -82,24 +82,24 @@ describe("TrestleError", () => {
     });
 
     it("shouldn't have a parent", () => {
-      assert.isUndefined(new TrestleError(mockErrorDescriptor).parent);
+      assert.isUndefined(new JunokitError(mockErrorDescriptor).parent);
     });
 
     it("Should work with instanceof", () => {
-      const error = new TrestleError(mockErrorDescriptor);
-      assert.instanceOf(error, TrestleError);
+      const error = new JunokitError(mockErrorDescriptor);
+      assert.instanceOf(error, JunokitError);
     });
   });
 
   describe("With parent error", () => {
     it("should have the right parent error", () => {
       const parent = new Error();
-      const error = new TrestleError(mockErrorDescriptor, {}, parent);
+      const error = new JunokitError(mockErrorDescriptor, {}, parent);
       assert.equal(error.parent, parent);
     });
 
     it("should format the error message with the template params", () => {
-      const error = new TrestleError(
+      const error = new JunokitError(
         {
           number: 12,
           message: "%a% %b% %c%",
@@ -115,8 +115,8 @@ describe("TrestleError", () => {
 
     it("Should work with instanceof", () => {
       const parent = new Error();
-      const error = new TrestleError(mockErrorDescriptor, {}, parent);
-      assert.instanceOf(error, TrestleError);
+      const error = new JunokitError(mockErrorDescriptor, {}, parent);
+      assert.instanceOf(error, JunokitError);
     });
   });
 });
@@ -201,28 +201,28 @@ describe("Error descriptors", () => {
   });
 });
 
-describe("TrestlePluginError", () => {
+describe("JunokitPluginError", () => {
   describe("Type guard", () => {
-    it("Should return true for TrestlePluginError", () => {
+    it("Should return true for JunokitPluginError", () => {
       assert.isTrue(
-        TrestlePluginError.isTrestlePluginError(
-          new TrestlePluginError("asd", "asd")
+        JunokitPluginError.isJunokitPluginError(
+          new JunokitPluginError("asd", "asd")
         )
       );
     });
 
     it("Should return false for everything else", () => {
-      assert.isFalse(TrestlePluginError.isTrestlePluginError(new Error()));
+      assert.isFalse(JunokitPluginError.isJunokitPluginError(new Error()));
       assert.isFalse(
-        TrestlePluginError.isTrestlePluginError(
-          new TrestleError(ERRORS.GENERAL.NOT_INSIDE_PROJECT)
+        JunokitPluginError.isJunokitPluginError(
+          new JunokitError(ERRORS.GENERAL.NOT_INSIDE_PROJECT)
         )
       );
-      assert.isFalse(TrestlePluginError.isTrestlePluginError(undefined));
-      assert.isFalse(TrestlePluginError.isTrestlePluginError(null));
-      assert.isFalse(TrestlePluginError.isTrestlePluginError(123));
-      assert.isFalse(TrestlePluginError.isTrestlePluginError("123"));
-      assert.isFalse(TrestlePluginError.isTrestlePluginError({ asd: 123 }));
+      assert.isFalse(JunokitPluginError.isJunokitPluginError(undefined));
+      assert.isFalse(JunokitPluginError.isJunokitPluginError(null));
+      assert.isFalse(JunokitPluginError.isJunokitPluginError(123));
+      assert.isFalse(JunokitPluginError.isJunokitPluginError("123"));
+      assert.isFalse(JunokitPluginError.isJunokitPluginError({ asd: 123 }));
     });
   });
 
@@ -232,7 +232,7 @@ describe("TrestlePluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new TrestlePluginError(message, parent);
+        const error = new JunokitPluginError(message, parent);
 
         assert.equal(error.message, message);
         assert.equal(error.parent, parent);
@@ -241,7 +241,7 @@ describe("TrestlePluginError", () => {
       it("Should work without a parent error", () => {
         const message = "m2";
 
-        const error = new TrestlePluginError(message);
+        const error = new JunokitPluginError(message);
 
         assert.equal(error.message, message);
         assert.isUndefined(error.parent);
@@ -251,7 +251,7 @@ describe("TrestlePluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new TrestlePluginError(message, parent);
+        const error = new JunokitPluginError(message, parent);
 
         // This is being called from mocha, so that would be used as plugin name
         assert.equal(error.pluginName, "mocha");
@@ -261,9 +261,9 @@ describe("TrestlePluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new TrestlePluginError(message, parent);
+        const error = new JunokitPluginError(message, parent);
 
-        assert.instanceOf(error, TrestlePluginError);
+        assert.instanceOf(error, JunokitPluginError);
       });
     });
 
@@ -273,7 +273,7 @@ describe("TrestlePluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new TrestlePluginError(plugin, message, parent);
+        const error = new JunokitPluginError(plugin, message, parent);
 
         assert.equal(error.pluginName, plugin);
         assert.equal(error.message, message);
@@ -284,7 +284,7 @@ describe("TrestlePluginError", () => {
         const plugin = "p2";
         const message = "m2";
 
-        const error = new TrestlePluginError(plugin, message);
+        const error = new JunokitPluginError(plugin, message);
 
         assert.equal(error.pluginName, plugin);
         assert.equal(error.message, message);
@@ -296,9 +296,9 @@ describe("TrestlePluginError", () => {
         const message = "m";
         const parent = new Error();
 
-        const error = new TrestlePluginError(plugin, message, parent);
+        const error = new JunokitPluginError(plugin, message, parent);
 
-        assert.instanceOf(error, TrestlePluginError);
+        assert.instanceOf(error, JunokitPluginError);
       });
     });
   });

@@ -2,6 +2,7 @@ import debug from "debug";
 
 import type {
   EnvironmentExtender,
+  JunokitRuntimeEnvironment,
   Network,
   ParamDefinitionAny,
   ResolvedConfig,
@@ -10,16 +11,15 @@ import type {
   RuntimeArgs,
   TaskArguments,
   TaskDefinition,
-  TasksMap,
-  TrestleRuntimeEnvironment
+  TasksMap
 } from "../../types";
-import { TrestleError } from "../core/errors";
+import { JunokitError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { OverriddenTaskDefinition } from "./tasks/task-definitions";
 
-const log = debug("trestle:core:pre");
+const log = debug("junokit:core:pre");
 
-export class Environment implements TrestleRuntimeEnvironment {
+export class Environment implements JunokitRuntimeEnvironment {
   private static readonly _BLACKLISTED_PROPERTIES: string[] = [
     "injectToGlobal",
     "_runTaskDefinition"
@@ -30,14 +30,14 @@ export class Environment implements TrestleRuntimeEnvironment {
   private readonly _extenders: EnvironmentExtender[];
 
   /**
-   * Initializes the trestle Runtime Environment and the given
+   * Initializes the junokit Runtime Environment and the given
    * extender functions.
    *
    * @remarks The extenders' execution order is given by the order
-   * of the requires in the trestle's config file and its plugins.
+   * of the requires in the junokit's config file and its plugins.
    *
-   * @param config The trestle's config object.
-   * @param runtimeArgs The parsed trestle's arguments.
+   * @param config The junokit's config object.
+   * @param runtimeArgs The parsed junokit's arguments.
    * @param tasks A map of tasks.
    * @param extenders A list of extenders.
    * @param networkRequired if true it will assert that a requested network is defined.
@@ -54,7 +54,7 @@ export class Environment implements TrestleRuntimeEnvironment {
     const ncfg = config.networks[runtimeArgs.network];
     // network configuration is required for all tasks except few setup tasks
     if (!ncfg && networkRequired) {
-      throw new TrestleError(ERRORS.NETWORK.CONFIG_NOT_FOUND, {
+      throw new JunokitError(ERRORS.NETWORK.CONFIG_NOT_FOUND, {
         network: runtimeArgs.network
       });
     }
@@ -77,7 +77,7 @@ export class Environment implements TrestleRuntimeEnvironment {
    * @param name The task's name.
    * @param taskArguments A map of task's arguments.
    *
-   * @throws a TRESTLE303 if there aren't any defined tasks with the given name.
+   * @throws a JUNOKIT303 if there aren't any defined tasks with the given name.
    * @returns a promise with the task's execution result.
    */
   public readonly run: RunTaskFunction = async (name, taskArguments = {}) => {
@@ -86,7 +86,7 @@ export class Environment implements TrestleRuntimeEnvironment {
     log("Running task %s", name);
 
     if (taskDefinition === undefined) {
-      throw new TrestleError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
+      throw new JunokitError(ERRORS.ARGUMENTS.UNRECOGNIZED_TASK, {
         task: name
       });
     }
@@ -100,7 +100,7 @@ export class Environment implements TrestleRuntimeEnvironment {
   };
 
   /**
-   * Injects the properties of `this` (the trestle Runtime Environment) into the global scope.
+   * Injects the properties of `this` (the junokit Runtime Environment) into the global scope.
    *
    * @param blacklist a list of property names that won't be injected.
    *
@@ -153,7 +153,7 @@ export class Environment implements TrestleRuntimeEnvironment {
       runSuperFunction.isDefined = true;
     } else {
       runSuperFunction = async () => {
-        throw new TrestleError(ERRORS.TASK_DEFINITIONS.RUNSUPER_NOT_AVAILABLE, {
+        throw new JunokitError(ERRORS.TASK_DEFINITIONS.RUNSUPER_NOT_AVAILABLE, {
           taskName: taskDefinition.name
         });
       };
@@ -182,7 +182,7 @@ export class Environment implements TrestleRuntimeEnvironment {
    * Also, populate missing, non-mandatory arguments with default param values (if any).
    *
    * @private
-   * @throws TrestleError if any of the following are true:
+   * @throws JunokitError if any of the following are true:
    *  > a required argument is missing
    *  > an argument's value's type doesn't match the defined param type
    *
@@ -205,7 +205,7 @@ export class Environment implements TrestleRuntimeEnvironment {
     ];
 
     const initResolvedArguments: {
-      errors: TrestleError[]
+      errors: JunokitError[]
       values: TaskArguments
     } = { errors: [], values: {} };
 
@@ -260,7 +260,7 @@ export class Environment implements TrestleRuntimeEnvironment {
       }
 
       // undefined & mandatory argument -> error
-      throw new TrestleError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
+      throw new JunokitError(ERRORS.ARGUMENTS.MISSING_TASK_ARGUMENT, {
         param: name
       });
     }
@@ -277,7 +277,7 @@ export class Environment implements TrestleRuntimeEnvironment {
    * @param paramDefinition {ParamDefinition} - the param definition for validation
    * @param argumentValue - the value to be validated
    * @private
-   * @throws TRESTLE301 if value is not valid for the param type
+   * @throws JUNOKIT301 if value is not valid for the param type
    */
   private _checkTypeValidation (
     paramDefinition: ParamDefinitionAny,

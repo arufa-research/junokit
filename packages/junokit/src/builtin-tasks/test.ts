@@ -3,11 +3,11 @@ import fsExtra from "fs-extra";
 import path from "path";
 
 import { task } from "../internal/core/config/config-env";
-import { TrestleError } from "../internal/core/errors";
+import { JunokitError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
 import { TESTS_DIR } from "../internal/core/project-structure";
 import { assertDirChildren } from "../lib/files";
-import { TrestleRuntimeEnvironment } from "../types";
+import { JunokitRuntimeEnvironment } from "../types";
 import { TASK_TEST } from "./task-names";
 
 interface Input {
@@ -19,7 +19,7 @@ export function filterNonExistent (scripts: string[]): string[] {
 }
 
 async function runTests (
-  runtimeEnv: TrestleRuntimeEnvironment,
+  runtimeEnv: JunokitRuntimeEnvironment,
   scriptNames: string[],
   logDebugTag: string
 ): Promise<void> {
@@ -38,9 +38,9 @@ async function runTests (
 
 async function executeTestTask (
   { tests }: Input,
-  runtimeEnv: TrestleRuntimeEnvironment
+  runtimeEnv: JunokitRuntimeEnvironment
 ): Promise<void> {
-  const logDebugTag = "trestle:tasks:test";
+  const logDebugTag = "junokit:tasks:test";
 
   if (tests === undefined) {
     tests = [];
@@ -53,7 +53,7 @@ async function executeTestTask (
 
   const nonExistent = filterNonExistent(tests);
   if (nonExistent.length !== 0) {
-    throw new TrestleError(ERRORS.BUILTIN_TASKS.RUN_FILES_NOT_FOUND, {
+    throw new JunokitError(ERRORS.BUILTIN_TASKS.RUN_FILES_NOT_FOUND, {
       scripts: nonExistent
     });
   }
@@ -72,7 +72,7 @@ export default function (): void {
   task(TASK_TEST, "Runs a user-defined test script after compiling the project")
     .addOptionalVariadicPositionalParam(
       "tests",
-      "A js file to be run within trestle's environment"
+      "A js file to be run within junokit's environment"
     )
     .setAction((input, env) => executeTestTask(input, env));
 }

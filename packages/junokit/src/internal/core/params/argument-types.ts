@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-import { TrestleError } from "../errors";
+import { JunokitError } from "../errors";
 import { ERRORS } from "../errors-list";
 
 /**
@@ -13,13 +13,13 @@ export interface ArgumentType<T> {
   name: string
 
   /**
-   * Parses strValue. This function MUST throw TRESTLE301 if it
+   * Parses strValue. This function MUST throw JUNOKIT301 if it
    * can parse the given value.
    *
    * @param argName argument's name - used for context in case of error.
    * @param strValue argument's string value to be parsed.
    *
-   * @throws TRESTLE301 if an invalid value is given.
+   * @throws JUNOKIT301 if an invalid value is given.
    * @returns the parsed value.
    */
   parse: (argName: string, strValue: string) => T
@@ -30,7 +30,7 @@ export interface ArgumentType<T> {
    * @param argName {string} argument's name - used for context in case of error.
    * @param argumentValue - value to be validated
    *
-   * @throws TRESTLE301 if value is not of type <t>
+   * @throws JUNOKIT301 if value is not of type <t>
    */
   validate?(argName: string, argumentValue: any): void;  // eslint-disable-line
 }
@@ -49,13 +49,13 @@ export const string: ArgumentType<string> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws TRESTLE301 if value is not of type "string"
+   * @throws JUNOKIT301 if value is not of type "string"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     const isString = typeof value === "string";
 
     if (!isString) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
         type: string.name
@@ -68,7 +68,7 @@ export const string: ArgumentType<string> = {
  * Boolean type.
  *
  * Accepts only 'true' or 'false' (case-insensitive).
- * @throws TRESTLE301
+ * @throws JUNOKIT301
  */
 export const boolean: ArgumentType<boolean> = {
   name: "boolean",
@@ -80,7 +80,7 @@ export const boolean: ArgumentType<boolean> = {
       return false;
     }
 
-    throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+    throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
       value: strValue,
       name: argName,
       type: "boolean"
@@ -92,13 +92,13 @@ export const boolean: ArgumentType<boolean> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws TRESTLE301 if value is not of type "boolean"
+   * @throws JUNOKIT301 if value is not of type "boolean"
    */
   validate: (argName: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const isBoolean = typeof value === "boolean";
 
     if (!isBoolean) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
         type: boolean.name
@@ -110,7 +110,7 @@ export const boolean: ArgumentType<boolean> = {
 /**
  * Int type.
  * Accepts either a decimal string integer or hexadecimal string integer.
- * @throws TRESTLE301
+ * @throws JUNOKIT301
  */
 export const int: ArgumentType<number> = {
   name: "int",
@@ -122,7 +122,7 @@ export const int: ArgumentType<number> = {
       strValue.match(decimalPattern) === null &&
       strValue.match(hexPattern) === null
     ) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value: strValue,
         name: argName,
         type: int.name
@@ -137,12 +137,12 @@ export const int: ArgumentType<number> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws TRESTLE301 if value is not of type "int"
+   * @throws JUNOKIT301 if value is not of type "int"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     const isInt = Number.isInteger(value);
     if (!isInt) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
         type: int.name
@@ -154,7 +154,7 @@ export const int: ArgumentType<number> = {
 /**
  * Float type.
  * Accepts either a decimal string number or hexadecimal string number.
- * @throws TRESTLE301
+ * @throws JUNOKIT301
  */
 export const float: ArgumentType<number> = {
   name: "float",
@@ -166,7 +166,7 @@ export const float: ArgumentType<number> = {
       strValue.match(decimalPattern) === null &&
       strValue.match(hexPattern) === null
     ) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value: strValue,
         name: argName,
         type: float.name
@@ -182,13 +182,13 @@ export const float: ArgumentType<number> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws TRESTLE301 if value is not of type "number"
+   * @throws JUNOKIT301 if value is not of type "number"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     const isFloatOrInteger = typeof value === "number" && !isNaN(value);
 
     if (!isFloatOrInteger) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
         type: float.name
@@ -200,7 +200,7 @@ export const float: ArgumentType<number> = {
 /**
  * Input file type.
  * Accepts a path to a readable file..
- * @throws TRESTLE302
+ * @throws JUNOKIT302
  */
 export const inputFile: ArgumentType<string> = {
   name: "inputFile",
@@ -210,12 +210,12 @@ export const inputFile: ArgumentType<string> = {
       const stats = fs.lstatSync(strValue);
 
       if (stats.isDirectory()) {
-        // This is caught and encapsulated in a trestle error.
-        // tslint:disable-next-line only-trestle-error
+        // This is caught and encapsulated in a junokit error.
+        // tslint:disable-next-line only-junokit-error
         throw new Error(`${strValue} is a directory, not a file`);
       }
     } catch (error) {
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.ARGUMENTS.INVALID_INPUT_FILE,
         {
           name: argName,
@@ -234,14 +234,14 @@ export const inputFile: ArgumentType<string> = {
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws TRESTLE301 if value is not of type "inputFile"
+   * @throws JUNOKIT301 if value is not of type "inputFile"
    */
   validate: (argName: string, value: any): void => {  // eslint-disable-line
     try {
       inputFile.parse(argName, value);
     } catch (error) {
       // the input value is considered invalid, throw error.
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE,
         {
           value,
@@ -260,7 +260,7 @@ export const json: ArgumentType<any> = {  // eslint-disable-line
     try {
       return JSON.parse(strValue);
     } catch (error) {
-      throw new TrestleError(
+      throw new JunokitError(
         ERRORS.ARGUMENTS.INVALID_JSON_ARGUMENT,
         {
           param: argName,
@@ -277,11 +277,11 @@ export const json: ArgumentType<any> = {  // eslint-disable-line
    * @param argName {string} argument's name - used for context in case of error.
    * @param value {any} argument's value to validate.
    *
-   * @throws TRESTLE301 if value is not of type "json"
+   * @throws JUNOKIT301 if value is not of type "json"
    */
   validate: (argName: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (value === undefined) {
-      throw new TrestleError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
+      throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
         type: json.name

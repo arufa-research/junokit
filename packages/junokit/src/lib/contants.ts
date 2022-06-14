@@ -1,4 +1,4 @@
-export const TRESTLE_NAME = "trestle";
+export const JUNOKIT_NAME = "junokit";
 
 export const defaultFees = {
   upload: {

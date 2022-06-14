@@ -10,7 +10,7 @@ import {
 } from "./task-definitions";
 
 /**
- * This class defines the DSL used in trestle config files
+ * This class defines the DSL used in junokit config files
  * for creating and overriding tasks.
  */
 export class TasksDSL {

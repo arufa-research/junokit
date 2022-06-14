@@ -6,6 +6,6 @@
   "dependencies": {
     "@types/chai": "^4.3.0",
     "chai": "^4.3.4",
-    "junokit": "^0.0.1"
+    "junokit": "^0.0.2"
   }
 }

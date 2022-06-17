@@ -1,4 +1,4 @@
-const { Contract, getAccountByName, getLogs } = require("junokit");
+const { Contract, ExternalContract, getAccountByName, getLogs } = require("junokit");
 
 async function run() {
   const contract_owner = getAccountByName("account_0");
@@ -6,6 +6,32 @@ async function run() {
   const contract = new Contract("cw_erc20");
   await contract.setUpclient();
   await contract.parseSchema();
+
+  const junoswap_contract = new ExternalContract("junoswap");
+  await junoswap_contract.setUpclient();
+
+  // query external contract
+  const ext_query_response = await junoswap_contract.query(
+    "balance",
+    {
+      address: contract_owner.account.address
+    }
+  );
+  console.log(ext_query_response);
+
+  // execute external contract
+  const ext_execute_response = await junoswap_contract.execute(
+    "transfer",
+    {
+      account: contract_owner,
+    },
+    {
+      recipient: other.account.address,
+      amount: "10000"
+    }
+  );
+  console.log(ext_execute_response);
+
 
   console.log("Client setup done!! ");
 

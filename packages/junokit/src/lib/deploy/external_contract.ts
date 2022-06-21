@@ -7,7 +7,6 @@ import { ERRORS } from "../../internal/core/errors-list";
 import { replaceAll } from "../../internal/util/strings";
 import type {
   Account,
-  Checkpoints,
   Coin,
   ContractFunction,
   ExternalContractsConfig,
@@ -15,10 +14,8 @@ import type {
   StdFee,
   UserAccount
 } from "../../types";
-import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
 import { ExecuteResult, getClient, getSigningClient } from "../client";
 import { defaultFees } from "../contants";
-import { Abi, AbiParam } from "./abi";
 
 export interface ExecArgs {
   account: Account | UserAccount

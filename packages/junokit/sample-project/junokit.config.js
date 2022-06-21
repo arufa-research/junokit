@@ -30,12 +30,6 @@ module.exports = {
     default: networks.testnet,
     localnet: networks.localnet,
   },
-  external_contracts: {
-    junoswap: {
-      default: "juno1z6h3cz7rla009ut3w5v0ukekm5zcc3mk53y2pnk6m5f44egk8lss2uyehw",
-      localnet: "addr2"
-    }
-  },
   mocha: {
     timeout: 60000
   },

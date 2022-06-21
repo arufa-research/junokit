@@ -1,5 +1,4 @@
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import chalk from "chalk";
 
 import { JunokitContext } from "../../internal/context";
 import { JunokitError } from "../../internal/core/errors";
@@ -8,7 +7,6 @@ import { replaceAll } from "../../internal/util/strings";
 import type {
   Account,
   Coin,
-  ContractFunction,
   ExternalContractsConfig,
   JunokitRuntimeEnvironment,
   StdFee,

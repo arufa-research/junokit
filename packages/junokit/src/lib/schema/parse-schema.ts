@@ -8,8 +8,8 @@ export * from './node-types';
 export * from './rust-repr';
 
 const reformatDefinitions = (definitions: {
-  [d: string]: { [d: string]: any }
-}): any => {
+  [d: string]: { [d: string]: any } // eslint-disable-line  @typescript-eslint/no-explicit-any
+}): any => { // eslint-disable-line  @typescript-eslint/no-explicit-any
   if (definitions === undefined) {
     return undefined;
   }
@@ -20,12 +20,14 @@ const reformatDefinitions = (definitions: {
   }));
 };
 
-export const parseSchema = async (schema: any): Promise<ParseNode> => {
+export const parseSchema = async (
+  schema: any // eslint-disable-line  @typescript-eslint/no-explicit-any
+): Promise<ParseNode> => {
   return _parse(
     (await $RefParser.dereference({
       ...schema,
       definitions: reformatDefinitions(schema.definitions)
-    })) as any
+    })) as any // eslint-disable-line  @typescript-eslint/no-explicit-any
   );
 };
 
@@ -116,7 +118,7 @@ export const _parse = (schema: ParseSchema): ParseNode => { // eslint-disable-li
   }
 
   if (schema.type === 'object') {
-    const members: Struct.Node<any>['value']['members'] = {};
+    const members: Struct.Node<any>['value']['members'] = {}; // eslint-disable-line  @typescript-eslint/no-explicit-any
     Object.entries(schema.properties || {}).forEach(
       ([memberName, memberSchema]) => {
         members[memberName] = _parse(memberSchema);
@@ -175,7 +177,7 @@ export const _parse = (schema: ParseSchema): ParseNode => { // eslint-disable-li
   }
 
   if (Array.isArray(schema.type) && schema.type.includes('null')) {
-    const newSchema: any = {
+    const newSchema: any = { // eslint-disable-line  @typescript-eslint/no-explicit-any
       ...schema,
       type: schema.type[0]
     };

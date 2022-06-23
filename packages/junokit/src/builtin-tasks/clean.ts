@@ -2,7 +2,7 @@ import chalk from "chalk";
 import fsExtra from "fs-extra";
 import path from "path";
 
-import { ERRORS } from "../../src/internal/core/errors-list";
+import { ERRORS } from "../internal/core/errors-list";
 import { task } from "../internal/core/config/config-env";
 import { JunokitError } from "../internal/core/errors";
 import { ARTIFACTS_DIR, isCwdProjectDir } from "../internal/core/project-structure";

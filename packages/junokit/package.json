@@ -41,6 +41,12 @@
   "engines": {
     "node": ">=14.11.0"
   },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md",
+    "sample-project/"
+  ],
   "devDependencies": {
     "@types/express": "^4.17.12",
     "@types/node": "^15.12.2",

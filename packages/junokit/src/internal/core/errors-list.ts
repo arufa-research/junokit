@@ -273,6 +273,34 @@ Please check that the configured keypair are correct.`,
       title: "Object is not a function",
       description: `Object is not a function.`,
       shouldBeReported: false
+    },
+    EXT_CONTRACT_NOT_FOUND: {
+      number: 30,
+      message: "External contract %contractName% not present in config",
+      title: "External contract not found",
+      description: `External contract not found.`,
+      shouldBeReported: false
+    },
+    EXT_CONTRACT_NETWORK_NOT_FOUND: {
+      number: 31,
+      message: "Network for %networkName% external contract %contractName% not present in config",
+      title: "Network for external contract not found",
+      description: `Network for external contract not found.`,
+      shouldBeReported: false
+    },
+    EXT_CONTRACT_CONFIG_NOT_FOUND: {
+      number: 32,
+      message: "External contract config not present while reading for contract %contractName%",
+      title: "External contract config not found",
+      description: `External contract config not found.`,
+      shouldBeReported: false
+    },
+    EXT_CONTRACT_ADDR_INCORRECT: {
+      number: 33,
+      message: "External contract %contractName% address not of correct format",
+      title: "External contract addr not correct",
+      description: `External contract addr not correct.`,
+      shouldBeReported: false
     }
   },
   NETWORK: {

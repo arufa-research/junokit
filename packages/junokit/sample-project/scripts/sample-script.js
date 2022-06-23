@@ -1,4 +1,4 @@
-const { Contract, getAccountByName, getLogs } = require("junokit");
+const { Contract, ExternalContract, getAccountByName, getLogs } = require("junokit");
 
 async function run() {
   const contract_owner = getAccountByName("account_0");

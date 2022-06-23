@@ -157,6 +157,14 @@ export interface DockerConfig {
   runTestnet?: string
 }
 
+export interface ExternalContractsConfig {
+  [contractName: string]: ExternalContractConfig
+}
+
+export interface ExternalContractConfig {
+  [networkName: string]: string
+}
+
 // Project paths config
 
 export interface ProjectPathsUserConfig {
@@ -190,6 +198,7 @@ export interface JunokitUserConfig {
   networks?: NetworksUserConfig
   mocha?: Mocha.MochaOptions
   docker?: DockerConfig
+  external_contracts?: ExternalContractsConfig
 }
 
 export interface JunokitConfig {

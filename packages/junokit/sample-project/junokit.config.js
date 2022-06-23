@@ -10,7 +10,7 @@ const accounts = [
     mnemonic: 'student prison fresh dwarf ecology birth govern river tissue wreck hope autumn basic trust divert dismiss buzz play pistol focus long armed flag bicycle'
   }
 ];
-// TODO: update fixture tests
+
 const networks = {
   localnet: {
     endpoint: 'http://localhost:26657/'

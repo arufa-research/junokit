@@ -1,6 +1,5 @@
 import { assert } from "chai";
 import fs from "fs-extra";
-import path from "path";
 
 import { ERRORS } from "../../src/internal/core/errors-list";
 import { compile } from "../../src/lib/compile/compile";

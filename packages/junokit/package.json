@@ -1,7 +1,7 @@
 {
   "name": "junokit",
   "version": "0.0.3",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/arufa-research/junokit.git",
   "authors": [
     {
@@ -34,9 +34,9 @@
     "prepublish": "yarn build",
     "publish": "yarn publish --access public"
   },
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "bin": {
-    "junokit": "dist/src/internal/cli/cli.js"
+    "junokit": "dist/internal/cli/cli.js"
   },
   "engines": {
     "node": ">=14.11.0"

@@ -22,6 +22,20 @@ const networks = {
     trustNode: true,
     keyringBackend: 'test',
     accounts: accounts,
+    fees: {
+      upload: {
+          amount: [{ amount: "500000", denom: "ujunox" }],
+          gas: "4000000",
+      },
+      init: {
+          amount: [{ amount: "125000", denom: "ujunox" }],
+          gas: "500000",
+      },
+      exec: {
+        amount: [{ amount: "125000", denom: "ujunox" }],
+        gas: "500000",
+      },
+    }
   },
 };
 

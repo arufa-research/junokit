@@ -1,7 +1,7 @@
 {
   "name": "junokit",
-  "version": "0.0.5",
-  "main": "dist/index.js",
+  "version": "0.0.6",
+  "main": "dist/src/index.js",
   "repository": "https://github.com/arufa-research/junokit.git",
   "authors": [
     {
@@ -41,12 +41,7 @@
   "engines": {
     "node": ">=14.11.0"
   },
-  "files": [
-    "dist/",
-    "LICENSE",
-    "README.md",
-    "sample-project/"
-  ],
+  "files": ["build/", "README.md", "sample-project/"],
   "devDependencies": {
     "@types/express": "^4.17.12",
     "@types/node": "^15.12.2",

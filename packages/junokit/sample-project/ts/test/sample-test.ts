@@ -1,5 +1,5 @@
-const { use } = require("chai");
-const { Contract, getAccountByName, junokitChai } = require("junokit");
+import { expect, use } from "chai";
+import { Contract, getAccountByName, junokitChai } from "junokit";
 
 use(junokitChai);
 
@@ -11,18 +11,18 @@ describe("erc-20", () => {
     const contract = new Contract("cw_erc20");
     await contract.parseSchema();
     const deploy_response = await contract.deploy(
-    contract_owner,
-    { // custom fees
-      amount: [{ amount: "750000", denom: "ujunox" }],
-      gas: "3000000",
-    }
-  );
-  console.log(deploy_response)
-
+      contract_owner,
+      { // custom fees
+        amount: [{ amount: "750000", denom: "ujunox" }],
+        gas: "3000000",
+      }
+    );
+    console.log(deploy_response);
     return { contract_owner, other, contract };
   }
 
   it("deploy and init", async () => {
+    const { contract_owner, other, contract } = await setup();
     const contract_info = await contract.instantiate(
     {
       "name": "ERC", "symbol": "ER", "decimals": 10,
@@ -31,7 +31,7 @@ describe("erc-20", () => {
         "amount": "100000000"
       }]
     }, "deploy test", contract_owner);
-  console.log(contract_info);
+    console.log(contract_info);
   });
 
   it("transfer and query balance", async () => {
@@ -47,16 +47,16 @@ describe("erc-20", () => {
         "amount": "100000000"
       }]
     }, "deploy test", contract_owner);
-  console.log(contract_info);
+    console.log(contract_info);
     let transfer_response = await contract.tx.transfer(
-    { account: contract_owner },
-    {
-      recipient: other.account.address,
-      amount: "50000000"
-    }
-  );
-  console.log(transfer_response);
+      { account: contract_owner },
+      {
+        recipient: other.account.address,
+        amount: "50000000"
+      }
+    );
+    console.log(transfer_response);
   
-  await expect(contract.query.balance({ "address": contract_owner.account.address })).to.respondWith({"balance": "50000000"});
+    await expect(contract.query.balance({ "address": contract_owner.account.address })).to.respondWith({"balance": "50000000"});
   });
 });

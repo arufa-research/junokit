@@ -55,8 +55,8 @@ function copySampleProject (
   });
 
   const scriptsDir = isTSProject
-    ? path.join(projectCommonDir, "ts")
-    : path.join(projectCommonDir, "js");
+    ? path.join(sampleProjDir, "ts")
+    : path.join(sampleProjDir, "js");
 
   // copy the js/ts scripts and tests based on --typescript flag
   fsExtra.copySync(scriptsDir, projectPath);

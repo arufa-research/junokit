@@ -20,7 +20,15 @@ describe("Init task", () => {
 
   it("When directory with same name doesn't exist", async function () {
     const projectName = "testproject";
-    await createProject(projectName);
+    await createProject(projectName, false);
+
+    assert.isTrue(fs.existsSync(`./${projectName}`));
+    assert.isTrue(fs.existsSync(`./${projectName}/junokit.config.js`));
+  });
+
+  it("When directory with same name doesn't exist, for ts", async function () {
+    const projectName = "testproject";
+    await createProject(projectName, true);
 
     assert.isTrue(fs.existsSync(`./${projectName}`));
     assert.isTrue(fs.existsSync(`./${projectName}/junokit.config.js`));
@@ -28,7 +36,7 @@ describe("Init task", () => {
 
   it("When directory name has special character", async function () {
     const projectName = "test-project";
-    await createProject(projectName);
+    await createProject(projectName, false);
 
     assert.isTrue(fs.existsSync(`./${projectName}`));
     assert.isTrue(fs.existsSync(`./${projectName}/junokit.config.js`));
@@ -38,7 +46,7 @@ describe("Init task", () => {
     fs.mkdirSync("./testproject");
 
     await expectJunokitErrorAsync(
-      async () => await createProject("testproject"),
+      async () => await createProject("testproject", false),
       ERRORS.GENERAL.INIT_INSIDE_PROJECT
     );
   });

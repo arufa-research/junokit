@@ -22,15 +22,19 @@ export async function printWelcomeMessage (): Promise<void> {
     chalk.cyan(`★ Welcome to ${JUNOKIT_NAME} v${packageJson.version}`));
 }
 
-function copySampleProject (projectName: string): void {
+function copySampleProject (
+  projectName: string,
+  isTSProject: boolean
+): void {
   const packageRoot = getPackageRoot();
   const sampleProjDir = path.join(packageRoot, "sample-project");
+  const projectCommonDir = path.join(sampleProjDir, "common");
 
   const currDir = process.cwd();
   const projectPath = path.join(currDir, projectName);
   console.log(chalk.greenBright("Initializing new project in " + projectPath + "."));
 
-  fsExtra.copySync(sampleProjDir, projectPath, {
+  fsExtra.copySync(projectCommonDir, projectPath, {
     // User doesn't choose the directory so overwrite should be avoided
     overwrite: false,
     filter: (src: string, dest: string) => {
@@ -49,6 +53,13 @@ function copySampleProject (projectName: string): void {
       return true;
     }
   });
+
+  const scriptsDir = isTSProject
+    ? path.join(sampleProjDir, "ts")
+    : path.join(sampleProjDir, "js");
+
+  // copy the js/ts scripts and tests based on --typescript flag
+  fsExtra.copySync(scriptsDir, projectPath);
 }
 
 export function printSuggestedCommands (projectName: string): void {
@@ -75,7 +86,7 @@ async function printPluginInstallationInstructions (): Promise<void> {
 }
 // eslint-disable-next-line
 export async function createProject (
-  projectName: string, templateName?: string, destination?: string
+  projectName: string, isTSProject: boolean, templateName?: string, destination?: string
 ): Promise<any> { // eslint-disable-line  @typescript-eslint/no-explicit-any
   if (templateName !== undefined) {
     const currDir = process.cwd();
@@ -90,7 +101,7 @@ export async function createProject (
   }
   await printWelcomeMessage();
 
-  copySampleProject(projectName);
+  copySampleProject(projectName, isTSProject);
 
   let shouldShowInstallationInstructions = true;
 

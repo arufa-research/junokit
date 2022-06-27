@@ -53,7 +53,7 @@ export class UserAccountI implements UserAccount {
 
 export function getAccountByName (
   name: string
-): (Account | UserAccount) {
+): (UserAccount) {
   const env: JunokitRuntimeEnvironment = JunokitContext.getJunokitContext().getRuntimeEnv();
   if (env.network.config.accounts === undefined) {
     throw new JunokitError(ERRORS.GENERAL.ACCOUNT_DOES_NOT_EXIST, { name: name });

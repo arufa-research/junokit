@@ -21,7 +21,7 @@ import type {
   DeployInfo,
   InstantiateInfo,
   JunokitRuntimeEnvironment,
-  StdFee,
+  TxnStdFee,
   UserAccount
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
@@ -71,7 +71,7 @@ function buildCall (
 export interface ExecArgs {
   account: Account | UserAccount
   transferAmount: readonly Coin[] | undefined
-  customFees: StdFee | undefined
+  customFees: TxnStdFee | undefined
 }
 
 function buildSend (
@@ -241,10 +241,13 @@ export class Contract {
 
   async deploy (
     account: Account | UserAccount,
-    customFees?: StdFee | undefined
+    customFees?: TxnStdFee | undefined
   ): Promise<DeployInfo> {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
+    // custom fee from junokit.config.js handled here as not in cosmjs client
+    const customFeesVal: TxnStdFee | undefined = customFees !== undefined
+      ? customFees : this.env.network.config.fees?.upload;
     const info = this.checkpointData[this.env.network.name]?.deployInfo;
     if (info) {
       console.log("Warning: contract already deployed, using checkpoints");
@@ -258,7 +261,7 @@ export class Contract {
     const uploadReceipt = await signingClient.upload(
       accountVal.address,
       wasmFileContent,
-      customFees ?? defaultFees.upload,
+      customFeesVal ?? defaultFees.upload,
       "this is upload"
     );
     const codeId: number = uploadReceipt.codeId;
@@ -309,10 +312,13 @@ export class Contract {
     label: string,
     account: Account | UserAccount,
     transferAmount?: readonly Coin[],
-    customFees?: StdFee | undefined
+    customFees?: TxnStdFee | undefined
   ): Promise<InstantiateInfo> {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
+    // custom fee from junokit.config.js handled here as not in cosmjs client
+    const customFeesVal: TxnStdFee | undefined = customFees !== undefined
+      ? customFees : this.env.network.config.fees?.init;
     const info = this.checkpointData[this.env.network.name]?.instantiateInfo;
     if (info) {
       console.log("Warning: contract already instantiated, using checkpoints");
@@ -328,7 +334,7 @@ export class Contract {
       this.codeId,
       initArgs,
       label,
-      customFees ?? defaultFees.init,
+      customFeesVal ?? defaultFees.init,
       {}
     );
     this.contractAddress = contract.contractAddress;
@@ -368,10 +374,13 @@ export class Contract {
     callArgs: Record<string, unknown>,
     account: Account | UserAccount,
     transferAmount?: readonly Coin[],
-    customFees?: StdFee | undefined
+    customFees?: TxnStdFee | undefined
   ): Promise<ExecuteResult> {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
+    // custom fee from junokit.config.js handled here as not in cosmjs client
+    const customFeesVal: TxnStdFee | undefined = customFees !== undefined
+      ? customFees : this.env.network.config.fees?.exec;
     if (this.contractAddress === "mock_address") {
       throw new JunokitError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
         param: this.contractName
@@ -388,7 +397,7 @@ export class Contract {
       accountVal.address,
       this.contractAddress,
       msgData,
-      customFees ?? defaultFees.exec,
+      customFeesVal ?? defaultFees.exec,
       "executing",
       transferAmount
 

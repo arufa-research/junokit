@@ -1,11 +1,16 @@
 import { expect, use } from "chai";
 import { Contract, getAccountByName, junokitChai } from "junokit";
+import { UserAccount } from "../../../dist/types";
 
 use(junokitChai);
 
 describe("erc-20", () => {
 
-  async function setup() {
+  async function setup(): Promise<{
+    contract_owner: UserAccount;
+    other: UserAccount;
+    contract: Contract;
+  }> {
     const contract_owner = getAccountByName("account_1");
     const other = getAccountByName("account_0");
     const contract = new Contract("cw_erc20");

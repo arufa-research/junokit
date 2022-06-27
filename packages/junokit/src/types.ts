@@ -32,22 +32,10 @@ export interface TxnStdFee {
 }
 
 export interface StdFee {
-  readonly upload: {
-    readonly amount: readonly Coin[]
-    readonly gas: string
-  }
-  readonly init: {
-    readonly amount: readonly Coin[]
-    readonly gas: string
-  }
-  readonly exec: {
-    readonly amount: readonly Coin[]
-    readonly gas: string
-  }
-  readonly send: {
-    readonly amount: readonly Coin[]
-    readonly gas: string
-  }
+  readonly upload: TxnStdFee
+  readonly init: TxnStdFee
+  readonly exec: TxnStdFee
+  readonly send: TxnStdFee
   readonly amount: readonly Coin[]
   readonly gas: string
 }

@@ -13,7 +13,7 @@ To run the `sample-project`:
 - Install `Junokit` if not yet installed.
 
   - `yarn global add junokit` will install the `junokit` system-wide.
-  - To check if installed, run command `junokit` and thsi should list out the possible commands.
+  - To check if installed, run command `junokit` and this should list out the possible commands.
 
 - Compile and deploy Smart Contracts:
 

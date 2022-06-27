@@ -1,4 +1,4 @@
-import { Contract, ExternalContract, getAccountByName, getLogs } from "junokit";
+import { Contract, getAccountByName } from "junokit";
 
 async function run() {
   const contract_owner = getAccountByName("account_0");

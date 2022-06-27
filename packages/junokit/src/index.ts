@@ -4,6 +4,6 @@ import { junokitChai } from "./lib/chai/chai";
 import { Contract } from "./lib/deploy/contract";
 import { ExternalContract } from "./lib/deploy/external_contract";
 import { getLogs } from "./lib/response";
-import * as types from "./types";
+import * as junokitTypes from "./types";
 
-export { Contract, ExternalContract, getAccountByName, junokitChai, getLogs, types };
+export { Contract, ExternalContract, getAccountByName, junokitChai, getLogs, junokitTypes };

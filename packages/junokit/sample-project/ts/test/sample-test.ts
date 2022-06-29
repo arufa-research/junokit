@@ -1,5 +1,6 @@
 import { expect, use } from "chai";
-import { Contract, getAccountByName, junokitChai, junokitTypes } from "junokit";
+import { getAccountByName, junokitChai, junokitTypes } from "junokit";
+import { CwErc20Contract } from "CwErc20Contract";
 
 use(junokitChai);
 
@@ -8,12 +9,11 @@ describe("erc-20", () => {
   async function setup(): Promise<{
     contract_owner: junokitTypes.UserAccount;
     other: junokitTypes.UserAccount;
-    contract: Contract;
+    contract: CwErc20Contract;
   }> {
     const contract_owner = getAccountByName("account_1");
     const other = getAccountByName("account_0");
-    const contract = new Contract("cw_erc20");
-    await contract.parseSchema();
+    const contract = new CwErc20Contract();
     const deploy_response = await contract.deploy(
       contract_owner,
       { // custom fees
@@ -52,7 +52,7 @@ describe("erc-20", () => {
       }]
     }, "deploy test", contract_owner);
     console.log(contract_info);
-    let transfer_response = await contract.tx.transfer(
+    let transfer_response = await contract.transfer(
       { account: contract_owner },
       {
         recipient: other.account.address,
@@ -61,6 +61,6 @@ describe("erc-20", () => {
     );
     console.log(transfer_response);
   
-    await expect(contract.query.balance({ "address": contract_owner.account.address })).to.respondWith({"balance": "50000000"});
+    await expect(contract.balance({ "address": contract_owner.account.address })).to.respondWith({"balance": "50000000"});
   });
 });

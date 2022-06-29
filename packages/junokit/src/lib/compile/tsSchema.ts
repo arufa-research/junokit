@@ -51,16 +51,16 @@ export async function generateTsSchema (
     ReadOnlyInstance = pascal(`${name}ReadOnlyInterface`);
 
     body.push(
-      w.createQueryInterface(ReadOnlyInstance, QueryMsg)
+      w.createQueryInterface(ReadOnlyInstance, QueryMsg as any) // eslint-disable-line  @typescript-eslint/no-explicit-any
     );
     body.push(
-      w.createQueryClass(QueryClient, ReadOnlyInstance, "Contract", QueryMsg)
+      w.createQueryClass(QueryClient, ReadOnlyInstance, "Contract", QueryMsg as any) // eslint-disable-line  @typescript-eslint/no-explicit-any
     );
   }
 
   // execute messages
   if (ExecuteMsg) {
-    const children = getMessageProperties(ExecuteMsg);
+    const children = getMessageProperties(ExecuteMsg as any); // eslint-disable-line  @typescript-eslint/no-explicit-any
     if (children.length > 0) {
       Client = pascal(`${name}Contract`);
       Instance = pascal(`${name}Interface`);
@@ -69,7 +69,7 @@ export async function generateTsSchema (
         w.createExecuteInterface(
           Instance,
           ReadOnlyInstance,
-          ExecuteMsg
+          ExecuteMsg as any // eslint-disable-line  @typescript-eslint/no-explicit-any
         )
       );
       body.push(
@@ -77,7 +77,7 @@ export async function generateTsSchema (
           Client,
           Instance,
           QueryClient as string,
-          ExecuteMsg,
+          ExecuteMsg as any, // eslint-disable-line  @typescript-eslint/no-explicit-any
           name
         )
       );

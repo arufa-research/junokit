@@ -1,8 +1,9 @@
 module.exports = {
   plugins: ['prettier'],
   extends: ['eslint:recommended', 'prettier'],
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: "./tsconfig.json",
     ecmaVersion: 11,
     requireConfigFile: false,
     sourceType: 'module',

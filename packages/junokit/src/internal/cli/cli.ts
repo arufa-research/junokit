@@ -214,7 +214,7 @@ async function main (): Promise<void> {
 
     console.log("");
 
-    printStackTraces(showStackTraces, error);
+    printStackTraces(showStackTraces, error as JunokitError);
 
     process.exit(1);
   }

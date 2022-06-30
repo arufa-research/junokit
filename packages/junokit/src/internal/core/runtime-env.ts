@@ -222,7 +222,7 @@ export class Environment implements JunokitRuntimeEnvironment {
             values[paramName] = resolvedArgumentValue;
           }
         } catch (error) {
-          errors.push(error);
+          errors.push(error as JunokitError);
         }
         return { errors, values };
       },

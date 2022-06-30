@@ -110,7 +110,6 @@ export async function generateSchema (
   process.chdir(currDir);
 
   // Creates typescript objects for execute and query msgs from json schema files
-
   const contractTsSchemaDir = TS_SCHEMA_DIR;
   // create nested dirs if not present
   if (!fs.existsSync(contractTsSchemaDir)) {

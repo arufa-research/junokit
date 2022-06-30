@@ -1,6 +1,5 @@
-import { getAccountByName } from "junokit";
-
-import { CwErc20Contract } from "CwErc20Contract";
+const { getAccountByName } = require("junokit");
+const { CwErc20Contract } = require("CwErc20Contract");
 
 async function run() {
   const contract_owner = getAccountByName("account_0");

@@ -1,6 +1,6 @@
-import { expect, use } from "chai";
-import { getAccountByName, junokitChai } from "junokit";
-import { CwErc20Contract } from "CwErc20Contract";
+const { expect, use } = require("chai");
+const { getAccountByName, junokitChai } = require("junokit");
+const { CwErc20Contract } = require("CwErc20Contract");
 
 use(junokitChai);
 

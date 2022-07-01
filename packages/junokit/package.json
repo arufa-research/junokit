@@ -1,6 +1,6 @@
 {
   "name": "junokit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "repository": "https://github.com/arufa-research/junokit.git",
   "authors": [
@@ -66,7 +66,7 @@
     "@cosmjs/stargate": "^0.27.1",
     "@iov/crypto": "^2.5.0",
     "@iov/encoding": "^2.5.0",
-    "@junokit/wasm-ast-types": "0.3.5",
+    "junokit-wasm-ast-types": "0.3.5",
     "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.17.1",
     "@types/chai": "^4.2.19",

@@ -1,9 +1,9 @@
 import generate from "@babel/generator";
 import * as t from '@babel/types';
-import * as w from '@junokit/wasm-ast-types';
-import { getMessageProperties } from "@junokit/wasm-ast-types";
 import { pascal } from "case";
 import { writeFileSync } from 'fs';
+import * as w from 'junokit-wasm-ast-types';
+import { getMessageProperties } from "junokit-wasm-ast-types";
 import { sync as mkdirp } from "mkdirp";
 import { join } from "path";
 

@@ -1,5 +1,5 @@
 {
-  "name": "@junokit/wasm-ast-types",
+  "name": "junokit-wasm-ast-types",
   "version": "0.3.5",
   "description": "CosmWasm TypeScript AST generation",
   "author": "Dan Lynch <pyramation@gmail.com>",
@@ -29,7 +29,8 @@
     "test": "jest",
     "test:ast": "cross-env NODE_ENV=development babel-node scripts/test-ast.js",
     "test:watch": "jest --watch",
-    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "publish": "yarn publish --access public"
   },
   "jest": {
     "testPathIgnorePatterns": [

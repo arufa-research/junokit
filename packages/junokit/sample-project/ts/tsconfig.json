@@ -1,9 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./",
-        "paths" : {
-            "*" : ["artifacts/typescript_schema/*"]	// used to simplify ts schema import
-        },
 		"target": "ES2020",
 		"lib": ["esnext", "dom"],
 		"outDir": "./build/scripts",

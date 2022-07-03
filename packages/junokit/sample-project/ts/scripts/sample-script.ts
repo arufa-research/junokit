@@ -1,6 +1,6 @@
 import { getAccountByName } from "junokit";
 
-import { CwErc20Contract } from "CwErc20Contract";
+import { CwErc20Contract } from "../artifacts/typescript_schema/CwErc20";
 
 async function run() {
   const contract_owner = getAccountByName("account_0");

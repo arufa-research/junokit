@@ -58,7 +58,7 @@ export async function runScript (
   runtimeEnv: JunokitRuntimeEnvironment
 ): Promise<void> {
   if (relativeScriptPath.endsWith('.ts')) {
-    relativeScriptPath = path.join('build', relativeScriptPath.split('.ts')[0] + '.js');
+    relativeScriptPath = path.join('build', 'scripts', relativeScriptPath.split('.ts')[0] + '.js');
   }
 
   log(`Running ${relativeScriptPath}.default()`);

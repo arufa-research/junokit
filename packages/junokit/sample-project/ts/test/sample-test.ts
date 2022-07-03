@@ -1,6 +1,6 @@
 import { expect, use } from "chai";
 import { getAccountByName, junokitChai, junokitTypes } from "junokit";
-import { CwErc20Contract } from "CwErc20Contract";
+import { CwErc20Contract } from "../artifacts/typescript_schema/CwErc20";
 
 use(junokitChai);
 

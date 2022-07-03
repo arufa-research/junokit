@@ -14,7 +14,7 @@ export async function generateTsSchema (
   schemas: any[], // eslint-disable-line  @typescript-eslint/no-explicit-any
   outPath: string
 ): Promise<void> {
-  const Contract = pascal(name) + 'Contract.ts';
+  const Contract = pascal(name) + '.ts';
 
   const QueryMsg = findQueryMsg(schemas);
   const ExecuteMsg = findExecuteMsg(schemas);

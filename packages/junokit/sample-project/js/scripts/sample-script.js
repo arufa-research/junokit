@@ -1,10 +1,9 @@
-const { getAccountByName } = require("junokit");
-const { CwErc20Contract } = require("CwErc20Contract");
+const { Contract, getAccountByName } = require("junokit");
 
 async function run() {
   const contract_owner = getAccountByName("account_0");
   const other = getAccountByName("account_1");
-  const cw20_contract = new CwErc20Contract();
+  const cw20_contract = new Contract('cw_erc20');
   await cw20_contract.setUpclient();
 
   console.log("Client setup done!! ");
@@ -28,19 +27,25 @@ async function run() {
     }, "deploy test", contract_owner);
   console.log(contract_info);
 
-  let balance_before = await cw20_contract.balance({ "address": contract_owner.account.address });
+  let balance_before = await cw20_contract.queryMsg({
+    balance: { "address": contract_owner.account.address }
+  });
   console.log(balance_before);
 
-  let transfer_response = await cw20_contract.transfer(
-    { account: contract_owner },
+  let transfer_response = await cw20_contract.executeMsg(
     {
-      recipient: other.account.address,
-      amount: "50000000"
-    }
+      transfer: {
+        recipient: other.account.address,
+        amount: "50000000"
+      }
+    },
+    contract_owner
   );
   console.log(transfer_response);
 
-  let balance_after = await cw20_contract.balance({ "address": contract_owner.account.address });
+  let balance_after = await cw20_contract.queryMsg({
+    balance: { "address": contract_owner.account.address }
+  });
   console.log(balance_after);
 }
 

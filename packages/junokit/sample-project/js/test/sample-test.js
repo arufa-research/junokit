@@ -1,6 +1,5 @@
 const { expect, use } = require("chai");
-const { getAccountByName, junokitChai } = require("junokit");
-const { CwErc20Contract } = require("CwErc20Contract");
+const { Contract, getAccountByName, junokitChai } = require("junokit");
 
 use(junokitChai);
 
@@ -9,7 +8,7 @@ describe("erc-20", () => {
   async function setup() {
     const contract_owner = getAccountByName("account_1");
     const other = getAccountByName("account_0");
-    const contract = new CwErc20Contract();
+    const contract = new Contract('cw_erc20');
     const deploy_response = await contract.deploy(
       contract_owner,
       { // custom fees
@@ -48,15 +47,19 @@ describe("erc-20", () => {
       }]
     }, "deploy test", contract_owner);
     console.log(contract_info);
-    let transfer_response = await contract.transfer(
-      { account: contract_owner },
+    let transfer_response = await contract.executeMsg(
       {
-        recipient: other.account.address,
-        amount: "50000000"
-      }
+        transfer: {
+          recipient: other.account.address,
+          amount: "50000000"
+        }
+      },
+      contract_owner
     );
     console.log(transfer_response);
   
-    await expect(contract.balance({ "address": contract_owner.account.address })).to.respondWith({"balance": "50000000"});
+    await expect(await cw20_contract.queryMsg({
+      balance: { "address": contract_owner.account.address }
+    })).to.respondWith({"balance": "50000000"});
   });
 });

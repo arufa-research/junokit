@@ -14,14 +14,14 @@ async function run() {
     contract_owner,
     { // custom fees
       amount: [{ amount: "750000", denom: "ujunox" }],
-      gas: "3000000",
+      gas: "18000000",
     }
   );
   console.log(deploy_response);
 
   const contract_info = await cw20_contract.instantiate(
     {
-      "name": "ERC", "symbol": "ER", "decimals": 10,
+      "name": "ERC20", "symbol": "ERC", "decimals": 10,
       "initial_balances": [{
         "address": contract_owner.account.address,
         "amount": "100000000"

@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "ES2020",
 		"lib": ["esnext", "dom"],
-		"outDir": "./build/scripts",
+		"outDir": "./build",
 		"typeRoots": ["node_modules/@types"],
 		"experimentalDecorators": true,
 		"esModuleInterop": true,
@@ -17,5 +17,5 @@
 		"declaration": true
 	},
 	"exclude": ["**/node_modules", "**/webpack"],
-	"include": ["scripts"]
+	"include": ["scripts", "test"]
 }

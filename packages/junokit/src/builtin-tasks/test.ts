@@ -45,7 +45,10 @@ async function executeTestTask (
   if (tests === undefined) {
     tests = [];
     for (const file of fsExtra.readdirSync(TESTS_DIR)) {
-      tests.push(path.join(TESTS_DIR, file));
+      if (file.endsWith('.ts')) {
+        const relativeFilePath = path.join(TESTS_DIR, file.split('.ts')[0] + '.js');
+        tests.push(path.join('build', relativeFilePath));
+      }
     }
     console.log(`Reading test files in ${chalk.cyan(TESTS_DIR)} directory`);
     console.log(`Found ${tests.length} test files: ${chalk.green(tests)}`);
@@ -63,7 +66,7 @@ async function executeTestTask (
 
   await runTests(
     runtimeEnv,
-    assertDirChildren(TESTS_DIR, tests),
+    assertDirChildren(path.join('build', TESTS_DIR), tests),
     logDebugTag
   );
 }

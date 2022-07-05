@@ -21,7 +21,7 @@ import {
 export const createWasmQueryMethod = (jsonschema: any) => {
   const underscoreName = Object.keys(jsonschema.properties)[0];
   const methodName = camel(underscoreName);
-  const responseType = pascal(`${methodName}Response`);
+  const responseType = `any`;
   const properties = jsonschema.properties[underscoreName].properties ?? {};
 
   const obj = createTypedObjectParams(jsonschema.properties[underscoreName]);
@@ -155,11 +155,7 @@ export const createWasmExecMethod = (jsonschema: any) => {
       t.tSPropertySignature(
         t.identifier('customFees?'),
         t.tsTypeAnnotation(
-          t.tsUnionType([
-            t.tsNumberKeyword(),
-            t.tsTypeReference(t.identifier('StdFee')),
-            t.tsLiteralType(t.stringLiteral('auto'))
-          ])
+          t.tsTypeReference(t.identifier('junokitTypes.TxnStdFee'))
         )
       ),
       t.tSPropertySignature(
@@ -372,11 +368,7 @@ export const createPropertyFunctionWithObjectParamsForExec = (
       t.tSPropertySignature(
         t.identifier('customFees?'),
         t.tsTypeAnnotation(
-          t.tsUnionType([
-            t.tsNumberKeyword(),
-            t.tsTypeReference(t.identifier('StdFee')),
-            t.tsLiteralType(t.stringLiteral('auto'))
-          ])
+          t.tsTypeReference(t.identifier('junokitTypes.TxnStdFee'))
         )
       ),
       t.tSPropertySignature(
@@ -410,7 +402,7 @@ export const createQueryInterface = (className: string, queryMsg: QueryMsg) => {
   const methods = getMessageProperties(queryMsg).map((jsonschema) => {
     const underscoreName = Object.keys(jsonschema.properties)[0];
     const methodName = camel(underscoreName);
-    const responseType = pascal(`${methodName}Response`);
+    const responseType = `any`;
     return createPropertyFunctionWithObjectParams(
       methodName,
       responseType,

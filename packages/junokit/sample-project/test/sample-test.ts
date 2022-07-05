@@ -1,6 +1,6 @@
 import { expect, use } from "chai";
 import { getAccountByName, junokitChai, junokitTypes } from "junokit";
-import { CwErc20Contract } from "CwErc20Contract";
+import { CwErc20Contract } from "../artifacts/typescript_schema/CwErc20";
 
 use(junokitChai);
 
@@ -11,14 +11,15 @@ describe("erc-20", () => {
     other: junokitTypes.UserAccount;
     contract: CwErc20Contract;
   }> {
-    const contract_owner = getAccountByName("account_1");
-    const other = getAccountByName("account_0");
+    const contract_owner = getAccountByName("account_0");
+    const other = getAccountByName("account_1");
     const contract = new CwErc20Contract();
+    await contract.setUpclient();
     const deploy_response = await contract.deploy(
       contract_owner,
       { // custom fees
         amount: [{ amount: "750000", denom: "ujunox" }],
-        gas: "3000000",
+        gas: "18000000",
       }
     );
     console.log(deploy_response);
@@ -29,7 +30,7 @@ describe("erc-20", () => {
     const { contract_owner, other, contract } = await setup();
     const contract_info = await contract.instantiate(
     {
-      "name": "ERC", "symbol": "ER", "decimals": 10,
+      "name": "ERC20", "symbol": "ERC", "decimals": 10,
       "initial_balances": [{
         "address": contract_owner.account.address,
         "amount": "100000000"
@@ -45,7 +46,7 @@ describe("erc-20", () => {
 
     const contract_info = await contract.instantiate(
     {
-      "name": "ERC", "symbol": "ER", "decimals": 10,
+      "name": "ERC20", "symbol": "ERC", "decimals": 10,
       "initial_balances": [{
         "address": contract_owner.account.address,
         "amount": "100000000"

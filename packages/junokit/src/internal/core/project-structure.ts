@@ -26,6 +26,10 @@ export function isCwdProjectDir (): boolean {
   return Boolean(fs.existsSync(JS_CONFIG_FILENAME));
 }
 
+export function isCwdTSProjectDir (): boolean {
+  return Boolean(fs.existsSync("tsconfig.json"));
+}
+
 export function getUserConfigPath (): string | undefined {
   return findUp.sync(JS_CONFIG_FILENAME) ?? undefined;
 }

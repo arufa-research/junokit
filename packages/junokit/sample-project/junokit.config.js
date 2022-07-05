@@ -1,8 +1,8 @@
 const accounts = [
   {
     name: 'account_0',
-    address: 'juno1evpfprq0mre5n0zysj6cf74xl6psk96gus7dp5',
-    mnemonic: 'omit sphere nurse rib tribe suffer web account catch brain hybrid zero act gold coral shell voyage matter nose stick crucial fog judge text'
+    address: 'juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y',
+    mnemonic: 'clip hire initial neck maid actor venue client foam budget lock catalog sweet steak waste crater broccoli pipe steak sister coyote moment obvious choose'
   },
   {
     name: 'account_1',
@@ -13,7 +13,8 @@ const accounts = [
 
 const networks = {
   localnet: {
-    endpoint: 'http://localhost:26657/'
+    endpoint: 'http://localhost:26657/',
+    accounts: accounts
   },
   // uni-2
   testnet: {
@@ -45,7 +46,8 @@ module.exports = {
     localnet: networks.localnet,
   },
   mocha: {
-    timeout: 60000
+    timeout: 60000,
+    require: ["ts-node/require"]
   },
   rust: {
     version: "1.59.0",

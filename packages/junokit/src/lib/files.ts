@@ -13,7 +13,8 @@ export function assertDirChildren (dir: string, scriptNames: string[]): string[]
     .filter(scriptName => !path.relative(".", scriptName).startsWith(dir));
   if (nonScriptPaths.length !== 0) {
     throw new JunokitError(ERRORS.BUILTIN_TASKS.SCRIPTS_OUTSIDE_SCRIPTS_DIRECTORY, {
-      scripts: nonScriptPaths
+      scripts: nonScriptPaths,
+      directory: dir
     });
   }
   return normalized;

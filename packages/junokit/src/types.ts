@@ -43,6 +43,7 @@ export interface StdFee {
 export interface UserAccount {
   account: Account
   getBalance: (searchDenom: string) => Promise<Coin>
+  setupClient: () => Promise<void>
 }
 
 export interface ContractInfo {

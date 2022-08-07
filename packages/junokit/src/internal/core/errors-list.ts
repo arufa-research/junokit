@@ -957,9 +957,9 @@ or go to [solang](https://solang.readthedocs.io/en/latest/installing.html) to le
     },
     SCRIPTS_OUTSIDE_SCRIPTS_DIRECTORY: {
       number: 612,
-      message: "Attempted to execute a script outside scripts directory: %directory%.",
+      message: "Attempted to execute a script outside %directory% directory: %scripts%.",
       title: "Script is outside `scripts`",
-      description: `Tried to run scripts that was outside scripts directory %directory%.
+      description: `Tried to run scripts that was outside %directory% directory: %scripts%.
   
   Please double check your command parameters`,
       shouldBeReported: false

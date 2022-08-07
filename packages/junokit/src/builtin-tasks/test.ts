@@ -26,8 +26,12 @@ async function runTests (
   const { default: Mocha } = await import('mocha');
   const mocha = new Mocha(runtimeEnv.config.mocha);
 
-  for (const relativeScriptPath of scriptNames) {
-    mocha.addFile(relativeScriptPath);
+  for (const file of scriptNames) {
+    let relativeFilePath = file;
+    if (file.endsWith('.ts')) {
+      relativeFilePath = path.join('build', file.split('.ts')[0] + '.js');
+    }
+    mocha.addFile(relativeFilePath);
   }
   const testFailures = await new Promise<number>((resolve, reject) => {
     mocha.run(resolve);
@@ -45,9 +49,9 @@ async function executeTestTask (
   if (tests === undefined) {
     tests = [];
     for (const file of fsExtra.readdirSync(TESTS_DIR)) {
-      if (file.endsWith('.ts')) {
-        const relativeFilePath = path.join(TESTS_DIR, file.split('.ts')[0] + '.js');
-        tests.push(path.join('build', relativeFilePath));
+      if (file.endsWith('.ts') || file.endsWith('.js')) {
+        const relativeFilePath = path.join(TESTS_DIR, file);
+        tests.push(relativeFilePath);
       }
     }
     console.log(`Reading test files in ${chalk.cyan(TESTS_DIR)} directory`);
@@ -66,7 +70,7 @@ async function executeTestTask (
 
   await runTests(
     runtimeEnv,
-    assertDirChildren(path.join('build', TESTS_DIR), tests),
+    assertDirChildren(TESTS_DIR, tests),
     logDebugTag
   );
 }

@@ -1,4 +1,4 @@
-import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { CosmWasmClient, MigrateResult } from "@cosmjs/cosmwasm-stargate";
 import fs from "fs-extra";
 import path from "path";
 
@@ -146,7 +146,8 @@ export class Contract {
     label: string,
     account: Account | UserAccount,
     transferAmount?: readonly Coin[],
-    customFees?: TxnStdFee
+    customFees?: TxnStdFee,
+    contractAdmin?: string | undefined
   ): Promise<InstantiateInfo> {
     const accountVal: Account = (account as UserAccount).account !== undefined
       ? (account as UserAccount).account : (account as Account);
@@ -170,7 +171,8 @@ export class Contract {
       label,
       customFeesVal ?? defaultFees.init,
       {
-        funds: transferAmount
+        funds: transferAmount,
+        admin: contractAdmin
       }
     );
     this.contractAddress = contract.contractAddress;
@@ -235,6 +237,42 @@ export class Contract {
       customFeesVal ?? defaultFees.exec,
       memo === undefined ? "executing" : memo,
       transferAmount
+    );
+  }
+
+  async migrate (
+    msgData: Record<string, unknown>,
+    newCodeId: number,
+    account: Account | UserAccount,
+    customFees?: TxnStdFee,
+    memo?: string
+  ): Promise<MigrateResult> {
+    const accountVal: Account = (account as UserAccount).account !== undefined
+      ? (account as UserAccount).account : (account as Account);
+    // custom fee from junokit.config.js handled here as not in cosmjs client
+    const customFeesVal: TxnStdFee | undefined = customFees !== undefined
+      ? customFees : this.env.network.config.fees?.exec;
+    if (this.contractAddress === "mock_address") {
+      throw new JunokitError(ERRORS.GENERAL.CONTRACT_NOT_INSTANTIATED, {
+        param: this.contractName
+      });
+    }
+    // Send migrate msg to the contract
+    const signingClient = await getSigningClient(this.env.network, accountVal);
+
+    // TODO: if migration passes, update codeId of contract and checkpoints
+
+    // const msgData: { [key: string]: Record<string, unknown> } = {};
+    // msgData[methodName] = callArgs;
+    console.log('Migrating', this.contractAddress, '=>', msgData);
+    // Send the same handleMsg to increment multiple times
+    return await signingClient.migrate(
+      accountVal.address,
+      this.contractAddress,
+      newCodeId,
+      msgData,
+      customFeesVal ?? defaultFees.exec,
+      memo === undefined ? "migrating" : memo
     );
   }
 }

@@ -7,12 +7,12 @@ export const defaultFees = {
   },
 
   init: {
-    amount: [{ amount: "500000", denom: "ujunox" }],
+    amount: [{ amount: "300000", denom: "ujunox" }],
     gas: "500000"
   },
 
   exec: {
-    amount: [{ amount: "500000", denom: "ujunox" }],
+    amount: [{ amount: "300000", denom: "ujunox" }],
     gas: "500000"
   },
 

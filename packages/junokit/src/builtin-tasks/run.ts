@@ -6,6 +6,7 @@ import { JunokitError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
 import { SCRIPTS_DIR } from "../internal/core/project-structure";
 import { runScript } from "../internal/util/script-runner";
+import { buildTsScripts } from "../lib/compile/scripts";
 import { assertDirChildren } from "../lib/files";
 import { JunokitRuntimeEnvironment } from "../types";
 import { TASK_RUN } from "./task-names";
@@ -45,6 +46,10 @@ async function executeRunTask (
   // eslint-disable-next-line
 ): Promise<any> {
   const logDebugTag = "junokit:tasks:run";
+
+  // build the ts scripts/test to js first
+  // path dependent, might find a better soln later
+  await buildTsScripts();
 
   const nonExistent = filterNonExistent(scripts);
   if (nonExistent.length !== 0) {

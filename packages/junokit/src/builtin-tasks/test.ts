@@ -6,6 +6,7 @@ import { task } from "../internal/core/config/config-env";
 import { JunokitError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
 import { TESTS_DIR } from "../internal/core/project-structure";
+import { buildTsScripts } from "../lib/compile/scripts";
 import { assertDirChildren } from "../lib/files";
 import { JunokitRuntimeEnvironment } from "../types";
 import { TASK_TEST } from "./task-names";
@@ -45,6 +46,10 @@ async function executeTestTask (
   runtimeEnv: JunokitRuntimeEnvironment
 ): Promise<void> {
   const logDebugTag = "junokit:tasks:test";
+
+  // build the ts scripts/test to js first
+  // path dependent, might find a better soln later
+  await buildTsScripts();
 
   if (tests === undefined) {
     tests = [];

@@ -22,7 +22,7 @@ import type {
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
 import { ExecuteResult, getClient, getSigningClient } from "../client";
-import { defaultFees } from "../contants";
+import { defaultFees } from "../constants";
 
 export interface ExecArgs {
   account: Account | UserAccount

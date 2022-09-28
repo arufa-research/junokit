@@ -13,7 +13,7 @@ import type {
   UserAccount
 } from "../../types";
 import { ExecuteResult, getClient, getSigningClient } from "../client";
-import { defaultFees } from "../contants";
+import { defaultFees } from "../constants";
 
 export interface ExecArgs {
   account: Account | UserAccount

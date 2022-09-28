@@ -48,8 +48,6 @@ async function executeTestTask (
 ): Promise<void> {
   const logDebugTag = "junokit:tasks:test";
 
-  // build the ts scripts/test to js first
-  // path dependent, might find a better soln later
   const currDir = process.cwd();
 
   if (tests === undefined) {

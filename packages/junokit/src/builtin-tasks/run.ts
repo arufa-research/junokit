@@ -49,9 +49,6 @@ async function executeRunTask (
 ): Promise<any> {
   const logDebugTag = "junokit:tasks:run";
 
-  // build the ts scripts/test to js first
-  // path dependent, might find a better soln later
-
   const currDir = process.cwd();
 
   const nonExistent = filterNonExistent(scripts);

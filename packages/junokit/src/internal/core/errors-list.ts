@@ -301,13 +301,6 @@ Please check that the configured keypair are correct.`,
       title: "External contract addr not correct",
       description: `External contract addr not correct.`,
       shouldBeReported: false
-    },
-    TS_COMPILE_ERROR: {
-      number: 34,
-      message: "TSC compiler unable to compile ts scripts due to errors in ts script code.",
-      title: "TSC compiler error",
-      description: `You are trying to compile ts script that has errors.`,
-      shouldBeReported: false
     }
   },
   NETWORK: {

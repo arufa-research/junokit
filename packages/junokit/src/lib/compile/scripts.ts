@@ -1,22 +1,31 @@
 import chalk from "chalk";
-import { execSync } from "child_process";
+import * as ts from "typescript";
 
-import { JunokitError } from "../../internal/core/errors";
-import { ERRORS } from "../../internal/core/errors-list";
-
-export async function buildTsScripts (): Promise<void> {
+export async function buildTsScripts (
+  fileNames: string[],
+  options: ts.CompilerOptions
+): Promise<void> {
   console.log(
-    `🛠 Compiling TS files in directories: ${chalk.gray("scripts/")}, ${chalk.gray("test/")}`
+    `🛠 Compiling TS files: ${chalk.gray(fileNames)}`
   );
   console.log("===========================================");
-  // Compiles the ts files to js files in build/ directory
-  try {
-    execSync(`npx tsc --build .`, { stdio: 'inherit' });
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new JunokitError(ERRORS.GENERAL.TS_COMPILE_ERROR);
+  const program = ts.createProgram(fileNames, options);
+  const emitResult = program.emit();
+
+  const allDiagnostics = ts
+    .getPreEmitDiagnostics(program)
+    .concat(emitResult.diagnostics);
+
+  allDiagnostics.forEach(diagnostic => {
+    if (diagnostic.file) {
+      const { line, character } = ts.getLineAndCharacterOfPosition(
+        diagnostic.file,
+        diagnostic.start!
+      );
+      const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+      console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
     } else {
-      throw error;
+      console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
     }
-  }
+  });
 }

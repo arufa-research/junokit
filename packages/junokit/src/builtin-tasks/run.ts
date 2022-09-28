@@ -1,5 +1,7 @@
 import debug from "debug";
 import fsExtra from "fs-extra";
+import path from "path";
+import * as ts from "typescript";
 
 import { task } from "../internal/core/config/config-env";
 import { JunokitError } from "../internal/core/errors";
@@ -49,7 +51,8 @@ async function executeRunTask (
 
   // build the ts scripts/test to js first
   // path dependent, might find a better soln later
-  await buildTsScripts();
+
+  const currDir = process.cwd();
 
   const nonExistent = filterNonExistent(scripts);
   if (nonExistent.length !== 0) {
@@ -57,6 +60,31 @@ async function executeRunTask (
       scripts: nonExistent
     });
   }
+
+  await buildTsScripts(
+    scripts,
+    {
+      baseUrl: currDir,
+      paths: {
+        "*": [
+          "node_modules/*"
+        ]
+      },
+      target: ts.ScriptTarget.ES2020,
+      outDir: path.join(currDir, "build"),
+      experimentalDecorators: true,
+      esModuleInterop: true,
+      allowJs: true,
+      module: ts.ModuleKind.CommonJS,
+      resolveJsonModule: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      strict: true,
+      forceConsistentCasingInFileNames: true,
+      sourceMap: true,
+      declaration: true
+    }
+  );
 
   if (skipCheckpoints) { // used by Contract() class to skip checkpoints
     runtimeEnv.runtimeArgs.useCheckpoints = false;

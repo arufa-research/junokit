@@ -1,11 +1,13 @@
 import chalk from "chalk";
 import fsExtra from "fs-extra";
 import path from "path";
+import * as ts from "typescript";
 
 import { task } from "../internal/core/config/config-env";
 import { JunokitError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
 import { TESTS_DIR } from "../internal/core/project-structure";
+import { buildTsScripts } from "../lib/compile/scripts";
 import { assertDirChildren } from "../lib/files";
 import { JunokitRuntimeEnvironment } from "../types";
 import { TASK_TEST } from "./task-names";
@@ -46,6 +48,8 @@ async function executeTestTask (
 ): Promise<void> {
   const logDebugTag = "junokit:tasks:test";
 
+  const currDir = process.cwd();
+
   if (tests === undefined) {
     tests = [];
     for (const file of fsExtra.readdirSync(TESTS_DIR)) {
@@ -64,6 +68,31 @@ async function executeTestTask (
       scripts: nonExistent
     });
   }
+
+  await buildTsScripts(
+    tests,
+    {
+      baseUrl: currDir,
+      paths: {
+        "*": [
+          "node_modules/*"
+        ]
+      },
+      target: ts.ScriptTarget.ES2020,
+      outDir: path.join(currDir, "build"),
+      experimentalDecorators: true,
+      esModuleInterop: true,
+      allowJs: true,
+      module: ts.ModuleKind.CommonJS,
+      resolveJsonModule: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      strict: true,
+      forceConsistentCasingInFileNames: true,
+      sourceMap: true,
+      declaration: true
+    }
+  );
 
   runtimeEnv.runtimeArgs.command = "test"; // used by Contract() class to skip artifacts
   runtimeEnv.runtimeArgs.useCheckpoints = false;

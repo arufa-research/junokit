@@ -13,7 +13,7 @@ import type {
   UserAccount
 } from "../../types";
 import { ExecuteResult, getClient, getSigningClient } from "../client";
-import { defaultFees } from "../constants";
+import { defaultFees, defaultFeesMainnet } from "../constants";
 
 export interface ExecArgs {
   account: Account | UserAccount
@@ -28,6 +28,7 @@ export class ExternalContract {
   JunokitContext.getJunokitContext().getRuntimeEnv();
 
   private client?: CosmWasmClient;
+  private contractDefaultFee = defaultFees;
 
   public contractAddress: string;
 
@@ -73,6 +74,11 @@ export class ExternalContract {
 
   async setUpclient (): Promise<void> {
     this.client = await getClient(this.env.network);
+
+    const chainId = await this.client.getChainId();
+    if (chainId === "juno-1") { // mainnet
+      this.contractDefaultFee = defaultFeesMainnet;
+    }
   }
 
   async query (
@@ -105,7 +111,7 @@ export class ExternalContract {
       accountVal.address,
       this.contractAddress,
       msgData,
-      customFees ?? defaultFees.exec,
+      customFees ?? this.contractDefaultFee.exec,
       "executing",
       transferAmount
     );

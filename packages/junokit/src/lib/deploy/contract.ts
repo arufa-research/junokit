@@ -22,7 +22,7 @@ import type {
 } from "../../types";
 import { loadCheckpoint, persistCheckpoint } from "../checkpoints";
 import { ExecuteResult, getClient, getSigningClient } from "../client";
-import { defaultFees } from "../constants";
+import { defaultFees, defaultFeesMainnet } from "../constants";
 
 export interface ExecArgs {
   account: Account | UserAccount
@@ -38,6 +38,7 @@ export class Contract {
   JunokitContext.getJunokitContext().getRuntimeEnv();
 
   private client?: CosmWasmClient;
+  private contractDefaultFee = defaultFees;
 
   public codeId: number;
   // public contractCodeHash: string;
@@ -71,6 +72,11 @@ export class Contract {
 
   async setUpclient (): Promise<void> {
     this.client = await getClient(this.env.network);
+
+    const chainId = await this.client.getChainId();
+    if (chainId === "juno-1") { // mainnet
+      this.contractDefaultFee = defaultFeesMainnet;
+    }
   }
 
   async deploy (
@@ -95,8 +101,8 @@ export class Contract {
     const uploadReceipt = await signingClient.upload(
       accountVal.address,
       wasmFileContent,
-      customFeesVal ?? defaultFees.upload,
-      "this is upload"
+      customFeesVal ?? this.contractDefaultFee.upload,
+      "uploading"
     );
     const codeId: number = uploadReceipt.codeId;
 
@@ -169,7 +175,7 @@ export class Contract {
       this.codeId,
       initArgs,
       label,
-      customFeesVal ?? defaultFees.init,
+      customFeesVal ?? this.contractDefaultFee.init,
       {
         funds: transferAmount,
         admin: contractAdmin
@@ -271,7 +277,7 @@ export class Contract {
       this.contractAddress,
       newCodeId,
       msgData,
-      customFeesVal ?? defaultFees.exec,
+      customFeesVal ?? this.contractDefaultFee.exec,
       memo === undefined ? "migrating" : memo
     );
   }

@@ -4,7 +4,7 @@ import fsExtra from "fs-extra";
 import os from "os";
 import path from "path";
 
-import { JUNOKIT_NAME } from "../../lib/contants";
+import { JUNOKIT_NAME } from "../../lib/constants";
 import { JunokitError } from "../core/errors";
 import { ERRORS } from "../core/errors-list";
 import { ExecutionMode, getExecutionMode } from "../core/execution-mode";

@@ -8,7 +8,7 @@
 //   Account, Coin, UserAccount
 // } from "../../../types";
 // import { getClient } from "../../client";
-// import { defaultFees } from "../../contants";
+// import { defaultFees } from "../../constants";
 
 // export function supportChangeScrtBalance (Assertion: Chai.AssertionStatic): void {
 //   Assertion.addMethod('changeScrtBalance', function (

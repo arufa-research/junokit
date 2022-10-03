@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&family=Rajdhani:wght@300&family=Raleway:wght@100&display=swap');
+
+.counter-container{
+    width: fit-content;
+    min-width: 400px;
+    background-color: rgba(61,61,87,.9215686274509803);
+    margin:  200px auto 120px;
+    height: 200px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    justify-content: center;
+    row-gap: 20px;
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.counter-count{
+    font-family: 'Manrope', sans-serif;
+}
+.counter-label{
+    font-size: 1.5rem;
+    font-family: 'Raleway', sans-serif;
+}
+.inc-btn-wrapper button{
+        color: #fff;
+        font-size: 1rem;
+        transition: .2s ease-in;
+        -moz-transition: ease-in .2s;
+        cursor: pointer;
+        background: #f2545b;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        /* margin: 2rem 0; */
+        width: 70%;
+}
+
+.inc-btn-wrapper button:hover {
+    transform: scale(1.01);
+    background: #fbf5ee;
+    color: #4e4e4e;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+}
+.inc-btn-wrapper button:disabled {
+    background: #a69cac;
+  }
+  .inc-btn-wrapper button:disabled:hover {
+    transform: scale(1);
+    color: rgb(78, 78, 78);
+    color: white;
+    letter-spacing: normal;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    cursor: not-allowed;
+  }

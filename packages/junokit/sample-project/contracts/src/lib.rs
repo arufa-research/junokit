@@ -4,6 +4,6 @@ mod msg;
 mod state;
 
 pub use msg::{
-    AllowanceResponse, BalanceResponse, ExecuteMsg, InitialBalance, InstantiateMsg, QueryMsg,
+    ExecuteMsg,InstantiateMsg, QueryMsg, CountResponse, 
 };
 pub use state::Constants;

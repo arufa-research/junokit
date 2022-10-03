@@ -1,48 +1,35 @@
 import { getAccountByName } from "junokit";
 
-import { CwErc20Contract } from "../artifacts/typescript_schema/CwErc20";
+import { CounterContract } from "../artifacts/typescript_schema/Counter";
 
 async function run() {
+  const runTs = String(new Date());
   const contract_owner = getAccountByName("account_0");
-  const other = getAccountByName("account_1");
-  const cw20_contract = new CwErc20Contract();
-  await cw20_contract.setUpclient();
+  const counter_contract = new CounterContract();
+  await counter_contract.setUpclient();
 
   console.log("Client setup done!! ");
 
-  const deploy_response = await cw20_contract.deploy(
+  const deploy_response = await counter_contract.deploy(
     contract_owner,
     { // custom fees
-      amount: [{ amount: "750000", denom: "ujunox" }],
-      gas: "18000000",
+      amount: [{ amount: "900000", denom: "ujunox" }],
+      gas: "35000000",
     }
   );
   console.log(deploy_response);
-
-  const contract_info = await cw20_contract.instantiate(
+  const contract_info = await counter_contract.instantiate(
     {
-      "name": "ERC20", "symbol": "ERC", "decimals": 10,
-      "initial_balances": [{
-        "address": contract_owner.account.address,
-        "amount": "100000000"
-      }]
-    }, "deploy test", contract_owner);
+      "count": 102
+    }, `deploy test ${runTs}`, contract_owner);
   console.log(contract_info);
 
-  let balance_before = await cw20_contract.balance({ "address": contract_owner.account.address });
-  console.log(balance_before);
+  const inc_response = await counter_contract.increment({account: contract_owner});
+  console.log(inc_response);
 
-  let transfer_response = await cw20_contract.transfer(
-    { account: contract_owner },
-    {
-      recipient: other.account.address,
-      amount: "50000000"
-    }
-  );
-  console.log(transfer_response);
+  const response = await counter_contract.getCount();
+  console.log(response);
 
-  let balance_after = await cw20_contract.balance({ "address": contract_owner.account.address });
-  console.log(balance_after);
 }
 
 module.exports = { default: run };

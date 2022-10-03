@@ -1,0 +1,40 @@
+.logo-header-text{
+    color: rgb(143, 143, 143);
+    letter-spacing: 3px;
+    font-size: 0.6rem;
+    margin-bottom: 30px;
+}
+.all-logo-wrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+.ar-logo-wrapper{
+    height: fit-content;
+    border-radius: 10px;
+    /* overflow: hidden; */
+}
+.juno-logo-wrapper img{
+    width: 4rem !important;
+}
+.juno-text-label{
+    color: rgb(192, 192, 192);
+    
+}
+.se-white-logo-wrapper img{
+    width: 3.5rem !important;
+}
+.se-logo-wrapper{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content:center ;
+    align-items: center;
+}
+
+.all-logo-wrapper img{
+    width: 5rem;
+}

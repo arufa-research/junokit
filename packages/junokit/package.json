@@ -1,6 +1,6 @@
 {
   "name": "junokit",
-  "version": "0.0.92",
+  "version": "0.0.93",
   "main": "dist/index.js",
   "repository": "https://github.com/arufa-research/junokit.git",
   "authors": [

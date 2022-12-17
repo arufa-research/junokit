@@ -34,9 +34,15 @@ export async function generateTsSchema (
     w.importStmt(['Contract', 'junokitTypes'], 'junokit')
   );
 
-  body.push(
-    w.importStmt(['Coin', 'StdFee'], '@cosmjs/amino')
-  );
+  if (Object.prototype.hasOwnProperty.call(typeHash, 'Coin')) {
+    body.push(
+      w.importStmt(['StdFee'], '@cosmjs/amino')
+    );
+  } else {
+    body.push(
+      w.importStmt(['StdFee', 'Coin'], '@cosmjs/amino')
+    );
+  }
 
   // TYPES
   Object.values(typeHash).forEach(type => {

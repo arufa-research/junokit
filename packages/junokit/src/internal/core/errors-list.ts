@@ -301,6 +301,13 @@ Please check that the configured keypair are correct.`,
       title: "External contract addr not correct",
       description: `External contract addr not correct.`,
       shouldBeReported: false
+    },
+    UNKNOWN_ADDRESS_PREFIX: {
+      number: 34,
+      message: "Unknown address prefix %prefix%",
+      title: "Unknown address prefix",
+      description: `Unknown address prefix.`,
+      shouldBeReported: false
     }
   },
   NETWORK: {

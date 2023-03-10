@@ -26,6 +26,8 @@ jobs:
         restore-keys: |
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
+    - name: Install typescript
+      run: npm i -g typescript
     - name: Install junokit
       run: npm i -g junokit
     - name: Run commands

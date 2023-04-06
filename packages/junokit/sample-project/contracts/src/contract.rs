@@ -55,6 +55,7 @@ fn try_increment(
     Ok(Response::new()
         .add_attribute("action", "increament"))
 }
+
 fn try_reset(
     deps: DepsMut,
     _env: Env,

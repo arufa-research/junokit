@@ -27,9 +27,7 @@ const networks = {
   // uni-2
   testnet: {
     endpoint: 'https://rpc.uni.juno.deuslabs.fi/',//https://lcd.uni.juno.deuslabs.fi/
-    chainId: 'uni-3',
-    trustNode: true,
-    keyringBackend: 'test',
+    chainId: 'uni-6',
     accounts: testnet_accounts,
   },
 };

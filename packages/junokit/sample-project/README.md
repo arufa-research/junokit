@@ -2,7 +2,7 @@
 
 This is a boilerplate `junokit` project with counter smart contract example.
 
-To run the `sample-project`:
+To run the `counter` project:
 
 - First you need to set the configuration in `junokit.config.js` file:
 
@@ -26,7 +26,7 @@ To run the `sample-project`:
 
   - `junokit test` runs the mocha in project root.
 
-In the `sample-project` folder you'll have following items:
+In the project folder you'll have following items:
 
 - `contracts/`: Directory for contracts files:
 
@@ -44,3 +44,7 @@ In the `sample-project` folder you'll have following items:
   - You can add tests for your scripts here.
 
 - `junokit.config.js`: Junokit configuration file.
+
+# Frontend
+
+This folder contains frontend code for counter example.

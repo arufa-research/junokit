@@ -1,0 +1,22 @@
+{
+  "staking": {
+    "contract_addr": "inj14mj5nsgx2v88xsdyjxx8gdtky0zqfummrelv2f",
+    "contract_code_hash": "B47DDA116ACBC36DE841C0A0F173D1DAD850C0EE1274B263B5A14EAD3B9B7996"
+  },
+  "gov_token": {
+    "contract_addr": "",
+    "contract_code_hash": ""
+  },
+  "rewards": {
+    "contract_addr": "inj1m526sagamlhmtaefrfum5u4ym74w6rz5va3jnc",
+    "contract_code_hash": "977DDFCAF7A38D26A8C6AD15756C507D8B872DD79D26903CE4A52FC5B4E669F6"
+  },
+  "se_token": {
+    "contract_addr": "inj1wy9tregh5smg237r3sw5azf7dukt4zvvvqw7ge",
+    "contract_code_hash": "3A81E919DAC69065AAAF274D752017B04C6AC529D3B90B8E0CB8BB371604D443"
+  },
+  "b_token": {
+    "contract_addr": "inj15crwm9mttu7xd6nuvnuzdmghp6xftkfnux2g2q",
+    "contract_code_hash": "2D0A55113199437D7C65C4E89C26038A56B5FD8DC464F5A8646B09369E7EE636"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "chainId": "pulsar-2",
+  "chainName": "Pulsar Testnet",
+  "rpc": "https://rpc.pulsar.scrttestnet.com",
+  "rest": "https://api.pulsar.scrttestnet.com",
+  "stakeCurrency": {
+    "coinDenom": "SCRT",
+    "coinMinimalDenom": "uscrt",
+    "coinDecimals": 6
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "secret",
+    "bech32PrefixAccPub": "secretpub",
+    "bech32PrefixValAddr": "secretvaloper",
+    "bech32PrefixValPub": "secretvaloperpub",
+    "bech32PrefixConsAddr": "secretvalcons",
+    "bech32PrefixConsPub": "secretvalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "SCRT",
+      "coinMinimalDenom": "uscrt",
+      "coinDecimals": 6
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "SCRT",
+      "coinMinimalDenom": "uscrt",
+      "coinDecimals": 6
+    }
+  ],
+  "coinType": 118,
+  "gasPriceStep": {
+    "low": 0.2,
+    "average": 0.5,
+    "high": 0.9
+  },
+  "features": [
+    "cosmwasm"
+  ]
+}

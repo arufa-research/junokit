@@ -1,0 +1,22 @@
+{
+    "staking": {
+        "contract_addr": "",
+        "contract_code_hash": ""
+    },
+    "gov_token": {
+        "contract_addr": "",
+        "contract_code_hash": ""
+    },
+    "rewards": {
+        "contract_addr": "",
+        "contract_code_hash": ""
+    },
+    "se_token": {
+        "contract_addr": "",
+        "contract_code_hash": ""
+    },
+    "b_token": {
+        "contract_addr": "",
+        "contract_code_hash": ""
+    }
+}

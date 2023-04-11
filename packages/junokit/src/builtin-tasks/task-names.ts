@@ -8,5 +8,6 @@ export const TASK_RUN = "run";
 export const TASK_REPL = "repl";
 export const TASK_INSTALL = "install";
 export const TASK_TEST = "test";
+export const TASK_CREATE_PLAYGROUND = "playground";
 
 // export const TASK_CHECK = "check";

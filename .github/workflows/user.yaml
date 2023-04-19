@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v2-beta
       with:
-        node-version: '14.15.4'
+        node-version: '16.0.0'
     - name: Cache Node.js modules
       uses: actions/cache@v2
       with:

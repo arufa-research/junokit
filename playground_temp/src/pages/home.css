@@ -1,0 +1,71 @@
+
+/* Create a container for the five divs
+.container {
+    display: flex;
+    height: 100%;
+  } */
+  
+  /* Set the width and background color of the sidebar */
+  .sidebar {
+    /* width: 20%;
+    background-color: #ccc; */
+    height: 100vh;
+  width: 20%;
+  background-color: #ccc; /* modify this as needed */
+  float: left; /* add this line to float the sidebar to the left */
+  }
+  
+  /* Create a container for the navbar divs
+  .navbar-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  } */
+  
+/* Set the height and background color of the navbar divs */
+.navbar {
+    /* height: 50px;
+    flex: 1; add this line to make the navbar items fill the available space */
+     height: 150px;
+  background-color: #333; /* modify this as needed */
+  overflow: hidden; /* add this line to hide any content that overflows the navbar */
+  }
+  .description{
+      text-align: center;
+      background-color: blanchedalmond;
+      height: 70px;
+  }
+  /* Set the background color of each navbar item */
+  .navbar-item {
+    /* background-color: #333;
+    color: #fff; 
+    text-align: center; 
+    text-decoration: none; 
+    padding: 10px; */
+    background-color: rgb(175, 163, 163); /* modify this as needed */
+    color: #fff; /* add this line to set the text color of the navbar items */
+    text-align: center; /* add this line to center the text horizontally */
+    text-decoration: none; /* add this line to remove the underline from links */
+    padding: 10px; /* add this line to add some padding to the navbar items */
+    flex: 1; /* add this line to make each navbar item fill the available space equally */
+    height:80px;
+    width: calc(100% / 3);
+  }
+ .active{
+     background-color: #555;
+ }
+  /* Add hover effects to the navbar items */
+.navbar-item:hover {
+    background-color: #555; /* modify this as needed */ 
+  }
+  
+  /* Set the remaining space to fill the container */
+  .playground {
+    /* flex: 1;
+    background-color: #eee; */
+    height: calc(100vh - 150px);
+    width: 80%;
+    background-color: #fff; /* modify this as needed */
+    float: right; /* add this line to float the fillup div to the right */
+    background-color: rgb(226, 186, 138);
+  }

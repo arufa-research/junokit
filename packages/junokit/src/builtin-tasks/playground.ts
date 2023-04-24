@@ -7,7 +7,7 @@ export default function (): void {
 
   task(TASK_CREATE_PLAYGROUND, "Initialize the playground in the project directory")
 
-    .setAction(async ({ projectName = "Playground", templateName = "client" }:
+    .setAction(async ({ projectName = "playground", templateName = "playground" }:
     { projectName: string, templateName: string, destination: string }, _) => {
       await createPlayground(projectName, templateName);
     });

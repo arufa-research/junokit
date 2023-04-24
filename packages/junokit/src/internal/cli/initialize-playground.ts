@@ -5,8 +5,8 @@ import path from "path";
 
 import { copyTemplatetoDestination, fetchRepository, setUpTempDirectory } from "../util/fetch";
 import { createConfirmationPrompt, printSuggestedCommands, printWelcomeMessage } from "./playground-creation";
-const TEMPLATES_GIT_REMOTE = 'VarunProhit/Lottery_Dapp';
-const DEFAULT_TEMPLATE = 'client';
+const TEMPLATES_GIT_REMOTE = 'VarunProhit/play-juno';
+const DEFAULT_TEMPLATE = 'playground';
 // const templateName :string = 'client';
 // const templatePath = path.join(TEMPLATES_GIT_REMOTE, templateName);
 

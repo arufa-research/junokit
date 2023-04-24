@@ -107,3 +107,5 @@ dist
 
 packages/junokit/dist
 packages/junokit/node_modules
+
+junokit-temp/

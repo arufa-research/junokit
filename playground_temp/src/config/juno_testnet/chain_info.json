@@ -1,36 +1,36 @@
 {
-  "chainId": "pulsar-2",
-  "chainName": "Pulsar Testnet",
-  "rpc": "https://rpc.pulsar.scrttestnet.com",
-  "rest": "https://api.pulsar.scrttestnet.com",
+  "chainId": "uni-6",
+  "chainName": "Juno Network",
+  "rpc": "https://rpc.uni.juno.deuslabs.fi/",
+  "rest": "https://api.uni.junonetwork.io/",
   "stakeCurrency": {
-    "coinDenom": "SCRT",
-    "coinMinimalDenom": "uscrt",
+    "coinDenom": "JUNO",
+    "coinMinimalDenom": "ujuno",
     "coinDecimals": 6
   },
   "bip44": {
     "coinType": 118
   },
   "bech32Config": {
-    "bech32PrefixAccAddr": "secret",
-    "bech32PrefixAccPub": "secretpub",
-    "bech32PrefixValAddr": "secretvaloper",
-    "bech32PrefixValPub": "secretvaloperpub",
-    "bech32PrefixConsAddr": "secretvalcons",
-    "bech32PrefixConsPub": "secretvalconspub"
+    "bech32PrefixAccAddr": "juno",
+    "bech32PrefixAccPub": "junopub",
+    "bech32PrefixValAddr": "junovaloper",
+    "bech32PrefixValPub": "junovaloperpub",
+    "bech32PrefixConsAddr": "junovalcons",
+    "bech32PrefixConsPub": "junovalconspub"
   },
   "currencies": [
     {
-      "coinDenom": "SCRT",
-      "coinMinimalDenom": "uscrt",
+      "coinDenom": "JUNO",
+      "coinMinimalDenom": "ujuno",
       "coinDecimals": 6
     }
   ],
   "feeCurrencies": [
     {
-      "coinDenom": "SCRT",
-      "coinMinimalDenom": "uscrt",
-      "coinDecimals": 6
+    "coinDenom": "JUNO",
+    "coinMinimalDenom": "ujuno",
+    "coinDecimals": 6
     }
   ],
   "coinType": 118,

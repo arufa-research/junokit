@@ -1,2 +1,2 @@
-declare function run (runtimeEnv: any): Promise<any>;
+declare function run(runtimeEnv: any): Promise<any>;
 export { run as default };

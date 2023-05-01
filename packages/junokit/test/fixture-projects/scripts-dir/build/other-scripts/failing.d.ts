@@ -1,2 +1,2 @@
-declare function run (): Promise<void>;
+declare function run(): Promise<void>;
 export { run as default };

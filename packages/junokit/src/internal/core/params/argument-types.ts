@@ -10,7 +10,7 @@ export interface ArgumentType<T> {
   /**
    * Type's name.
    */
-  name: string
+  name: string;
 
   /**
    * Parses strValue. This function MUST throw JUNOKIT301 if it
@@ -22,7 +22,7 @@ export interface ArgumentType<T> {
    * @throws JUNOKIT301 if an invalid value is given.
    * @returns the parsed value.
    */
-  parse: (argName: string, strValue: string) => T
+  parse: (argName: string, strValue: string) => T;
 
   /**
    * Check if argument value is of type <T>. Optional method.
@@ -32,7 +32,7 @@ export interface ArgumentType<T> {
    *
    * @throws JUNOKIT301 if value is not of type <t>
    */
-  validate?(argName: string, argumentValue: any): void;  // eslint-disable-line
+  validate?(argName: string, argumentValue: any): void; // eslint-disable-line
 }
 
 /**
@@ -51,17 +51,18 @@ export const string: ArgumentType<string> = {
    *
    * @throws JUNOKIT301 if value is not of type "string"
    */
-  validate: (argName: string, value: any): void => {  // eslint-disable-line
+  validate: (argName: string, value: any): void => {
+    // eslint-disable-line
     const isString = typeof value === "string";
 
     if (!isString) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: string.name
+        type: string.name,
       });
     }
-  }
+  },
 };
 
 /**
@@ -83,7 +84,7 @@ export const boolean: ArgumentType<boolean> = {
     throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
       value: strValue,
       name: argName,
-      type: "boolean"
+      type: "boolean",
     });
   },
   /**
@@ -94,17 +95,18 @@ export const boolean: ArgumentType<boolean> = {
    *
    * @throws JUNOKIT301 if value is not of type "boolean"
    */
-  validate: (argName: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  validate: (argName: string, value: any): void => {
+    // eslint-disable-line @typescript-eslint/no-explicit-any
     const isBoolean = typeof value === "boolean";
 
     if (!isBoolean) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: boolean.name
+        type: boolean.name,
       });
     }
-  }
+  },
 };
 
 /**
@@ -118,14 +120,11 @@ export const int: ArgumentType<number> = {
     const decimalPattern = /^\d+(?:[eE]\d+)?$/;
     const hexPattern = /^0[xX][\dABCDEabcde]+$/;
 
-    if (
-      strValue.match(decimalPattern) === null &&
-      strValue.match(hexPattern) === null
-    ) {
+    if (strValue.match(decimalPattern) === null && strValue.match(hexPattern) === null) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value: strValue,
         name: argName,
-        type: int.name
+        type: int.name,
       });
     }
 
@@ -139,16 +138,17 @@ export const int: ArgumentType<number> = {
    *
    * @throws JUNOKIT301 if value is not of type "int"
    */
-  validate: (argName: string, value: any): void => {  // eslint-disable-line
+  validate: (argName: string, value: any): void => {
+    // eslint-disable-line
     const isInt = Number.isInteger(value);
     if (!isInt) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: int.name
+        type: int.name,
       });
     }
-  }
+  },
 };
 
 /**
@@ -162,14 +162,11 @@ export const float: ArgumentType<number> = {
     const decimalPattern = /^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE]\d+)?$/;
     const hexPattern = /^0[xX][\dABCDEabcde]+$/;
 
-    if (
-      strValue.match(decimalPattern) === null &&
-      strValue.match(hexPattern) === null
-    ) {
+    if (strValue.match(decimalPattern) === null && strValue.match(hexPattern) === null) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value: strValue,
         name: argName,
-        type: float.name
+        type: float.name,
       });
     }
 
@@ -184,17 +181,18 @@ export const float: ArgumentType<number> = {
    *
    * @throws JUNOKIT301 if value is not of type "number"
    */
-  validate: (argName: string, value: any): void => {  // eslint-disable-line
+  validate: (argName: string, value: any): void => {
+    // eslint-disable-line
     const isFloatOrInteger = typeof value === "number" && !isNaN(value);
 
     if (!isFloatOrInteger) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: float.name
+        type: float.name,
       });
     }
-  }
+  },
 };
 
 /**
@@ -204,7 +202,7 @@ export const float: ArgumentType<number> = {
  */
 export const inputFile: ArgumentType<string> = {
   name: "inputFile",
-  parse (argName: string, strValue: string): string {
+  parse(argName: string, strValue: string): string {
     try {
       fs.accessSync(strValue, fs.constants.R_OK);
       const stats = fs.lstatSync(strValue);
@@ -219,7 +217,7 @@ export const inputFile: ArgumentType<string> = {
         ERRORS.ARGUMENTS.INVALID_INPUT_FILE,
         {
           name: argName,
-          value: strValue
+          value: strValue,
         },
         error as Error
       );
@@ -236,7 +234,8 @@ export const inputFile: ArgumentType<string> = {
    *
    * @throws JUNOKIT301 if value is not of type "inputFile"
    */
-  validate: (argName: string, value: any): void => {  // eslint-disable-line
+  validate: (argName: string, value: any): void => {
+    // eslint-disable-line
     try {
       inputFile.parse(argName, value);
     } catch (error) {
@@ -246,17 +245,17 @@ export const inputFile: ArgumentType<string> = {
         {
           value,
           name: argName,
-          type: inputFile.name
+          type: inputFile.name,
         },
         error as Error
       );
     }
-  }
+  },
 };
-
-export const json: ArgumentType<any> = {  // eslint-disable-line
+export const json: ArgumentType<any> = {
+  // eslint-disable-line
   name: "json",
-  parse (argName: string, strValue: string): void {
+  parse(argName: string, strValue: string): void {
     try {
       return JSON.parse(strValue);
     } catch (error) {
@@ -264,7 +263,7 @@ export const json: ArgumentType<any> = {  // eslint-disable-line
         ERRORS.ARGUMENTS.INVALID_JSON_ARGUMENT,
         {
           param: argName,
-          error: (error as Error).message
+          error: (error as Error).message,
         },
         error as Error
       );
@@ -279,13 +278,14 @@ export const json: ArgumentType<any> = {  // eslint-disable-line
    *
    * @throws JUNOKIT301 if value is not of type "json"
    */
-  validate: (argName: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  validate: (argName: string, value: any): void => {
+    // eslint-disable-line @typescript-eslint/no-explicit-any
     if (value === undefined) {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: json.name
+        type: json.name,
       });
     }
-  }
+  },
 };

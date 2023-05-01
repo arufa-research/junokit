@@ -1,5 +1,5 @@
 import React from 'react';
-import contractInfo from "../../src/counter.json";
+import contractInfo from "../counter.json";
 
 function Instantiate(contractName: any) {
  console.log(contractName);

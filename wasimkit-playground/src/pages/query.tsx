@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { isPropertyAccessChain } from 'typescript';
 // import ClassInfo from "../../src/counterInf.json";
-import { Contract } from "../hooks/clients/contract"
-import contractInfo from "../../src/counter.json";
 import { walletState } from "../context/walletState";
+import { Contract } from "../hooks/clients/contract"
+import contractInfo from "../counter.json";
 interface Property {
   name: string;
   type: string;
@@ -17,25 +17,22 @@ interface ClassStructure {
   name: string;
   properties?: Property[];
 }
-interface Coin {
-  readonly denom: string;
-  readonly amount: string;
-}
 const classInfo = require("../../src/counterInf.json") as ClassStructure[];
 
+
 // import { CounterQueryContract } from "../method"
-function Execute(contractName: any) {
+function Query(contractName: any) {
 
-  const className = "CounterContract";
-
-  const val = useRecoilValue(walletState);
-  const [increres, setincreRes] = useState("");
+  const className = "CounterQueryContract";
 
 const classStructure = classInfo.find((structure) => {
   return structure.kind === "class" && structure.name === className;
 });
-console.log("class srinc", classStructure?.properties,"\n");
+const val = useRecoilValue(walletState);
+const [queryres, setqueryRes] = useState("");
 
+// console.log("class srinc", classStructure?.properties,"\n");
+// console.log("\nwallet: ", val);
 // if (!classStructure) {
 //   console.log(`Class ${className} not found in JSON file.`);
 // } else {
@@ -82,29 +79,26 @@ if (!classStructure) {
     );
   }
 }
-console.log("valaddresss", val.address, val.client)
-const temp = new Contract(val.client as SigningCosmWasmClient,val.client as CosmWasmClient, contractInfo.default.instantiateInfo.contractAddress);
-const transferAmt : readonly Coin[] =[
-  {
-    denom: "ujunox",
-   amount: "1"
-  }
-]
-const incre = async ()=>{
+const msg =
+{
+  get_count: {}
+}
+
+const temp = new Contract(val.client as SigningCosmWasmClient,val.client as CosmWasmClient,contractInfo.default.instantiateInfo.contractAddress);
+
+const query = async ()=>{
   console.log("response", contractInfo.default.instantiateInfo.contractAddress,temp);
- const ans = await temp.executeMsg({
-  increment: {},
-},
-val.address as string
-);
- console.log("increment response", ans, contractInfo.default.instantiateInfo.contractAddress);
+ const ans = await temp.queryMsg({
+  get_count: {}
+});
+ console.log("query response", ans, contractInfo.default.instantiateInfo.contractAddress);
  return ans;
 }
-incre();
+// query();
 
 const handlebtnclick = async()=>{
-  const res = await incre();
-  setincreRes(res.increment as string);
+  const res = await query();
+  setqueryRes(res.count as string);
 }
 
   return ( 
@@ -112,22 +106,18 @@ const handlebtnclick = async()=>{
 
       {/* <p>Class ${className} found in JSON file.</p> */}
       {propertiesJsx}
-      
-      <button onClick={handlebtnclick}>Click to increment </button>
+      <button onClick={handlebtnclick}>Click to query </button>
           {/* {propertiesJsx} */}
          
          <div>
-           {increres !== "" ?
-           increres
+           {queryres !== "" ?
+           queryres
            :
            <></>
            }
          </div>
-   
-         
     </div>
   )
 }
 
-
-export default Execute;
+export default Query;

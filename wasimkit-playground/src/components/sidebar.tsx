@@ -1,5 +1,5 @@
 import React from 'react';
-import contractName from "../../src/contracts.json";
+import contractName from "../contracts.json";
 import ConnectWalletButton from './common/buttons/connectWallet';
 import './sidebar.css'
 function SideNavbar(): JSX.Element {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ConnectWalletButton from './../components/common/buttons/connectWallet';
+import ConnectWalletButton from '../components/common/buttons/connectWallet';
 // import { useEffect, useState } from 'react';
 import Headlines from './headlines';
-import contractName from "../../src/contracts.json";
+import contractName from "../contracts.json";
 import Instantiate from './instantiate';
 import Execute from './execute';
 import Query from './query';

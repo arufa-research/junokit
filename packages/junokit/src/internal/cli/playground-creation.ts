@@ -6,10 +6,6 @@ import * as ts from "typescript";
 
 import { initialize } from "./initialize-playground";
 
-export async function printWelcomeMessage (): Promise<void> {
-  console.log(chalk.cyan(`★ Welcome to Junokit Playground v1.0 ★`));
-}
-
 export function printSuggestedCommands (projectName: string): void {
   const currDir = process.cwd();
   const projectPath = path.join(currDir, projectName);
@@ -123,8 +119,6 @@ export async function createPlayground (
   if (templateName !== undefined) {
     const currDir = process.cwd();
     const artifacts = path.join(currDir, "artifacts");
-    // const artifactDir = fse.readdirSync(artifacts);
-    console.log(artifacts);
     if (!fs.existsSync(artifacts)) {
       console.log("no artifacts found");
       return;
@@ -155,8 +149,8 @@ export async function createPlayground (
     // console.log(jobj);
     return;
   }
-  await printWelcomeMessage();
 
+  console.log(chalk.cyan(`★ Welcome to Junokit Playground v1.0 ★`));
   console.log("\n★", chalk.cyan("Project created"), "★\n");
 
   printSuggestedCommands(projectName);

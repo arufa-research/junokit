@@ -4,8 +4,8 @@ import fse from "fs-extra";
 import path from "path";
 
 import { copyTemplatetoDestination, fetchRepository, setUpTempDirectory } from "../util/fetch";
-import { createConfirmationPrompt, printSuggestedCommands, printWelcomeMessage } from "./playground-creation";
-const TEMPLATES_GIT_REMOTE = 'VarunProhit/play-juno';
+import { createConfirmationPrompt, printSuggestedCommands } from "./playground-creation";
+const TEMPLATES_GIT_REMOTE = 'arufa-research/wasmkit-react-playground';
 const DEFAULT_TEMPLATE = 'playground';
 
 /**
@@ -117,11 +117,10 @@ function _normalizeDestination (destination?: string): string {
  *     or not (if --force is not used).
  *  - If `--force` is used, then conflicting files are overwritten.
  */
-export async function initialize ({ force, projectName, templateName, destination }:
-{ force: boolean, projectName: string, templateName?: string, destination?: string}):
-  Promise<void> {
-  await printWelcomeMessage();
-
+export async function initialize (
+  { force, projectName, templateName, destination }:
+  { force: boolean, projectName: string, templateName?: string, destination?: string }
+): Promise<void> {
   const normalizedDestination = _normalizeDestination(destination);
   fse.ensureDirSync(normalizedDestination);
   await checkDir(normalizedDestination, force);

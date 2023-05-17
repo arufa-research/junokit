@@ -1,0 +1,45 @@
+{
+  "chainId": "juno-1",
+  "chainName": "Juno Network",
+  "rpc": "https://juno-rpc.stakely.io/",
+  "rest": "https://api.uni.junonetwork.io/",
+  "stakeCurrency": {
+    "coinDenom": "JUNO",
+    "coinMinimalDenom": "ujuno",
+    "coinDecimals": 6
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "juno",
+    "bech32PrefixAccPub": "junopub",
+    "bech32PrefixValAddr": "junovaloper",
+    "bech32PrefixValPub": "junovaloperpub",
+    "bech32PrefixConsAddr": "junovalcons",
+    "bech32PrefixConsPub": "junovalconspub"
+  },
+  "currencies": [
+    {
+    "coinDenom": "JUNO",
+    "coinMinimalDenom": "ujuno",
+    "coinDecimals": 6
+    }
+  ],
+  "feeCurrencies": [
+    {
+    "coinDenom": "JUNO",
+    "coinMinimalDenom": "ujuno",
+    "coinDecimals": 6
+    }
+  ],
+  "coinType": 118,
+  "gasPriceStep": {
+    "low": 0.2,
+    "average": 0.5,
+    "high": 0.9
+  },
+  "features": [
+    "cosmwasm"
+  ]
+}

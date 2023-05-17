@@ -1,0 +1,104 @@
+[
+  {
+    "kind": "interface",
+    "name": "Constants",
+    "properties": [
+      {
+        "name": "count",
+        "type": "number"
+      },
+      {
+        "name": "owner",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "kind": "interface",
+    "name": "CountResponse",
+    "properties": [
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ]
+  },
+  {
+    "kind": "typeAlias",
+    "name": "ExecuteMsg",
+    "properties": [
+      {
+        "name": "type",
+        "type": "{\n  increment: {\n    [k: string]: unknown;\n  };\n} | {\n  reset: {\n    count: number;\n    [k: string]: unknown;\n  };\n}"
+      }
+    ]
+  },
+  {
+    "kind": "interface",
+    "name": "InstantiateMsg",
+    "properties": [
+      {
+        "name": "count",
+        "type": "number"
+      }
+    ]
+  },
+  {
+    "kind": "typeAlias",
+    "name": "QueryMsg",
+    "properties": [
+      {
+        "name": "type",
+        "type": "{\n  get_count: {\n    [k: string]: unknown;\n  };\n}"
+      }
+    ]
+  },
+  {
+    "kind": "interface",
+    "name": "CounterReadOnlyInterface",
+    "properties": [
+      {
+        "name": "getCount",
+        "type": "() => Promise<any>"
+      }
+    ]
+  },
+  {
+    "kind": "class",
+    "name": "CounterQueryContract",
+    "properties": [
+      {
+        "name": "getCount",
+        "type": "unknown"
+      }
+    ]
+  },
+  {
+    "kind": "interface",
+    "name": "CounterInterface",
+    "properties": [
+      {
+        "name": "increment",
+        "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: junokitTypes.UserAccount;\n    customFees?: junokitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }) => Promise<ExecuteResult>"
+      },
+      {
+        "name": "reset",
+        "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: junokitTypes.UserAccount;\n    customFees?: junokitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    count\n  }: {\n    count: number;\n  }) => Promise<ExecuteResult>"
+      }
+    ]
+  },
+  {
+    "kind": "class",
+    "name": "CounterContract",
+    "properties": [
+      {
+        "name": "increment",
+        "type": "unknown"
+      },
+      {
+        "name": "reset",
+        "type": "unknown"
+      }
+    ]
+  }
+]

@@ -1,0 +1,208 @@
+/* Navigation button styles */
+
+.nav-link-button {
+  padding: 10px 7px;
+  /* color: var(--primary-font-color); */
+  font-size: var(--normal-font-size);
+  text-align: center;
+  transition: 100ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  color: var(--faded-subtitle-color);
+  justify-content: flex-start;
+  /* padding-top: 20px; */
+}
+
+.nav-link-button:hover {
+  border-right: 10px var(--accent-color-1) solid;
+  transition: 100ms ease-in-out;
+  color: var(--primary-font-color);
+  /* transform: scale(1.1); */
+}
+.nav-link-button__active {
+  /* background-color: var(--accent-color-1); */
+  background: linear-gradient(to right, var(--gradient-left), var(--gradient-right));
+  border-radius: var(--standard-radius);
+  color: var(--primary-font-color);
+}
+.nav-link-button__active:hover {
+  transition: none;
+  color: var(--secondary-font-color);
+}
+
+/* ****************************************************************************************************************************** */
+
+/* Connect wallet button styles */
+
+.connect-wallet-container {
+  color: var(--primary-font-color);
+  background-color: var(--accent-color-1);
+  /* width: 280px; */
+  border: solid 2px var(--accent-color-1);
+  margin: 0 auto;
+  display: flex;
+  /* flex-direction: column; */
+  border-radius: var(--standard-radius);
+  /* padding: 5px 0; */
+}
+
+.disconnected{
+  width: 153px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.connect-wallet-container:hover {
+  filter: brightness(0.85);
+}
+.connect-wallet-button {
+  padding: 10px 7px;
+  height: 40px;
+  background-color: transparent;
+  color: var(--primary-font-color);
+  border: none;
+  font-size: var(--normal-font-size);
+  /* width: 100%; */
+  font-size: 1rem;
+}
+.connect-wallet-button:hover {
+  /* color: var(--accent-color-1); */
+  cursor: pointer;
+}
+.wallet-button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 35px;
+}
+.address-copy-wrapper {
+  cursor: pointer;
+  position: relative;
+  padding: 9px 0px;
+  padding-left: 0;
+  color: var(--primary-font-color);
+}
+.address-copy-wrapper:hover svg {
+  color: rgb(49, 157, 245);
+}
+
+.logout-logo {
+  position: relative;
+  cursor: pointer;
+  color: var(--primary-font-color);
+  font-size: var(--normal-font-size) !important;
+  font-weight: 600;
+  font-variation-settings: "FILL" 0, "wght" 600, "GRAD" 100, "opsz" 24 !important;
+  background-color: var(--site-orange);
+  border-radius: 50%;
+  padding: 0px;
+}
+.logout-logo:hover {
+  /* background-color: red; */
+  color: red;
+}
+.floating-bubble-info {
+  position: absolute;
+  padding: 5px;
+  width: fit-content;
+  background-color: #3c404a;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  bottom: 0px;
+  right: 0px;
+  display: none;
+  white-space: nowrap;
+}
+.copy-address-bubble-info {
+  bottom: -25px;
+  right: -110px;
+}
+.logout-bubble-info {
+  bottom: -25px;
+  right: -110px;
+}
+.address-copy-wrapper:hover .copy-address-bubble-info {
+  display: block;
+}
+.logout-logo:hover .logout-bubble-info {
+  display: block;
+}
+.button-token-balance {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  color: var(--primary-font-color);
+}
+.button-token-balance span {
+  font-size: large;
+  font-weight: 600;
+}
+.button-token-balance svg {
+  color: var(--primary-font-color);
+  transform: rotate(-10deg);
+}
+
+.mid-wall{
+  margin: 0px 10px;
+}
+.column-gap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+/* ******************************************************************************************************************************** */
+
+/* CommonButton.tsx */
+
+.common-button {
+  width: 100%;
+  padding: 5px;
+  border-radius: 15px;
+  background-color: var(--accent-color-1);
+  font-size: 1.3rem;
+  font-family: var(--standard-font-family);
+  border: 1px solid transparent;
+  margin-top: 20px;
+  color: var(--primary-font-color);
+}
+.common-button:hover {
+  filter: brightness(0.85);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* ******************************************************************************************************************************* */
+
+/* CoinButton.tsx */
+
+.coin-select-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: var(--standard-radius);
+}
+
+.coin-logo {
+  width: 50px;
+}
+.coin-info {
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-font-color);
+}
+.coin-info-denom {
+  font-size: var(--normal-font-size);
+}
+.coin-info-name {
+  margin: 0;
+  color: var(--faded-subtitle-color);
+}
+
+/* ******************************************************************************************************************************* */

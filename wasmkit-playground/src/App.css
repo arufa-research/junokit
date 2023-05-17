@@ -1,0 +1,133 @@
+* {
+  box-sizing: border-box;
+  transition-duration: 0.3s;
+}
+
+.App {
+  text-align: center;
+  display: flex;
+  /* grid-template-columns: 16.5rem 2fr 16.5rem; */
+  height: 100vh;
+  max-width: 100vw;
+  justify-content: space-between;
+  /* place-content: space-between; */
+}
+.component-container {
+  /* border-radius: 20px; */
+  /* background-color: var(--secondary-bg-color); */
+  flex-grow: 1;
+  /* height: 100vh; */
+  /* margin-left: 460px; */
+  padding-left: 20px;
+  overflow: auto;
+}
+.component-container-display {
+  display: none;
+}
+.numeric-font {
+  font-size: 1.4rem;
+}
+
+.wrapper {
+  /* box-sizing: border-box; */
+  padding: 5rem 8%;
+  padding-bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  row-gap: 1.5rem;
+  grid-row-gap: 1.5rem;
+  /* max-width: 1142px; */
+  overflow-y: auto;
+  /* height: 100vh; */
+}
+
+.wrapper-none {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.01);
+  border: 4px solid transparent;
+}
+::-webkit-scrollbar-track {
+  /* background-color: rgba(0, 0, 0, 0.25); */
+  background-color: var(--primary-bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-bg-color);
+  border-radius: 500px;
+}
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.2);
+}
+
+@media screen and (max-width: 769px) {
+  .component-container {
+    margin-left: 0px;
+  }
+  .App {
+    flex-direction: column;
+  }
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--primary-font-color);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+  color: var(--primary-font-color);
+}
+
+.ReactModal__Overlay {
+  background-color: transparent !important;
+  /* backdrop-filter: blur(15px); */
+  z-index: 3;
+}
+.ReactModal__Content {
+  border-radius: var(--standard-radius);
+  outline: none;
+  border: none;
+  background-color: var(--primary-bg-color);
+  /* width: 50%;
+  max-width: 400px; */
+  padding: 20px;
+  z-index: 3;
+}

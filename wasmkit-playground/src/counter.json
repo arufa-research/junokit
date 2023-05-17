@@ -1,0 +1,12 @@
+{
+  "default": {
+    "deployInfo": {
+      "codeId": 1478,
+      "deployTimestamp": "Mon Apr 10 2023 11:02:00 GMT+0530 (India Standard Time)"
+    },
+    "instantiateInfo": {
+      "contractAddress": "juno16y6kcww333sm6tjjw38w0sjf6nt00zjm7mnev3df708pcdhrg43stuelzw",
+      "instantiateTimestamp": "Mon Apr 10 2023 11:02:01 GMT+0530 (India Standard Time)"
+    }
+  }
+}

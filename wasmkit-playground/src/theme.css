@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Philosopher&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap&text=0123456789");
+:root {
+  /* --primary-bg-color:  #FEFDDF;
+  --secondary-bg-color:#DAD8F0;
+  --accent-color-1:#E7FBBE; */
+
+  /* theme 4 */
+  /* --primary-bg-color: #161B33;
+  --secondary-bg-color: #5D6098;
+  --accent-color-1:#FBF5EE; */
+
+  /* --primary-bg-color: #3A288E;
+  --secondary-bg-color:#14045C;
+  --accent-color-1:#C997CC; */
+  /* --primary-bg-color: rgb(51, 54, 63);
+  --secondary-bg-color:rgb(37, 40, 49);
+  --accent-color-1:rgb(255, 232, 4); */
+
+  /* theme 5 */
+  /* --primary-bg-color: #1b1e28;
+  --secondary-bg-color: #192c44;
+  --accent-color-1:#58c092;
+  --percent-input: #6b6e78; */
+
+  /* theme 6 */
+  /* --primary-bg-color: #205072; */
+  /* --secondary-bg-color: #329d9c;
+  --accent-color-1: #cff4d2;
+  --percent-input: #7be495; */
+
+  /* theme 7 */
+  /* --primary-bg-color: #14343b;
+  --secondary-bg-color: #59914c;
+  --accent-color-1: #8fe783;
+  --percent-input: #58b4cb; */
+
+  /* theme 8 */
+  /* --primary-bg-color: #02353C;
+  --secondary-bg-color: #449342 ;
+  --accent-color-1:#c1f6eD;
+  --percent-input: #2eaf7d; */
+
+  /* theme 9 */
+  /* --primary-bg-color: #000000;
+  --secondary-bg-color: #7bbddf ;
+  --accent-color-1:#e5322e;
+  --percent-input: #fcfdfd; */
+
+  /* theme 10 */
+  /* --primary-bg-color: #287094;
+  --secondary-bg-color: #023246;
+  --accent-color-1:#d4d4ce;
+  --percent-input: #f6f6f6; */
+
+  /* theme 11 */
+  /* --primary-bg-color: #1F5D5E;
+  --secondary-bg-color: #25B386;
+  --accent-color-1:#9CE451;
+  --percent-input: #4CB3A0; */
+
+  --primary-bg-color: #1A1B3D;
+  --secondary-bg-color: #f3f7f0;
+  --accent-color-1: #8041D2;
+  --card-background:#423B5A;
+
+  /* --bg-img: url(./assets/img/bg_dark.png); */
+  --gradient-left: #8A32C7;
+  --gradient-right: #6B5DE4;
+
+  --accent-color-2: #da6e4f;
+  --accent-color-3: #962f22;
+  --accent-color-4: #b1d6f9;
+  --input-component:black;
+  --small-font-size: 1rem;
+  --normal-font-size: 1.2rem;
+  --large-font-size: 1.5rem;
+  --gigantic-font-size: 3rem;
+  --standard-radius: 10px;
+  --large-radius: 20px;
+  --standard-font-family: "Rajdhani", Manrope, Poppins, Inter,
+    PingFangSC-Regular, "Microsoft YaHei", sans-serif;
+  --primary-font-color: white;
+  --secondary-font-color: black;
+  /* --faded-subtitle-color:rgb(164, 164, 164); */
+  --faded-subtitle-color: #cce1f4;
+}
+
+.lighttheme {
+  /* theme final light */
+  --primary-bg-color: #E9D4C4;
+  --secondary-bg-color: #F1EFFE;
+  --input-component:#F1F1E6;
+  --card-background: #F0EDDF;
+  --gradient-left: #D3C2AD;
+  --gradient-right: #EFEBDC;
+  /* --bg-img: url(./assets/img/bg_light.png); */
+  --accent-color-1: #D3C2AD;
+  --percent-input: #c7defa;
+  --multicolor-left: #a500a8;
+  --multicolor-mid: #6046d2;
+  --multicolor-right: #1790ff;
+  --primary-font-color: black;
+  --secondary-font-color: white;
+  --faded-subtitle-color: black;
+  --accent-color-4: black;
+}

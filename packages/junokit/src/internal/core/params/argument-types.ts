@@ -10,7 +10,7 @@ export interface ArgumentType<T> {
   /**
    * Type's name.
    */
-  name: string;
+  name: string
 
   /**
    * Parses strValue. This function MUST throw JUNOKIT301 if it
@@ -22,7 +22,7 @@ export interface ArgumentType<T> {
    * @throws JUNOKIT301 if an invalid value is given.
    * @returns the parsed value.
    */
-  parse: (argName: string, strValue: string) => T;
+  parse: (argName: string, strValue: string) => T
 
   /**
    * Check if argument value is of type <T>. Optional method.
@@ -59,10 +59,10 @@ export const string: ArgumentType<string> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: string.name,
+        type: string.name
       });
     }
-  },
+  }
 };
 
 /**
@@ -84,7 +84,7 @@ export const boolean: ArgumentType<boolean> = {
     throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
       value: strValue,
       name: argName,
-      type: "boolean",
+      type: "boolean"
     });
   },
   /**
@@ -103,10 +103,10 @@ export const boolean: ArgumentType<boolean> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: boolean.name,
+        type: boolean.name
       });
     }
-  },
+  }
 };
 
 /**
@@ -124,7 +124,7 @@ export const int: ArgumentType<number> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value: strValue,
         name: argName,
-        type: int.name,
+        type: int.name
       });
     }
 
@@ -145,10 +145,10 @@ export const int: ArgumentType<number> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: int.name,
+        type: int.name
       });
     }
-  },
+  }
 };
 
 /**
@@ -166,7 +166,7 @@ export const float: ArgumentType<number> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value: strValue,
         name: argName,
-        type: float.name,
+        type: float.name
       });
     }
 
@@ -189,10 +189,10 @@ export const float: ArgumentType<number> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: float.name,
+        type: float.name
       });
     }
-  },
+  }
 };
 
 /**
@@ -202,7 +202,7 @@ export const float: ArgumentType<number> = {
  */
 export const inputFile: ArgumentType<string> = {
   name: "inputFile",
-  parse(argName: string, strValue: string): string {
+  parse (argName: string, strValue: string): string {
     try {
       fs.accessSync(strValue, fs.constants.R_OK);
       const stats = fs.lstatSync(strValue);
@@ -217,7 +217,7 @@ export const inputFile: ArgumentType<string> = {
         ERRORS.ARGUMENTS.INVALID_INPUT_FILE,
         {
           name: argName,
-          value: strValue,
+          value: strValue
         },
         error as Error
       );
@@ -245,17 +245,17 @@ export const inputFile: ArgumentType<string> = {
         {
           value,
           name: argName,
-          type: inputFile.name,
+          type: inputFile.name
         },
         error as Error
       );
     }
-  },
+  }
 };
 export const json: ArgumentType<any> = {
   // eslint-disable-line
   name: "json",
-  parse(argName: string, strValue: string): void {
+  parse (argName: string, strValue: string): void {
     try {
       return JSON.parse(strValue);
     } catch (error) {
@@ -263,7 +263,7 @@ export const json: ArgumentType<any> = {
         ERRORS.ARGUMENTS.INVALID_JSON_ARGUMENT,
         {
           param: argName,
-          error: (error as Error).message,
+          error: (error as Error).message
         },
         error as Error
       );
@@ -284,8 +284,8 @@ export const json: ArgumentType<any> = {
       throw new JunokitError(ERRORS.ARGUMENTS.INVALID_VALUE_FOR_TYPE, {
         value,
         name: argName,
-        type: json.name,
+        type: json.name
       });
     }
-  },
+  }
 };

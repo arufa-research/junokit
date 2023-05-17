@@ -1,8 +1,8 @@
 import { CosmWasmClient, ExecuteResult, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { DirectSecp256k1HdWallet, makeCosmoshubPath } from "@cosmjs/proto-signing";
+
 import { JunokitError } from "../internal/core/errors";
 import { ERRORS } from "../internal/core/errors-list";
-
 import { Account, Network } from "../types";
 
 export async function getClient (network: Network): Promise<CosmWasmClient> {

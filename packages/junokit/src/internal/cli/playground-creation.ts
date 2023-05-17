@@ -1,20 +1,16 @@
 import chalk from "chalk";
 import * as fs from "fs";
-import fsExtra from "fs-extra";
-import os from "os";
+// import fsExtra from "fs-extra";
 import path from "path";
 import * as ts from "typescript";
-import { getPackageJson, getPackageRoot } from "../util/packageInfo";
+
 import { initialize } from "./initialize-playground";
 
-const projectName = "Playground"; // hard code default project name... can be removed later
-export async function printWelcomeMessage(): Promise<void> {
-  const packageJson = await getPackageJson();
-
-  console.log(chalk.cyan(`★ Welcome to Junokit Playground v1.0`));
+export async function printWelcomeMessage (): Promise<void> {
+  console.log(chalk.cyan(`★ Welcome to Junokit Playground v1.0 ★`));
 }
 
-export function printSuggestedCommands(projectName: string): void {
+export function printSuggestedCommands (projectName: string): void {
   const currDir = process.cwd();
   const projectPath = path.join(currDir, projectName);
   console.log(`Success! Created project at ${chalk.greenBright(projectPath)}.`);
@@ -27,29 +23,7 @@ export function printSuggestedCommands(projectName: string): void {
   console.log(`  npm start`);
 }
 
-function directoryExists(path: string): boolean {
-  try {
-    return fs.statSync(path).isDirectory();
-  } catch (error: any) {
-    if (error.code === "ENOENT") {
-      return false; // directory does not exist
-    } else {
-      throw error; // other error occurred
-    }
-  }
-}
-
-function readDirectory(path: string): string[] {
-  try {
-    const filesAndFolders = fs.readdirSync(path);
-    return filesAndFolders;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
-
-function createArtifactJson(contractDir: string, destinationDir: string): void {
+function createArtifactJson (contractDir: string, destinationDir: string): void {
   const files = fs.readdirSync(contractDir); // Get an array of all files in the directory
   const json = [];
   console.log("\n", files);
@@ -65,18 +39,21 @@ function createArtifactJson(contractDir: string, destinationDir: string): void {
 }
 
 interface Property {
-  name: string;
-  type: string;
-  modifiers?: string[];
+  name: string
+  type: string
+  modifiers?: string[]
 }
 
 interface Structure {
-  kind: string;
-  name: string;
-  properties?: Property[];
+  kind: string
+  name: string
+  properties?: Property[]
 }
 
-function convertTypescriptFileToJson(inputFilePath: string, outputFilePath: string) {
+function convertTypescriptFileToJson (
+  inputFilePath: string,
+  outputFilePath: string
+): void {
   const sourceFile = ts.createSourceFile(
     inputFilePath,
     fs.readFileSync(inputFilePath).toString(),
@@ -85,8 +62,8 @@ function convertTypescriptFileToJson(inputFilePath: string, outputFilePath: stri
 
   const structures: Structure[] = [];
 
-  function parseNode(node: ts.Node) {
-    if(ts.isFunctionOrConstructorTypeNode(node)){
+  function parseNode (node: ts.Node): void {
+    if (ts.isFunctionOrConstructorTypeNode(node)) {
       console.log("\n In prsenode");
       // console.log(JSON.stringify(node.name,null,2));
     }
@@ -95,38 +72,38 @@ function convertTypescriptFileToJson(inputFilePath: string, outputFilePath: stri
         .filter(ts.isPropertyDeclaration)
         .map((member) => ({
           name: member.name.getText(sourceFile),
-          type: member.type?.getText(sourceFile) || "unknown",
-          modifiers: member.modifiers?.map((modifier) => modifier.getText(sourceFile)),
+          type: member.type?.getText(sourceFile) ?? "unknown",
+          modifiers: member.modifiers?.map((modifier) => modifier.getText(sourceFile))
         }));
-        console.log(JSON.stringify(node.members,null,2));
+      console.log(JSON.stringify(node.members, null, 2));
       structures.push({
         kind: "class",
-        name: node.name?.getText(sourceFile) || "unknown",
-        properties,
+        name: node.name?.getText(sourceFile) ?? "unknown",
+        properties
       });
     } else if (ts.isInterfaceDeclaration(node)) {
       const properties: Property[] = node.members
         .filter(ts.isPropertySignature)
         .map((member) => ({
           name: member.name.getText(sourceFile),
-          type: member.type?.getText(sourceFile) || "unknown",
-          modifiers: member.modifiers?.map((modifier) => modifier.getText(sourceFile)),
+          type: member.type?.getText(sourceFile) ?? "unknown",
+          modifiers: member.modifiers?.map((modifier) => modifier.getText(sourceFile))
         }));
       structures.push({
         kind: "interface",
-        name: node.name?.getText(sourceFile) || "unknown",
-        properties,
+        name: node.name?.getText(sourceFile) ?? "unknown",
+        properties
       });
     } else if (ts.isTypeAliasDeclaration(node)) {
       structures.push({
         kind: "typeAlias",
-        name: node.name?.getText(sourceFile) || "unknown",
+        name: node.name?.getText(sourceFile) ?? "unknown",
         properties: [
           {
             name: "type",
-            type: node.type?.getText(sourceFile) || "unknown",
-          },
-        ],
+            type: node.type?.getText(sourceFile) ?? "unknown"
+          }
+        ]
       });
     }
     ts.forEachChild(node, parseNode);
@@ -137,42 +114,42 @@ function convertTypescriptFileToJson(inputFilePath: string, outputFilePath: stri
   fs.writeFileSync(outputFilePath, JSON.stringify(structures, null, 2));
 }
 
-export async function createPlayground(
+export async function createPlayground (
   projectName: string,
-  templateName: string
+  templateName: string,
+  destination: string
+  // eslint-disable-next-line
 ): Promise<any> {
   if (templateName !== undefined) {
     const currDir = process.cwd();
     const artifacts = path.join(currDir, "artifacts");
     // const artifactDir = fse.readdirSync(artifacts);
     console.log(artifacts);
-    if (!directoryExists(artifacts)) {
-      console.log("no artifacts");
+    if (!fs.existsSync(artifacts)) {
+      console.log("no artifacts found");
       return;
     }
-
-  
 
     const projectPath = path.join(currDir, projectName);
     await initialize({
       force: false,
       projectName: projectName,
       templateName: templateName,
-      destination: projectPath,
+      destination: projectPath
     });
 
     const playground = path.join(currDir, "playground");
     const playgroundP = path.join(playground, "src");
-    const playgroundPages = path.join(playgroundP, "pages");
+    // const playgroundPages = path.join(playgroundP, "pages");
     const contracts = path.join(artifacts, "contracts");
-    const files = readDirectory(contracts);
+    // const files = readDirectory(contracts);
 
     createArtifactJson(contracts, playgroundP);
 
-    const ty_counter = path.join(artifacts, "typescript_schema");
-    const count = path.join(ty_counter, "Counter.ts");
-    const counter = fs.readFileSync(count, "utf8");
-    const jobj = JSON.stringify(counter);
+    const tyCounter = path.join(artifacts, "typescript_schema");
+    const count = path.join(tyCounter, "Counter.ts");
+    // const counter = fs.readFileSync(count, "utf8");
+    // const jobj = JSON.stringify(counter);
     const dest = path.join(playgroundP, "counterInf.json");
     convertTypescriptFileToJson(count, dest);
     // console.log(jobj);
@@ -185,7 +162,11 @@ export async function createPlayground(
   printSuggestedCommands(projectName);
 }
 
-export function createConfirmationPrompt(name: string, message: string): any {
+export function createConfirmationPrompt (
+  name: string,
+  message: string
+  // eslint-disable-next-line
+): any {
   // eslint-disable-line  @typescript-eslint/no-explicit-any
   return {
     type: "confirm",
@@ -193,44 +174,43 @@ export function createConfirmationPrompt(name: string, message: string): any {
     message,
     initial: "y",
     default: "(Y/n)",
-    isTrue(input: string | boolean) {
+    isTrue (input: string | boolean) {
       if (typeof input === "string") {
         return input.toLowerCase() === "y";
       }
 
       return input;
     },
-    isFalse(input: string | boolean) {
+    isFalse (input: string | boolean) {
       if (typeof input === "string") {
         return input.toLowerCase() === "n";
       }
 
       return input;
     },
-    format(): string {
-      const that = this; // eslint-disable-line @typescript-eslint/no-explicit-any
-      const value = that.value === true ? "y" : "n";
+    format (): string {
+      const value = this.value === true ? "y" : "n";
 
-      if (that.state.submitted === true) {
-        return that.styles.submitted(value);
+      if (this.state.submitted === true) {
+        return this.styles.submitted(value);
       }
 
       return value;
-    },
+    }
   };
 }
 
-function isInstalled(dep: string): boolean {
-  const packageJson = fsExtra.readJSONSync("package.json");
-  const allDependencies = {
-    ...packageJson.dependencies,
-    ...packageJson.devDependencies,
-    ...packageJson.optionalDependencies,
-  };
+// function isInstalled (dep: string): boolean {
+//   const packageJson = fsExtra.readJSONSync("package.json");
+//   const allDependencies = {
+//     ...packageJson.dependencies,
+//     ...packageJson.devDependencies,
+//     ...packageJson.optionalDependencies
+//   };
 
-  return dep in allDependencies;
-}
+//   return dep in allDependencies;
+// }
 
-function isYarnProject(): boolean {
-  return fsExtra.pathExistsSync("yarn.lock");
-}
+// function isYarnProject (): boolean {
+//   return fsExtra.pathExistsSync("yarn.lock");
+// }

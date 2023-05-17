@@ -7,9 +7,6 @@ import { copyTemplatetoDestination, fetchRepository, setUpTempDirectory } from "
 import { createConfirmationPrompt, printSuggestedCommands, printWelcomeMessage } from "./playground-creation";
 const TEMPLATES_GIT_REMOTE = 'VarunProhit/play-juno';
 const DEFAULT_TEMPLATE = 'playground';
-function isYarnProject (destination: string): boolean {
-  return fse.existsSync(path.join(destination, "yarn.lock"));
-}
 
 /**
  * Confirm if user wants to install project dependencies in template directory
